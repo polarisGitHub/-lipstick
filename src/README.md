@@ -1,0 +1,7 @@
+- gradle wrapper
+    - 先安装gradle
+    - 执行gradle wrapper
+- 查看gradle task
+    - ./gradlew task
+- 打包
+    - ./gradlew clean bootJar
