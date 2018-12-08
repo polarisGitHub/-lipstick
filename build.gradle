@@ -33,27 +33,41 @@ configurations {
     implementation {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
+    implementation {
+        exclude group: 'org.apache.tomcatt', module: 'tomcat-jdbc'
+    }
 }
 dependencies {
+    // spring
     implementation(
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-jetty',
             'org.springframework.boot:spring-boot-starter-actuator',
             'org.springframework.boot:spring-boot-devtools',
+            'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-jdbc',
+            'org.springframework.boot:spring-boot-starter-freemarker'
+    )
+    // db
+    implementation(
             'mysql:mysql-connector-java:8.0.13',
             'com.mchange:c3p0:0.9.5.2',
             'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2',
-            'com.alibaba:fastjson:1.2.54'
     )
-
+    // common
+    implementation(
+            'com.alibaba:fastjson:1.2.54',
+            'org.apache.commons:commons-lang3:3.8.1'
+    )
+    // test
     testCompile(
             'org.testng:testng',
             'org.springframework.boot:spring-boot-starter-test',
             'org.mockito:mockito-core'
     )
 
-
-    compileOnly('org.projectlombok:lombok')
-    annotationProcessor('org.projectlombok:lombok')
+    compileOnly(
+            'org.projectlombok:lombok:1.18.4',
+            'org.springframework.boot:spring-boot-configuration-processor'
+    )
 }
