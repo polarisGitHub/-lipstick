@@ -31,9 +31,6 @@ targetCompatibility = 11
 
 configurations {
     implementation {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-    }
-    implementation {
         exclude group: 'org.apache.tomcatt', module: 'tomcat-jdbc'
     }
 }
@@ -41,12 +38,10 @@ dependencies {
     // spring
     implementation(
             'org.springframework.boot:spring-boot-starter-web',
-            'org.springframework.boot:spring-boot-starter-jetty',
             'org.springframework.boot:spring-boot-starter-actuator',
             'org.springframework.boot:spring-boot-devtools',
             'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-jdbc',
-            'org.springframework.boot:spring-boot-starter-freemarker'
     )
     // db
     implementation(
@@ -56,8 +51,8 @@ dependencies {
     )
     // common
     implementation(
-            'com.alibaba:fastjson:1.2.54',
-            'org.apache.commons:commons-lang3:3.8.1'
+            'org.apache.commons:commons-lang3:3.8.1',
+            'org.slf4j:jcl-over-slf4j:1.7.25'
     )
     // test
     testCompile(
@@ -69,5 +64,10 @@ dependencies {
     compileOnly(
             'org.projectlombok:lombok:1.18.4',
             'org.springframework.boot:spring-boot-configuration-processor'
+    )
+
+
+    annotationProcessor(
+            'org.projectlombok:lombok:1.18.4',
     )
 }

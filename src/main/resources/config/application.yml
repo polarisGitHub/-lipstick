@@ -9,16 +9,3 @@ c3p0:
   maxIdleTime: 5000
   checkoutTimeout: 5000
   maxStatements: 20
-
-spring:
-  freemarker:
-    charset: UTF-8
-    cache: true
-    allow-request-override: false
-    expose-request-attributes: false
-    expose-session-attributes: false
-    content-type: text/html
-    expose-spring-macro-helpers: false
-    check-template-location: true
-    suffix: .ftl
-    template-loader-path: classpath:/templates
