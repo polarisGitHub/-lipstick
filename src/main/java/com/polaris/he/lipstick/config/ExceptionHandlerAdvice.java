@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @ControllerAdvice(annotations = RestController.class, basePackages = "com.polaris.he.lipstick.controller")
-public class ExceptionAdvice {
-
+public class ExceptionHandlerAdvice {
 
     /**
      * 业务异常处理
@@ -27,7 +26,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(value = BizExcepton.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public RestResponse bizExceptionHandler(BizExcepton e) {
-        log.error("[业务异常{}]", e.getExceptionCode(), e);
+        log.error("[业务异常{}],message={}", e.getMessage(), e.getExceptionCode(), e);
         RestResponse response = new RestResponse();
         response.setCode(ResponseCodeEnum.error);
         response.setErrorCode(e.getExceptionCode());
@@ -45,7 +44,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public RestResponse defaultExceptionHandler(Exception e) {
-        log.error("[系统异常]", e);
+        log.error("[系统异常],message={}", e.getMessage(), e);
         RestResponse response = new RestResponse();
         response.setCode(ResponseCodeEnum.error);
         response.setMessage(e.getMessage());
