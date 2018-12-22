@@ -3,14 +3,11 @@ package com.polaris.he.lipstick.config;
 import com.polaris.he.lipstick.common.constant.ResponseCodeEnum;
 import com.polaris.he.lipstick.common.data.RestResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -21,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  */
 @Slf4j
 @ControllerAdvice
-public class RestApiResponseBodyProcessor implements ResponseBodyAdvice<Object> {
+public class RestApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
@@ -30,7 +27,7 @@ public class RestApiResponseBodyProcessor implements ResponseBodyAdvice<Object> 
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        RestResponse restResponse = null;
+        RestResponse restResponse;
         if (body instanceof RestResponse) {
             restResponse = (RestResponse) body;
         } else {

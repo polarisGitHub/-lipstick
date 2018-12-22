@@ -25,10 +25,10 @@ public interface LipstickProductService {
     Brand getBrand(String id);
 
     /**
-     * @param brandId
+     * @param brandCodes
      * @return
      */
-    List<Category> getCategories(String brandId);
+    List<Category> getCategories(List<String> brandCodes);
 
     /**
      * @param categoryId

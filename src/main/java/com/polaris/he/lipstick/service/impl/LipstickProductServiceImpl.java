@@ -1,6 +1,8 @@
 package com.polaris.he.lipstick.service.impl;
 
+import com.polaris.he.lipstick.dao.BrandCategoryMappingDao;
 import com.polaris.he.lipstick.dao.BrandDao;
+import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.BrandDO;
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
@@ -10,10 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +30,9 @@ public class LipstickProductServiceImpl implements LipstickProductService {
 
     @Resource
     private BrandDao brandDao;
+
+    @Resource
+    private BrandCategoryMappingDao brandCategoryMappingDao;
 
     @Override
     public List<Brand> getBrands() {
@@ -43,21 +49,33 @@ public class LipstickProductServiceImpl implements LipstickProductService {
 
     @Override
     public Brand getBrand(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Category> getCategories(String brandId) {
-        return null;
+    public List<Category> getCategories(List<String> brandCodes) {
+        Assert.notEmpty(brandCodes, "参数不能为空");
+        List<BrandCategoryMappingDO> mappings = brandCategoryMappingDao.getCategoryByBrands(brandCodes);
+        if (CollectionUtils.isEmpty(mappings)) {
+            return new LinkedList<>();
+        }
+        Map<String, Category> distinct = mappings.stream().
+                map(BrandCategoryMappingDO::getCategory).
+                map(l -> {
+                    Category data = new Category();
+                    BeanUtils.copyProperties(l, data);
+                    return data;
+                }).collect(Collectors.toMap(Category::getCode, Function.identity(), (u, v) -> v, LinkedHashMap::new));
+        return new ArrayList<>(distinct.values());
     }
 
     @Override
     public List<ColorCard> getColorCards(String categoryId) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ColorCard getColorCard(String colorCardId) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

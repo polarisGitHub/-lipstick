@@ -15,3 +15,4 @@ gradle-app.setting
 .idea/
 *.iml
 out/
+src/main/resources/db/insert.sql

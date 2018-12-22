@@ -6,13 +6,14 @@ import lombok.ToString;
 
 /**
  * User: hexie
- * Date: 2018-12-17 22:10
+ * Date: 2018-12-22 22:17
  * Description:
  */
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class BrandDO extends BaseDO{
+public class CategoryDO extends BaseDO {
+
     private Long id;
 
     private String code;

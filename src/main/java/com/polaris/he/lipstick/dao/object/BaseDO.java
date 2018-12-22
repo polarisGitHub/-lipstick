@@ -4,18 +4,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 /**
  * User: hexie
- * Date: 2018-12-17 22:10
+ * Date: 2018-12-22 22:19
  * Description:
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
-public class BrandDO extends BaseDO{
-    private Long id;
+@ToString
+public class BaseDO {
 
-    private String code;
+    private LocalDateTime createdDate;
 
-    private String name;
+    private LocalDateTime modifiedDate;
 }

@@ -11,8 +11,8 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@ToString
-public class LipStickDO {
+@ToString(callSuper = true)
+public class LipStickDO extends BaseDO {
 
     /**
      * 品牌
