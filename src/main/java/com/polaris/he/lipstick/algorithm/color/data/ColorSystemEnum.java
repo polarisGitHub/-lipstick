@@ -7,5 +7,5 @@ package com.polaris.he.lipstick.algorithm.color.data;
  */
 public enum ColorSystemEnum {
 
-    RGB, HSL, LAB
+    RGB, HSL, LAB, XYZ
 }

@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.algorithm.color.data;
 
+import com.polaris.he.lipstick.algorithm.color.converter.ColorConvertUtils;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -20,9 +21,11 @@ public class ColorSpace {
 
     public ColorSpace(Rgb rgb) {
         this.rgb = rgb;
+        this.lab = ColorConvertUtils.convert(rgb, Lab.class);
     }
 
     public ColorSpace(Lab lab) {
+        this.rgb = ColorConvertUtils.convert(lab, Rgb.class);
         this.lab = lab;
     }
 

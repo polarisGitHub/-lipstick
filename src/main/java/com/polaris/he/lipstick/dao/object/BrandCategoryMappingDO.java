@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 /**
  * User: hexie
  * Date: 2018-12-22 22:17

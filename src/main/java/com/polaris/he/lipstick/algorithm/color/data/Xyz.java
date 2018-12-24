@@ -4,7 +4,7 @@ import lombok.*;
 
 /**
  * User: hexie
- * Date: 2018-12-23 16:50
+ * Date: 2018-12-23 21:32
  * Description:
  */
 @Getter
@@ -12,14 +12,15 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Hsl implements Color {
+public class Xyz implements Color {
 
-    private double h;
-    private double s;
-    private double l;
+    private double x;
+    private double y;
+    private double z;
+
 
     @Override
     public ColorSystemEnum colorSystem() {
-        return ColorSystemEnum.HSL;
+        return ColorSystemEnum.XYZ;
     }
 }

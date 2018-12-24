@@ -4,16 +4,15 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.polaris.he.lipstick.algorithm.color.data.Color;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.type.filter.AssignableTypeFilter;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * User: hexie
@@ -22,39 +21,35 @@ import java.util.Set;
  */
 @Slf4j
 @Service
-public class ColorConvertService {
+class ColorConvertService implements ApplicationContextAware {
 
-    private Table<Class, Class, ColorConverter> transform = HashBasedTable.create();
-    private Table<Class, Class, ColorConverter> inverse = HashBasedTable.create();
+    private Table<Type, Type, ColorConverter> transform = HashBasedTable.create();
 
-    @PostConstruct
-    public void init() {
-        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
-        scanner.addIncludeFilter(new AssignableTypeFilter(ColorConverter.class));
-        Set<BeanDefinition> beansDefinition = scanner.findCandidateComponents("com.polaris.he.lipstick.algorithm.color.converter");
-        beansDefinition.forEach(l -> {
-            try {
-                Class<?> clazz = Class.forName(l.getBeanClassName());
-                Arrays.stream(clazz.getGenericInterfaces()).
-                        filter(i -> ((ParameterizedType) i).getRawType().equals(ColorConverter.class)).
-                        findFirst().
-                        ifPresent(type -> {
-                            ParameterizedType parameterized = (ParameterizedType) type;
-                            Class source = (Class) parameterized.getActualTypeArguments()[0];
-                            Class target = (Class) parameterized.getActualTypeArguments()[1];
-                            try {
-                                ColorConverter instance = (ColorConverter) clazz.getDeclaredConstructor().newInstance();
-                                transform.put(source, target, instance);
-                                inverse.put(target, source, instance);
-                            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                            }
-
-                        });
-            } catch (ClassNotFoundException e) {
-                log.error("扫描ColorConverter错误", e);
-            }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        log.info("开始扫描ColorConverter");
+        Map<String, ColorConverter> beans = applicationContext.getBeansOfType(ColorConverter.class);
+        beans.forEach((key, value) -> {
+            Arrays.stream(value.getClass().getGenericInterfaces()).
+                    filter(i -> ((ParameterizedType) i).getRawType().equals(ColorConverter.class)).
+                    findFirst().
+                    ifPresent(c -> {
+                        Type[] actual = ((ParameterizedType) c).getActualTypeArguments();
+                        transform.put(actual[0], actual[1], value);
+                    });
         });
+
     }
 
-
+    @SuppressWarnings("unchecked")
+    public <T extends Color, R extends Color> T convert(R color, Class<T> targetClazz) {
+        Class sourceClazz = color.getClass();
+        if (transform.containsRow(sourceClazz) && transform.containsColumn(targetClazz)) {
+            return (T) transform.get(sourceClazz, targetClazz).transform(color);
+        } else if (transform.containsRow(targetClazz) && transform.containsColumn(sourceClazz)) {
+            return (T) transform.get(targetClazz, sourceClazz).inverse(color);
+        }
+        log.error("不支持的转换方式，source={},target={}", sourceClazz, targetClazz);
+        throw new UnsupportedOperationException();
+    }
 }
