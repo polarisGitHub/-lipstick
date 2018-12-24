@@ -27,7 +27,7 @@ public class RgbXyzConverterTest extends AbstractTestNGSpringContextTests {
             Rgb rgb = mapper.treeToValue(node.get("rgb"), Rgb.class);
             Xyz lab = mapper.treeToValue(node.get("xyz"), Xyz.class);
             Xyz expectedXyz = new RgbXyzConverter().transform(rgb);
-            log.info("rgb={},lab={},expetedLab={}", rgb, lab, expectedXyz);
+            log.info("rgb={},lab={},expectedXyz={}", rgb, lab, expectedXyz);
         }
     }
 }
