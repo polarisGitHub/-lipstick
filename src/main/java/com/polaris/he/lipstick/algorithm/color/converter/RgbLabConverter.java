@@ -16,11 +16,11 @@ public class RgbLabConverter implements ColorConverter<Rgb, Lab> {
 
     private static final double FUNCTION_THRESHOLD = Math.pow(6.0 / 29, 3);
 
-    private static final double XN = 0.950456;
+    private static final double XN = 95.0456;
 
-    private static final double YN = 1.0;
+    private static final double YN = 100.0;
 
-    private static final double ZN = 1.088754;
+    private static final double ZN = 108.8754;
 
     @Override
     public Lab transform(Rgb rgb) {

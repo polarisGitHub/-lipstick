@@ -19,7 +19,7 @@ public class RgbXyzConverter implements ColorConverter<Rgb, Xyz> {
         double x = 0.412453 * r + 0.357580 * g + 0.180423 * b;
         double y = 0.212671 * r + 0.715160 * g + 0.072169 * b;
         double z = 0.019334 * r + 0.119193 * g + 0.950227 * b;
-        return new Xyz(x, y, z);
+        return new Xyz(x * 100.0, y * 100.0, z * 100.0);
     }
 
     private double gamma(double x) {
