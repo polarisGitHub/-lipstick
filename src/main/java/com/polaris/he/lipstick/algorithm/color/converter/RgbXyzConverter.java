@@ -32,13 +32,14 @@ public class RgbXyzConverter implements ColorConverter<Rgb, Xyz> {
 
     @Override
     public Rgb inverse(Xyz xyz) {
-        double r = 3.240479 * xyz.getX() - 1.537150 * xyz.getY() - 0.498535 * xyz.getZ();
-        double g = -0.969256 * xyz.getX() + 1.875992 * xyz.getY() + 0.041556 * xyz.getZ();
-        double b = 0.055648 * xyz.getX() - 0.204043 * xyz.getY() + 1.057311 * xyz.getZ();
-        return new Rgb(
-                (int) Math.min(Math.max(0, r), 255),
-                (int) Math.min(Math.max(0, g), 255),
-                (int) Math.min(Math.max(0, b), 255)
-        );
+        throw new UnsupportedOperationException();
+//        double r = 3.240479 * xyz.getX() - 1.537150 * xyz.getY() - 0.498535 * xyz.getZ();
+//        double g = -0.969256 * xyz.getX() + 1.875992 * xyz.getY() + 0.041556 * xyz.getZ();
+//        double b = 0.055648 * xyz.getX() - 0.204043 * xyz.getY() + 1.057311 * xyz.getZ();
+//        return new Rgb(
+//                (int) Math.min(Math.max(0, r), 255),
+//                (int) Math.min(Math.max(0, g), 255),
+//                (int) Math.min(Math.max(0, b), 255)
+//        );
     }
 }
