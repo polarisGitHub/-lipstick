@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 
 @Slf4j
 @SpringBootTest
-public class srgbLabConverterTest extends AbstractTestNGSpringContextTests {
+public class SrgbLabConverterTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void transformTest() throws IOException {
@@ -25,7 +25,7 @@ public class srgbLabConverterTest extends AbstractTestNGSpringContextTests {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode[] nodes = mapper.readValue(str, ObjectNode[].class);
         for (ObjectNode node : nodes) {
-            Srgb sRgb = mapper.treeToValue(node.get("Srgb"), Srgb.class);
+            Srgb sRgb = mapper.treeToValue(node.get("rgb"), Srgb.class);
             Lab lab = mapper.treeToValue(node.get("lab"), Lab.class);
             Lab expectedLab = new RgbLabConverter().transform(sRgb);
             log.info("Srgb={},lab={},expetedLab={}", sRgb, lab, expectedLab);
