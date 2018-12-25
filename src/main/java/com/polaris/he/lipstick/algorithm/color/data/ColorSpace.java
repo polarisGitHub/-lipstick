@@ -13,19 +13,19 @@ import lombok.ToString;
 @ToString
 public class ColorSpace {
 
-    private Rgb rgb;
+    private Srgb sRgb;
 
     private Lab lab;
 
     private Hsl hsl;
 
-    public ColorSpace(Rgb rgb) {
-        this.rgb = rgb;
-        this.lab = ColorConvertUtils.convert(rgb, Lab.class);
+    public ColorSpace(Srgb sRgb) {
+        this.sRgb = sRgb;
+        this.lab = ColorConvertUtils.convert(sRgb, Lab.class);
     }
 
     public ColorSpace(Lab lab) {
-        this.rgb = ColorConvertUtils.convert(lab, Rgb.class);
+        this.sRgb = ColorConvertUtils.convert(lab, Srgb.class);
         this.lab = lab;
     }
 

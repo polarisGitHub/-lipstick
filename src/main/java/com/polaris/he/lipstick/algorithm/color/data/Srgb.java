@@ -14,7 +14,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rgb implements Color {
+public class Srgb implements Color {
 
     private int r;
     private int g;

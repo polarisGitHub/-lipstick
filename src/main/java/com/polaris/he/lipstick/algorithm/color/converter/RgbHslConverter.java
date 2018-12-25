@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.algorithm.color.converter;
 
 import com.polaris.he.lipstick.algorithm.color.data.Hsl;
-import com.polaris.he.lipstick.algorithm.color.data.Rgb;
+import com.polaris.he.lipstick.algorithm.color.data.Srgb;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
  * Description:
  */
 @Component
-public class RgbHslConverter implements ColorConverter<Rgb, Hsl> {
+public class RgbHslConverter implements ColorConverter<Srgb, Hsl> {
 
     @Override
-    public Hsl transform(Rgb color) {
+    public Hsl transform(Srgb color) {
         return null;
     }
 
     @Override
-    public Rgb inverse(Hsl color) {
+    public Srgb inverse(Hsl color) {
         return null;
     }
 }

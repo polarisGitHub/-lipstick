@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.algorithm.color.converter;
 
 import com.polaris.he.lipstick.algorithm.color.data.Lab;
-import com.polaris.he.lipstick.algorithm.color.data.Rgb;
+import com.polaris.he.lipstick.algorithm.color.data.Srgb;
 import com.polaris.he.lipstick.algorithm.color.data.Xyz;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Description:
  */
 @Component
-public class RgbLabConverter implements ColorConverter<Rgb, Lab> {
+public class RgbLabConverter implements ColorConverter<Srgb, Lab> {
 
     private static final double FUNCTION_THRESHOLD = Math.pow(6.0 / 29, 3);
 
@@ -23,8 +23,8 @@ public class RgbLabConverter implements ColorConverter<Rgb, Lab> {
     private static final double ZN = 108.8754;
 
     @Override
-    public Lab transform(Rgb rgb) {
-        Xyz xyz = ColorConvertUtils.convert(rgb, Xyz.class);
+    public Lab transform(Srgb sRgb) {
+        Xyz xyz = ColorConvertUtils.convert(sRgb, Xyz.class);
 
         double normalX = f(xyz.getX() / XN);
         double normalY = f(xyz.getY() / YN);
@@ -44,7 +44,7 @@ public class RgbLabConverter implements ColorConverter<Rgb, Lab> {
     }
 
     @Override
-    public Rgb inverse(Lab color) {
+    public Srgb inverse(Lab color) {
         throw new UnsupportedOperationException();
     }
 
