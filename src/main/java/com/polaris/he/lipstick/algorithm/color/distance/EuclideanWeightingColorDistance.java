@@ -9,8 +9,13 @@ import com.polaris.he.lipstick.algorithm.color.data.ColorSpace;
  * Description:
  */
 public class EuclideanWeightingColorDistance implements ColorDistance {
+
     @Override
     public double compute(ColorSpace source, ColorSpace target) {
-        return 0;
+        double r = (source.getSRgb().getR() + target.getSRgb().getR()) / 2.0;
+        double deltaR = source.getSRgb().getR() - target.getSRgb().getR();
+        double deltaG = source.getSRgb().getG() - target.getSRgb().getG();
+        double deltaB = source.getSRgb().getB() - target.getSRgb().getB();
+        return Math.sqrt((2 + r / 256.0) * deltaR * deltaR + 4 * deltaG * deltaG + (2 + (255 - r) / 256) * deltaB * deltaB);
     }
 }

@@ -11,6 +11,6 @@ import com.polaris.he.lipstick.algorithm.color.data.ColorSpace;
 public class CIEDE2000StandardColorDistance implements ColorDistance {
     @Override
     public double compute(ColorSpace source, ColorSpace target) {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 }
