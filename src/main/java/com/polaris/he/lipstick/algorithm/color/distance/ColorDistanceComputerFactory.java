@@ -16,6 +16,7 @@ public class ColorDistanceComputerFactory {
             put(ColorDistanceAlgorithm.EUCLIDEAN, new EuclideanColorDistance()).
             put(ColorDistanceAlgorithm.EUCLIDEAN_WEIGHTING, new EuclideanWeightingColorDistance()).
             put(ColorDistanceAlgorithm.CIE76, new CIE76StandardColorDistance()).
+            put(ColorDistanceAlgorithm.CIE94, new CIE94StandardColorDistance()).
             put(ColorDistanceAlgorithm.CIEDE2000, new CIEDE2000StandardColorDistance()).
             build();
 

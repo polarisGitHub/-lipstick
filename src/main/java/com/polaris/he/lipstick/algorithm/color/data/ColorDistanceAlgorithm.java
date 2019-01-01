@@ -7,5 +7,5 @@ package com.polaris.he.lipstick.algorithm.color.data;
  */
 public enum ColorDistanceAlgorithm {
 
-    EUCLIDEAN, EUCLIDEAN_WEIGHTING, CIE76, CIEDE2000
+    EUCLIDEAN, EUCLIDEAN_WEIGHTING, CIE76, CIE94, CIEDE2000
 }
