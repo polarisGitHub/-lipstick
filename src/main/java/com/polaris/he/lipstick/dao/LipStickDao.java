@@ -1,7 +1,10 @@
 package com.polaris.he.lipstick.dao;
 
 import com.polaris.he.lipstick.dao.object.LipStickDO;
+import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
+import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -11,5 +14,15 @@ import java.util.List;
  */
 public interface LipStickDao extends Dao {
 
+    /**
+     * @param inserts
+     * @return
+     */
     int bulkInsert(List<LipStickDO> inserts);
+
+
+    /**
+     * @param search
+     */
+    LipstickAggregationDO search(LipstickSearchDO search);
 }
