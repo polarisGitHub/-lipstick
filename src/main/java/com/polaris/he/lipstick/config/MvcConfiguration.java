@@ -2,6 +2,7 @@ package com.polaris.he.lipstick.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polaris.he.lipstick.common.utils.JsonUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -21,7 +22,6 @@ import java.util.List;
 public class MvcConfiguration implements WebMvcConfigurer {
 
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        ObjectMapper json = Jackson2ObjectMapperBuilder.json().serializationInclusion(JsonInclude.Include.NON_NULL).build();
-        converters.add(new MappingJackson2HttpMessageConverter(json));
+        converters.add(new MappingJackson2HttpMessageConverter(JsonUtils.getObjectMapper()));
     }
 }

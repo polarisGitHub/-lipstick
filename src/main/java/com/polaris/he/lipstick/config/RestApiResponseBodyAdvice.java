@@ -1,7 +1,10 @@
 package com.polaris.he.lipstick.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polaris.he.lipstick.common.constant.ResponseCodeEnum;
 import com.polaris.he.lipstick.common.data.RestResponse;
+import com.polaris.he.lipstick.common.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -35,7 +38,7 @@ public class RestApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             restResponse.setCode(ResponseCodeEnum.success);
             restResponse.setData(body);
         }
-        log.info("rest api返回消息，restResponse={}", restResponse);
+        log.info("rest api返回消息，{}", JsonUtils.toJsonString(restResponse));
         return restResponse;
     }
 }
