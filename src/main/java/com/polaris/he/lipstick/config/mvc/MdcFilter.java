@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.config;
+package com.polaris.he.lipstick.config.mvc;
 
 import org.slf4j.MDC;
 

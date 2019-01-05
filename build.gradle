@@ -42,6 +42,7 @@ dependencies {
             'org.springframework.boot:spring-boot-devtools',
             'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-jdbc',
+            'org.springframework.boot:spring-boot-starter-cache',
     )
     // db
     implementation(
@@ -51,6 +52,7 @@ dependencies {
     )
     // common
     implementation(
+            'com.github.ben-manes.caffeine:caffeine:2.6.2',
             'com.google.guava:guava:27.0.1-jre',
             'commons-io:commons-io:2.6',
             'org.apache.commons:commons-lang3:3.8.1',

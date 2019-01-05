@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.config;
+package com.polaris.he.lipstick.config.mvc;
 
 import com.polaris.he.lipstick.common.constant.ResponseCodeEnum;
 import com.polaris.he.lipstick.common.data.RestResponse;
