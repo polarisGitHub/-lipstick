@@ -18,7 +18,7 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
 
 
     @Override
-    public LipstickItem search(List<String> brandCodes, List<String> categories, String colorNo) {
+    public List<LipstickItem> search(List<String> brandCodes, List<String> categories, String colorNo) {
         return null;
     }
 }

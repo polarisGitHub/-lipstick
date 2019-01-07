@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * User: hexie
@@ -26,7 +27,7 @@ public class LipstickSearchController {
     private LipstickSearchService lipstickSearchService;
 
     @GetMapping("/")
-    public LipstickItem search(String brands, String categories, String colorNo) {
+    public List<LipstickItem> search(String brands, String categories, String colorNo) {
         log.info("查找口红，brands={},categories={},colorNo={}", brands, categories, colorNo);
         Assert.hasText(brands, "品牌不能为空");
         Assert.hasText(categories, "类别不能为空");

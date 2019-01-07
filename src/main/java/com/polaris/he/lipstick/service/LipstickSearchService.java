@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface LipstickSearchService {
 
-    LipstickItem search(List<String> brandCodes, List<String> categories, String colorNo);
+    List<LipstickItem> search(List<String> brandCodes, List<String> categories, String colorNo);
 }
