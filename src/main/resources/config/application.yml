@@ -12,7 +12,7 @@ c3p0:
 
 mybatis:
   mapperLocations: mapper/*.xml
-
+  type-handlers-package: com.polaris.he.lipstick.dao.handler
 
 spring:
   cache:
