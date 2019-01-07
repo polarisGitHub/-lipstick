@@ -1,24 +1,19 @@
 package com.polaris.he.lipstick.dao;
 
-import com.polaris.he.lipstick.dao.object.LipStickDO;
 import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
  * User: hexie
- * Date: 2018-12-08 15:02
+ * Date: 2019-01-07 23:26
  * Description:
  */
-public interface LipStickDao extends Dao {
+public interface LipstickSearchDao extends Dao {
 
     /**
-     * @param inserts
-     * @return
+     * @param search
      */
-    int bulkInsert(List<LipStickDO> inserts);
-
-
+    List<LipstickAggregationDO> search(LipstickSearchDO search);
 }
