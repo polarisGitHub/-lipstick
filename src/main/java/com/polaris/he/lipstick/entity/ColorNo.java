@@ -12,11 +12,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ColorCard {
+public class ColorNo {
 
-    private String id;
-
-    private String color;
+    private String code;
 
     private String name;
 }
