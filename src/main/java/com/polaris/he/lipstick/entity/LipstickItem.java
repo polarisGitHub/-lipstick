@@ -22,6 +22,10 @@ public class LipstickItem {
 
     private String categoryName;
 
+    private String goodsName;
+
+    private String skuName;
+
     private String colorNo;
 
     private String color;

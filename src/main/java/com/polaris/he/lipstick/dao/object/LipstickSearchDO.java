@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.dao.object;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Collection;
  * Description:
  */
 @Getter
-@Setter
+@Builder
 @ToString
 public class LipstickSearchDO {
 

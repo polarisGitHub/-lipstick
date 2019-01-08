@@ -14,11 +14,7 @@ import lombok.ToString;
 @ToString
 public class Brand {
 
-    private String id;
-
     private String code;
 
     private String name;
-
-    private String memo;
 }
