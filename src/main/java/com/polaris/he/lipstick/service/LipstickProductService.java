@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.service;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.ColorCard;
+import com.polaris.he.lipstick.entity.ColorNo;
 
 import java.util.List;
 
@@ -19,26 +19,20 @@ public interface LipstickProductService {
     List<Brand> getBrands();
 
     /**
-     * @param id
+     * @param code
      * @return
      */
-    Brand getBrand(String id);
+    Brand getBrand(String code);
+
+    /**
+     * @param code
+     * @return
+     */
+    Category getCategory(String code);
 
     /**
      * @param brandCodes
      * @return
      */
     List<Category> getCategories(List<String> brandCodes);
-
-    /**
-     * @param categoryId
-     * @return
-     */
-    List<ColorCard> getColorCards(String categoryId);
-
-    /**
-     * @param colorCardId
-     * @return
-     */
-    ColorCard getColorCard(String colorCardId);
 }

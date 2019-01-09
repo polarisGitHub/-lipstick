@@ -47,4 +47,6 @@ public class LipstickInfoController {
     public List<Category> getCategories(@PathVariable String brandId) {
         return lipstickProductService.getCategories(Arrays.asList(StringUtils.split(brandId, ",")));
     }
+
+
 }
