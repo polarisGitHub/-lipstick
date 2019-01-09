@@ -7,27 +7,27 @@
         <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
         <!--goods-->
         <association property="goods" javaType="com.polaris.he.lipstick.dao.object.GoodsDO">
-            <result column="brand_code" property="brandCode" javaType="VARCHAR"/>
-            <result column="goods_code" property="goodsCode" javaType="VARCHAR"/>
-            <result column="goods_name" property="goodsName" javaType="VARCHAR"/>
-            <result column="goods_illustration" property="illustration" javaType="VARCHAR"/>
-            <result column="goods_url" property="url" javaType="VARCHAR"/>
+            <result column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
+            <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+            <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+            <result column="goods_illustration" property="illustration" jdbcType="VARCHAR"/>
+            <result column="goods_url" property="url" jdbcType="VARCHAR"/>
         </association>
         <!--sku-->
         <association property="sku" javaType="com.polaris.he.lipstick.dao.object.SkuDO">
-            <result column="brand_code" property="brandCode" javaType="VARCHAR"/>
-            <result column="goods_code" property="goodsCode" javaType="VARCHAR"/>
-            <result column="sku_code" property="skuCode" javaType="VARCHAR"/>
-            <result column="sku_name" property="skuName" javaType="VARCHAR"/>
-            <result column="sku_url" property="url" javaType="VARCHAR"/>
+            <result column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
+            <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
+            <result column="sku_code" property="skuCode" jdbcType="VARCHAR"/>
+            <result column="sku_name" property="skuName" jdbcType="VARCHAR"/>
+            <result column="sku_url" property="url" jdbcType="VARCHAR"/>
             <result column="sku_extension" property="extension" typeHandler="com.polaris.he.lipstick.dao.handler.JsonNodeTypeHandler"/>
         </association>
     </resultMap>
 
     <select id="search" parameterType="com.polaris.he.lipstick.dao.object.LipstickSearchDO" resultMap="SearchResultMap">
         select
-          a.brand_code as brand_code,
           a.category_code as category_code,
+          b.brand_code as brand_code,
           b.goods_code as goods_code,
           b.goods_name as goods_name,
           b.illustration as goods_illustration,
@@ -36,18 +36,22 @@
           c.sku_name as sku_name,
           c.url as sku_url,
           c.extension as sku_extension
-        join goods_category_mapping a
-        from goods b on a.goods_code=b.goods_code
+        from goods_category_mapping a
+        join goods b on a.goods_code=b.goods_code
         join sku c on b.goods_code=c.goods_code
         where
           c.brand_code in
           <foreach collection="brandCodes" item="item" open="(" separator="," close=")">
               #{item,jdbcType=VARCHAR}
           </foreach>
-          and b.category_code in
+          and a.category_code in
           <foreach collection="categoryCodes" item="item" open="(" separator="," close=")">
               #{item,jdbcType=VARCHAR}
           </foreach>
-          and (c.sku_by_name like CONCATE('%',#{colorNo,jdbcType=VARCHAR,'#'}) or c.extension->'$.colorNo' like CONCATE('%',#{colorNo,jdbcType=VARCHAR,'#'}) )
+          and (
+              c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#') or
+              c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#') or
+              c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#')
+          )
     </select>
 </mapper>

@@ -6,7 +6,6 @@ import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.BrandDO;
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.ColorCard;
 import com.polaris.he.lipstick.service.LipstickProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -48,8 +47,13 @@ public class LipstickProductServiceImpl implements LipstickProductService {
     }
 
     @Override
-    public Brand getBrand(String id) {
+    public Brand getBrand(String code) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Category getCategory(String code) {
+        return null;
     }
 
     @Override
@@ -67,15 +71,5 @@ public class LipstickProductServiceImpl implements LipstickProductService {
                     return data;
                 }).collect(Collectors.toMap(Category::getCode, Function.identity(), (u, v) -> v, LinkedHashMap::new));
         return new ArrayList<>(distinct.values());
-    }
-
-    @Override
-    public List<ColorCard> getColorCards(String categoryId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public ColorCard getColorCard(String colorCardId) {
-        throw new UnsupportedOperationException();
     }
 }
