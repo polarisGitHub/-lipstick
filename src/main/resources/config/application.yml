@@ -10,6 +10,10 @@ c3p0:
   checkoutTimeout: 5000
   maxStatements: 20
 
+logging:
+  level:
+    com.polaris.he.lipstick.dao: DEBUG
+
 mybatis:
   mapperLocations: mapper/*.xml
   type-handlers-package: com.polaris.he.lipstick.dao.handler
