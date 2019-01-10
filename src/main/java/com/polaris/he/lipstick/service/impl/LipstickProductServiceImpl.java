@@ -1,23 +1,17 @@
 package com.polaris.he.lipstick.service.impl;
 
-import com.polaris.he.lipstick.dao.BrandCategoryMappingDao;
-import com.polaris.he.lipstick.dao.CategoryDao;
-import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
-import com.polaris.he.lipstick.dao.object.CategoryDO;
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
 import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.SkuAggregation;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -36,9 +30,6 @@ public class LipstickProductServiceImpl implements LipstickProductService {
     private CategoryService categoryService;
 
     @Resource
-    private GoodsService goodsService;
-
-    @Resource
     private SkuService skuService;
 
     @Override
@@ -53,17 +44,33 @@ public class LipstickProductServiceImpl implements LipstickProductService {
 
     @Override
     public Category getCategory(String code) {
-        return categoryService.getCategory(CosmeticsEnum.LIPSTICK.getCode(), code);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Category> getCategories(List<String> brandCodes) {
-        return categoryService.getCategories(CosmeticsEnum.LIPSTICK.getCode(), brandCodes);
+        return categoryService.getCategoriesByBrands(CosmeticsEnum.LIPSTICK.getCode(), brandCodes);
     }
 
     @Override
     public LipstickItem getBySkuCode(String skuCode) {
-        skuService.getByCode(CosmeticsEnum.LIPSTICK.getCode(), skuCode);
-        return null;
+        Assert.hasText(skuCode, "skuCode不能为空");
+        SkuAggregation skuInfo = skuService.getAggregationByCode(CosmeticsEnum.LIPSTICK.getCode(), skuCode);
+        if (skuInfo == null) {
+            return null;
+        }
+        LipstickItem ret = new LipstickItem();
+        ret.setBrandCode(skuInfo.getBrand().getCode());
+        ret.setBrandName(skuInfo.getBrand().getName());
+        // TODO
+//        ret.setCategoryCode(skuInfo.getCategories().stream().map(Category::getCode).collect(Collectors.joining(",")));
+//        ret.setCategoryName(skuInfo.getCategories().stream().map(Category::getName).collect(Collectors.joining(",")));
+        ret.setGoodsCode(skuInfo.getGoods().getGoodsCode());
+        ret.setGoodsName(skuInfo.getGoods().getGoodsName());
+        ret.setSkuCode(skuInfo.getSku().getSkuCode());
+        ret.setSkuName(skuInfo.getSku().getSkuName());
+        ret.setColorNo(skuInfo.getSku().getExtension().get("colorNo").asText(""));
+        ret.setColor(skuInfo.getSku().getExtension().get("color").asText(""));
+        return ret;
     }
 }

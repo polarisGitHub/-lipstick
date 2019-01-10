@@ -2,6 +2,7 @@ package com.polaris.he.lipstick.controller;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
+import com.polaris.he.lipstick.entity.LipstickItem;
 import com.polaris.he.lipstick.service.LipstickProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -48,5 +49,8 @@ public class LipstickInfoController {
         return lipstickProductService.getCategories(Arrays.asList(StringUtils.split(brandId, ",")));
     }
 
-
+    @GetMapping("/sku/{skuCode}")
+    public LipstickItem getBySkuCode(@PathVariable String skuCode) {
+        return lipstickProductService.getBySkuCode(skuCode);
+    }
 }

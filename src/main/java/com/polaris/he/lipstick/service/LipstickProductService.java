@@ -2,7 +2,6 @@ package com.polaris.he.lipstick.service;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.ColorNo;
 import com.polaris.he.lipstick.entity.LipstickItem;
 
 import java.util.List;
