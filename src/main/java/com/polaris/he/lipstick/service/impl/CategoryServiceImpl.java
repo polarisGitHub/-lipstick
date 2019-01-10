@@ -32,15 +32,12 @@ public class CategoryServiceImpl implements CategoryService {
     private BrandCategoryMappingDao brandCategoryMappingDao;
 
     @Override
-    public Category getCategory(String type, String code) {
-        CategoryDO category = categoryDao.getByCode(CosmeticsEnum.LIPSTICK.getCode(), code);
-        Category ret = new Category();
-        BeanUtils.copyProperties(category, ret);
-        return ret;
+    public List<Category> getCategoriesByBrand(String type, String code) {
+        return null;
     }
 
     @Override
-    public List<Category> getCategories(String type, List<String> brandCodes) {
+    public List<Category> getCategoriesByBrands(String type, List<String> brandCodes) {
         Assert.notEmpty(brandCodes, "参数不能为空");
         List<BrandCategoryMappingDO> mappings = brandCategoryMappingDao.getCategoryByBrands(type, brandCodes);
         if (CollectionUtils.isEmpty(mappings)) {
@@ -54,5 +51,11 @@ public class CategoryServiceImpl implements CategoryService {
                     return data;
                 }).collect(Collectors.toMap(Category::getCode, Function.identity(), (u, v) -> v, LinkedHashMap::new));
         return new ArrayList<>(distinct.values());
+    }
+
+
+    @Override
+    public List<Category> getCategoriesByGoods(String type, String goodsCode) {
+        return null;
     }
 }

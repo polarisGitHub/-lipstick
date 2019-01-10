@@ -12,14 +12,26 @@ import java.util.List;
 public interface CategoryService {
 
     /**
-     * @param code
+     *
+     * @param type
+     * @param brandCode
      * @return
      */
-    Category getCategory(String type, String code);
+    List<Category> getCategoriesByBrand(String type, String brandCode);
 
     /**
+     *
+     * @param type
      * @param brandCodes
      * @return
      */
-    List<Category> getCategories(String type, List<String> brandCodes);
+    List<Category> getCategoriesByBrands(String type, List<String> brandCodes);
+
+
+    /**
+     * @param type
+     * @param goodsCode
+     * @return
+     */
+    List<Category> getCategoriesByGoods(String type, String goodsCode);
 }

@@ -25,6 +25,8 @@ public class SkuDO extends BaseDO {
 
     private String skuName;
 
+    private String skuByName;
+
     private String url;
 
     private JsonNode extension;

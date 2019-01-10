@@ -1,36 +1,31 @@
 package com.polaris.he.lipstick.entity;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
  * User: hexie
- * Date: 2019-01-05 21:33
+ * Date: 2019-01-10 22:26
  * Description:
  */
-@Setter
 @Getter
+@Setter
 @ToString
-public class LipstickItem {
+public class Sku {
 
     private String brandCode;
 
-    private String brandName;
-
-    private String categoryCode;
-
-    private String categoryName;
-
     private String goodsCode;
-
-    private String goodsName;
 
     private String skuCode;
 
     private String skuName;
 
-    private String colorNo;
+    private String skuByName;
 
-    private String color;
+    private String url;
+
+    private JsonNode extension;
 }
