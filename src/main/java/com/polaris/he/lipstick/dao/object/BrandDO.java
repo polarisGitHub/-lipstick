@@ -12,8 +12,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class BrandDO extends BaseDO{
+public class BrandDO extends BaseDO {
+
     private Long id;
+
+    private String type;
 
     private String code;
 

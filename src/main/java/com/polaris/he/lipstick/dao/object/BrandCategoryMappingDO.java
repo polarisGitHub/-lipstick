@@ -16,6 +16,8 @@ public class BrandCategoryMappingDO extends BaseDO {
 
     private Long id;
 
+    private String type;
+
     private String brandCode;
 
     private String categoryCode;

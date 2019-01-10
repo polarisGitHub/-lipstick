@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class SkuDO extends BaseDO {
 
+    private String type;
 
     private String brandCode;
 

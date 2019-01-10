@@ -16,6 +16,8 @@ public class CategoryDO extends BaseDO {
 
     private Long id;
 
+    private String type;
+
     private String code;
 
     private String name;

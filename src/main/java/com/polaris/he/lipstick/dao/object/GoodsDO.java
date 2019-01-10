@@ -16,6 +16,8 @@ public class GoodsDO extends BaseDO {
 
     private Long id;
 
+    private String type;
+
     private String brandCode;
 
     private String goodsCode;
