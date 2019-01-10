@@ -56,12 +56,13 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         return result;
     }
 
-    private LipstickItem convert(LipstickAggregationDO l) {
+    private LipstickItem convert(LipstickAggregationDO l) {// TODO sku
         LipstickItem item = new LipstickItem();
         item.setBrandCode(l.getBrandCode());
         item.setBrandName(Optional.ofNullable(brandService.getBrand(CosmeticsEnum.LIPSTICK.getCode(), l.getBrandCode()).getName()).orElse(""));
-        item.setCategoryCode(l.getCategoryCode());
-        item.setCategoryName(Optional.ofNullable(categoryService.getCategory(CosmeticsEnum.LIPSTICK.getCode(), l.getCategoryCode()).getName()).orElse(""));
+        // FIXME multi category
+//        item.setCategoryCode(l.getCategoryCode());
+//        item.setCategoryName(Optional.ofNullable(categoryService.getCategoriesByGoods(CosmeticsEnum.LIPSTICK.getCode(), l.getGoods().getGoodsCode())).orElse(""));
         item.setGoodsCode(l.getGoods().getGoodsCode());
         item.setGoodsName(l.getGoods().getGoodsName());
         item.setSkuCode(l.getSku().getSkuCode());
