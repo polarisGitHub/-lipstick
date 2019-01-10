@@ -1,6 +1,7 @@
 package com.polaris.he.lipstick.dao;
 
 import com.polaris.he.lipstick.dao.object.BrandDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,5 +12,16 @@ import java.util.List;
  */
 public interface BrandDao extends Dao {
 
-    List<BrandDO> getAll();
+    /**
+     * @param type
+     * @return
+     */
+    List<BrandDO> getAll(String type);
+
+    /**
+     * @param type
+     * @param code
+     * @return
+     */
+    BrandDO getByCode(@Param("type") String type, @Param("code") String code);
 }

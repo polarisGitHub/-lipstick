@@ -1,6 +1,7 @@
 package com.polaris.he.lipstick.dao;
 
 import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,5 +13,11 @@ import java.util.List;
  */
 public interface BrandCategoryMappingDao extends Dao {
 
-    List<BrandCategoryMappingDO> getCategoryByBrands(Collection<String> brands);
+    /**
+     *
+     * @param type
+     * @param brands
+     * @return
+     */
+    List<BrandCategoryMappingDO> getCategoryByBrands(@Param("type") String type, @Param("brands") Collection<String> brands);
 }

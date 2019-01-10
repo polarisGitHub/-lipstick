@@ -27,8 +27,9 @@
         join brand_category_mapping b on a.code=b.brand_code
         join category c on b.category_code=c.code
         where
+        b.type=#{type,jdbcType=VARCHAR} and
         a.code in
-        <foreach collection="collection" item="item" open="(" separator="," close=")">
+        <foreach collection="brands" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>
     </select>

@@ -3,11 +3,12 @@
 <mapper namespace="com.polaris.he.lipstick.dao.LipstickSearchDao">
 
     <resultMap id="SearchResultMap" type="com.polaris.he.lipstick.dao.object.LipstickAggregationDO">
+        <id column="sku_code"/>
         <result column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
         <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
         <!--goods-->
         <association property="goods" javaType="com.polaris.he.lipstick.dao.object.GoodsDO">
-            <result column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
+            <id column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
             <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
             <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
             <result column="goods_illustration" property="illustration" jdbcType="VARCHAR"/>
@@ -15,7 +16,7 @@
         </association>
         <!--sku-->
         <association property="sku" javaType="com.polaris.he.lipstick.dao.object.SkuDO">
-            <result column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
+            <id column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
             <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
             <result column="sku_code" property="skuCode" jdbcType="VARCHAR"/>
             <result column="sku_name" property="skuName" jdbcType="VARCHAR"/>
@@ -40,6 +41,7 @@
         join goods b on a.goods_code=b.goods_code
         join sku c on b.goods_code=c.goods_code
         where
+          c.type='lipstick' and
           c.brand_code in
           <foreach collection="brandCodes" item="item" open="(" separator="," close=")">
               #{item,jdbcType=VARCHAR}
@@ -49,9 +51,9 @@
               #{item,jdbcType=VARCHAR}
           </foreach>
           and (
-              c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#') or
-              c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#') or
-              c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'#')
+              c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
+              c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
+              c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%')
           )
     </select>
 </mapper>

@@ -3,6 +3,14 @@
 <mapper namespace="com.polaris.he.lipstick.dao.BrandDao">
 
     <select id="getAll" resultType="com.polaris.he.lipstick.dao.object.BrandDO">
-        select * from brand
+        select code as code,name as name
+        from brand
+        where type=#{type,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByCode" resultType="com.polaris.he.lipstick.dao.object.BrandDO">
+        select code as code,name as name
+        from brand
+        where type=#{type,jdbcType=VARCHAR} and code=#{code,jdbcType=VARCHAR}
     </select>
 </mapper>

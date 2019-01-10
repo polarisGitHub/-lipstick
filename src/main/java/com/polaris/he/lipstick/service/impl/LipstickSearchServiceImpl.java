@@ -4,6 +4,9 @@ import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
 import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
+import com.polaris.he.lipstick.service.BrandService;
+import com.polaris.he.lipstick.service.CategoryService;
 import com.polaris.he.lipstick.service.LipstickProductService;
 import com.polaris.he.lipstick.service.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +33,10 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
     private LipstickSearchDao lipstickSearchDao;
 
     @Resource
-    private LipstickProductService lipstickProductService;
+    private BrandService brandService;
+
+    @Resource
+    private CategoryService categoryService;
 
     @Override
     public List<LipstickItem> search(List<String> brandCodes, List<String> categories, String colorNo) {
@@ -53,10 +59,12 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
     private LipstickItem convert(LipstickAggregationDO l) {
         LipstickItem item = new LipstickItem();
         item.setBrandCode(l.getBrandCode());
-        item.setBrandName(Optional.ofNullable(lipstickProductService.getBrand(l.getBrandCode()).getName()).orElse(""));
+        item.setBrandName(Optional.ofNullable(brandService.getBrand(CosmeticsEnum.LIPSTICK.getCode(), l.getBrandCode()).getName()).orElse(""));
         item.setCategoryCode(l.getCategoryCode());
-        item.setCategoryName(Optional.ofNullable(lipstickProductService.getCategory(l.getCategoryCode()).getName()).orElse(""));
+        item.setCategoryName(Optional.ofNullable(categoryService.getCategory(CosmeticsEnum.LIPSTICK.getCode(), l.getCategoryCode()).getName()).orElse(""));
+        item.setGoodsCode(l.getGoods().getGoodsCode());
         item.setGoodsName(l.getGoods().getGoodsName());
+        item.setSkuCode(l.getSku().getSkuCode());
         item.setSkuName(l.getSku().getSkuName());
         item.setColorNo(l.getSku().getExtension().get("colorNo").asText(""));
         item.setColor(l.getSku().getExtension().get("color").asText(""));
