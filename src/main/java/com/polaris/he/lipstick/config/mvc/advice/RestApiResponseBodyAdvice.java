@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.config.mvc;
+package com.polaris.he.lipstick.config.mvc.advice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
