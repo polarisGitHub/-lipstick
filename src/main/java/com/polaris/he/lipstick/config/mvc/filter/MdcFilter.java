@@ -1,9 +1,8 @@
-package com.polaris.he.lipstick.config.mvc;
+package com.polaris.he.lipstick.config.mvc.filter;
 
 import org.slf4j.MDC;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -12,7 +11,6 @@ import java.util.UUID;
  * Date: 2019-01-05 22:02
  * Description:
  */
-@WebFilter(urlPatterns = "/*", filterName = "mdcFilter")
 public class MdcFilter implements Filter {
 
     @Override

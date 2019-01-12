@@ -1,3 +1,2 @@
 logging:
-  level:
-    com.polaris.he.lipstick.dao: DEBUG
+  config: classpath:config/logback.xml
