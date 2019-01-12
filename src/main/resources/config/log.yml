@@ -1,0 +1,3 @@
+logging:
+  level:
+    com.polaris.he.lipstick.dao: DEBUG

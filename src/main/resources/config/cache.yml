@@ -1,0 +1,7 @@
+spring:
+  cache:
+    type: CAFFEINE
+    cache-names:
+      - local
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=300s
