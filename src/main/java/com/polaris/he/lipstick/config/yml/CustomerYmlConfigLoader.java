@@ -22,7 +22,7 @@ public class CustomerYmlConfigLoader implements EnvironmentPostProcessor {
         try {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
             YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-            yaml.setResources(resolver.getResources("classpath:config/*.yml"));
+            yaml.setResources(resolver.getResources("classpath*:*.yml"));
             environment.getPropertySources().addLast(new PropertiesPropertySource("customer-config", yaml.getObject()));
         } catch (IOException e) {
             log.error("加载自定义yml错误", e);

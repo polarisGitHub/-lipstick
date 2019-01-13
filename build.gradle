@@ -29,6 +29,15 @@ repositories {
 sourceCompatibility = 11
 targetCompatibility = 11
 
+def env = System.getProperty("profile") ?: "dev"
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources", "src/main/profile/$env"]
+        }
+    }
+}
+
 configurations {
     implementation {
         exclude group: 'org.apache.tomcatt', module: 'tomcat-jdbc'
