@@ -33,17 +33,23 @@ configurations {
     implementation {
         exclude group: 'org.apache.tomcatt', module: 'tomcat-jdbc'
     }
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 dependencies {
     // spring
     implementation(
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-actuator',
-            'org.springframework.boot:spring-boot-devtools',
             'org.springframework.boot:spring-boot-starter-aop',
             'org.springframework.boot:spring-boot-starter-jdbc',
             'org.springframework.boot:spring-boot-starter-cache',
     )
+    dependencies {
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+    }
     // db
     implementation(
             'com.mchange:c3p0:0.9.5.2',
