@@ -10,16 +10,12 @@ import java.util.List;
  */
 public interface UploadByteConverter {
 
-
-    /**
-     * @return
-     */
-    UploadExtensionExtensionEnum extension();
-
     /**
      * @param data
+     * @param extension
+     * @param clazz
+     * @param <T>
      * @return
      */
-    <T> List<T> convert(byte[] data, Class<T> clazz);
-
+    <T> List<T> convert(byte[] data, String extension, Class<T> clazz);
 }

@@ -1,9 +1,12 @@
 package com.polaris.he.lipstick.importer;
 
+import com.polaris.he.lipstick.importer.converter.UploadExtensionExtensionEnum;
 import com.polaris.he.lipstick.importer.data.UploadResult;
 import com.polaris.he.lipstick.importer.data.UploadValidateResult;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +30,8 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
     @Override
     @SuppressWarnings("unchecked")
     public UploadResult execute(byte[] data, String extension, UploadImportListener<T> listener) {
+        Assert.notNull(UploadExtensionExtensionEnum.valueOf(StringUtils.lowerCase(extension)), "不支持上传类型");
+
         Optional<UploadImportListener> optionalListener = Optional.ofNullable(listener);
         try {
             optionalListener.ifPresent(l -> l.onBegin(data));
