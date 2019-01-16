@@ -16,3 +16,4 @@ gradle-app.setting
 *.iml
 out/
 src/main/resources/db/insert.sql
+src/main/resources/db/*.json
