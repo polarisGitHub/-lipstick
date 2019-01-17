@@ -6,6 +6,7 @@ import com.polaris.he.lipstick.importer.data.UploadResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,19 +20,20 @@ import java.io.IOException;
  * Description:
  */
 @Slf4j
-@RestController("/api/lipstick/importer/json")
+@RestController
+@RequestMapping("/api/lipstick/importer")
 public class LipstickImporterController {
 
     @Resource
     private UploadImporter<LipstickUploadData> uploadImporter;
 
-    @PostMapping
+    @PostMapping("/")
     public UploadResult importer(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("文件为空");
         }
 
-        UploadResult result = uploadImporter.execute(file.getBytes(), FilenameUtils.getExtension(file.getName()), null);
+        UploadResult result = uploadImporter.execute(file.getBytes(), FilenameUtils.getExtension(file.getOriginalFilename()), null);
         log.info("导入数据，file={},size={},result={}", file.getName(), file.getSize(), result);
         return result;
     }
