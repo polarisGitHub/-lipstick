@@ -17,9 +17,6 @@ import java.util.List;
 @ToString
 public class LipstickUploadData {
 
-    @JsonProperty(value = "brand_code")
-    private String brandCode;
-
     @JsonProperty(value = "brand_name")
     private String brandName;
 
@@ -37,6 +34,9 @@ public class LipstickUploadData {
 
     @JsonProperty(value = "sku_code")
     private String skuCode;
+
+    @JsonProperty(value = "sku_name")
+    private String skuName;
 
     @JsonProperty(value = "sku_url")
     private String skuUrl;

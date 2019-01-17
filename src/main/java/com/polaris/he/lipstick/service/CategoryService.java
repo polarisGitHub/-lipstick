@@ -11,8 +11,15 @@ import java.util.List;
  */
 public interface CategoryService {
 
+
     /**
-     *
+     * @param type
+     * @return
+     */
+    List<Category> getCategories(String type);
+
+
+    /**
      * @param type
      * @param brandCode
      * @return
@@ -20,7 +27,6 @@ public interface CategoryService {
     List<Category> getCategoriesByBrand(String type, String brandCode);
 
     /**
-     *
      * @param type
      * @param brandCodes
      * @return

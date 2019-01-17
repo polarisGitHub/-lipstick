@@ -32,6 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
     private BrandCategoryMappingDao brandCategoryMappingDao;
 
     @Override
+    public List<Category> getCategories(String type) {
+        return null;// TODO
+    }
+
+    @Override
     public List<Category> getCategoriesByBrand(String type, String code) {
         return null;
     }
