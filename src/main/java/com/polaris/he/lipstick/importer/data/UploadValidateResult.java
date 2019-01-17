@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.importer.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
@@ -12,9 +12,13 @@ import java.util.List;
  * Description:
  */
 @Getter
-@Setter
 @ToString
+@AllArgsConstructor
 public class UploadValidateResult {
 
     private List<UploadValidateErrorLine> result;
+
+    public boolean hasError() {
+        return result != null && !result.isEmpty();
+    }
 }

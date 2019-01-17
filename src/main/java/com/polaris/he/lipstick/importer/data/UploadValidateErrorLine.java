@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.importer.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -10,13 +10,11 @@ import lombok.ToString;
  * Description:
  */
 @Getter
-@Setter
 @ToString
+@AllArgsConstructor
 public class UploadValidateErrorLine {
 
     private int line;
-
-    private String content;
 
     private String error;
 }

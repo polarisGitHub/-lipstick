@@ -6,6 +6,8 @@ import com.polaris.he.lipstick.importer.data.UploadValidateResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
 
     abstract protected UploadValidateResult validate(List<T> data);
 
+    @Transactional
     abstract protected void resolved(List<T> data);
 
     @Override
@@ -40,6 +43,9 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
             optionalListener.ifPresent(l -> l.onBeforeValidate(data, upload));
             UploadValidateResult validateResult = validate(upload);
             optionalListener.ifPresent(l -> l.onAfterValidate(upload, validateResult));
+            if (validateResult.hasError()) {
+                return new UploadResult(null, UUID.randomUUID().toString());
+            }
 
             // 判断是否异步上传，暂不支持
             boolean isAsync = optionalListener.map(l -> l.asyncOrNot(upload)).orElse(false);
@@ -47,13 +53,13 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
             optionalListener.ifPresent(l -> l.onBeforeResolve(upload));
             resolved(upload);
 
-            optionalListener.ifPresent(UploadImportListener::onEnd);
-
             return new UploadResult(isAsync ? "async" : "sync", UUID.randomUUID().toString());
         } catch (Exception e) {
             logger.error("数据上传失败", e);
             optionalListener.ifPresent(l -> l.onException(e));
             throw e;
+        } finally {
+            optionalListener.ifPresent(UploadImportListener::onEnd);
         }
     }
 }
