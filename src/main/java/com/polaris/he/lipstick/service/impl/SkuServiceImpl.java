@@ -7,7 +7,9 @@ import com.polaris.he.lipstick.service.BrandService;
 import com.polaris.he.lipstick.service.CategoryService;
 import com.polaris.he.lipstick.service.GoodsService;
 import com.polaris.he.lipstick.service.SkuService;
+import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * User: hexie
@@ -39,7 +43,13 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     @Transactional
-    public int save(Collection<Sku> collection) {
+    public int save(String type, Collection<Sku> collection) {
+        if (CollectionUtils.isEmpty(collection)) {
+            return 0;
+        }
+        List<SkuDO> skuInUpload = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new SkuDO())).collect(Collectors.toList());
+        Set<String> skuCodes = collection.stream().map(Sku::getSkuCode).collect(Collectors.toSet());
+        List<SkuDO> skuIndb = skuDao.getByCodes(type, skuCodes);
         return 0;
     }
 
@@ -49,9 +59,7 @@ public class SkuServiceImpl implements SkuService {
         if (sku == null) {
             return null;
         }
-        Sku ret = new Sku();
-        BeanUtils.copyProperties(sku, ret);
-        return ret;
+        return BeanCopyUtils.copyObject(sku, new Sku());
     }
 
     @Override

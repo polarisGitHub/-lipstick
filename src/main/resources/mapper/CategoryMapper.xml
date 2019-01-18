@@ -3,8 +3,18 @@
 <mapper namespace="com.polaris.he.lipstick.dao.CategoryDao">
 
     <select id="getByCode" resultType="com.polaris.he.lipstick.dao.object.CategoryDO">
-        select code as code,name as name
+        select
+          code as code,
+          name as name
         from category
         where code=#{code,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getCategoriesByType" resultType="com.polaris.he.lipstick.dao.object.CategoryDO">
+        select
+          code as code,
+          name as name
+        from category
+        where type=#{type,jdbcType=VARCHAR}
     </select>
 </mapper>

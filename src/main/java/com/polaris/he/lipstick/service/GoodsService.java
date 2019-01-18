@@ -14,17 +14,21 @@ public interface GoodsService {
 
     /**
      *
+     *
+     * @param type
      * @param collection
      * @return
      */
-    int save(Collection<Goods> collection);
+    int save(String type, Collection<Goods> collection);
 
     /**
      *
+     *
+     * @param type
      * @param collection
      * @return
      */
-    int saveGoodsCategoriesMapping(Collection<GoodsCategoryMapping> collection);
+    int saveGoodsCategoriesMapping(String type, Collection<GoodsCategoryMapping> collection);
 
     /**
      * @param type

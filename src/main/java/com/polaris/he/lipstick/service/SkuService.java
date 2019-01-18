@@ -16,7 +16,7 @@ public interface SkuService {
      * @param collection
      * @return
      */
-    int save(Collection<Sku> collection);
+    int save(String type, Collection<Sku> collection);
 
     /**
      * @param type

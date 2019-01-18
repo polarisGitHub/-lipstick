@@ -4,6 +4,7 @@ import com.polaris.he.lipstick.dao.BrandDao;
 import com.polaris.he.lipstick.dao.object.BrandDO;
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.service.BrandService;
+import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,11 +28,7 @@ public class BrandServiceImpl implements BrandService {
     public List<Brand> getBrands(String type) {
         List<BrandDO> brands = brandDao.getAll(type);
         if (CollectionUtils.isNotEmpty(brands)) {
-            return brands.stream().map(l -> {
-                Brand brand = new Brand();
-                BeanUtils.copyProperties(l, brand);
-                return brand;
-            }).collect(Collectors.toList());
+            return brands.stream().map(l -> BeanCopyUtils.copyObject(l, new Brand())).collect(Collectors.toList());
         }
         return null;
     }
@@ -39,8 +36,6 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public Brand getBrand(String type, String code) {
         BrandDO brand = brandDao.getByCode(type, code);
-        Brand ret = new Brand();
-        BeanUtils.copyProperties(brand, ret);
-        return ret;
+        return BeanCopyUtils.copyObject(brand, new Brand());
     }
 }

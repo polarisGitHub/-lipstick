@@ -7,6 +7,7 @@ import com.polaris.he.lipstick.dao.object.CategoryDO;
 import com.polaris.he.lipstick.entity.Category;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.CategoryService;
+import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getCategories(String type) {
-        return null;// TODO
+        List<CategoryDO> categories = categoryDao.getCategoriesByType(type);
+        List<Category> ret = new LinkedList<>();
+        if (CollectionUtils.isNotEmpty(categories)) {
+            ret = categories.stream().map(l -> BeanCopyUtils.copyObject(l, new Category())).collect(Collectors.toList());
+        }
+        return ret;
     }
 
     @Override
@@ -50,11 +56,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
         Map<String, Category> distinct = mappings.stream().
                 map(BrandCategoryMappingDO::getCategory).
-                map(l -> {
-                    Category data = new Category();
-                    BeanUtils.copyProperties(l, data);
-                    return data;
-                }).collect(Collectors.toMap(Category::getCode, Function.identity(), (u, v) -> v, LinkedHashMap::new));
+                map(l -> BeanCopyUtils.copyObject(l, new Category())).
+                collect(Collectors.toMap(Category::getCode, Function.identity(), (u, v) -> v, LinkedHashMap::new));
         return new ArrayList<>(distinct.values());
     }
 

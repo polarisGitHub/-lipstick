@@ -129,8 +129,8 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             mapping.setCategories(goodsCategoryMapping.get(l.getGoodsCode()));
             mappings.add(mapping);
         });
-        goodsService.saveGoodsCategoriesMapping(mappings);
-        goodsService.save(goodsList);
-        skuService.save(skuList);
+        goodsService.saveGoodsCategoriesMapping(CosmeticsEnum.LIPSTICK.getCode(), mappings);
+        goodsService.save(CosmeticsEnum.LIPSTICK.getCode(), goodsList);
+        skuService.save(CosmeticsEnum.LIPSTICK.getCode(), skuList);
     }
 }
