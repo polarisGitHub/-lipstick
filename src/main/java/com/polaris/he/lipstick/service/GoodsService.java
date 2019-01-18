@@ -1,6 +1,9 @@
 package com.polaris.he.lipstick.service;
 
 import com.polaris.he.lipstick.entity.Goods;
+import com.polaris.he.lipstick.entity.GoodsCategoryMapping;
+
+import java.util.Collection;
 
 /**
  * User: hexie
@@ -8,6 +11,20 @@ import com.polaris.he.lipstick.entity.Goods;
  * Description:
  */
 public interface GoodsService {
+
+    /**
+     *
+     * @param collection
+     * @return
+     */
+    int save(Collection<Goods> collection);
+
+    /**
+     *
+     * @param collection
+     * @return
+     */
+    int saveGoodsCategoriesMapping(Collection<GoodsCategoryMapping> collection);
 
     /**
      * @param type

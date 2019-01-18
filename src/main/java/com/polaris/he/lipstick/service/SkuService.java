@@ -3,6 +3,8 @@ package com.polaris.he.lipstick.service;
 import com.polaris.he.lipstick.entity.Sku;
 import com.polaris.he.lipstick.entity.SkuAggregation;
 
+import java.util.Collection;
+
 /**
  * User: hexie
  * Date: 2019-01-10 21:12
@@ -11,15 +13,19 @@ import com.polaris.he.lipstick.entity.SkuAggregation;
 public interface SkuService {
 
     /**
-     *
+     * @param collection
+     * @return
+     */
+    int save(Collection<Sku> collection);
+
+    /**
      * @param type
      * @param code
      * @return
      */
-    Sku getByCode(String type,String code);
+    Sku getByCode(String type, String code);
 
     /**
-     *
      * @param type
      * @param code
      * @return

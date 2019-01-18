@@ -1,7 +1,5 @@
 package com.polaris.he.lipstick.importer.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -91,30 +89,27 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             return;
         }
 
-        Map<String, String> brandMap = brandService.getBrands(CosmeticsEnum.LIPSTICK.getCode()).stream().collect(Collectors.toMap(Brand::getName, Brand::getCode));
+        Map<String, Brand> brandMap = brandService.getBrands(CosmeticsEnum.LIPSTICK.getCode()).stream().collect(Collectors.toMap(Brand::getName, Function.identity()));
+        Map<String, Category> categoryMap = categoryService.getCategories(CosmeticsEnum.LIPSTICK.getCode()).stream().collect(Collectors.toMap(Category::getName, Function.identity()));
 
-        Set<String> goodsSet = new HashSet<>();
-        List<Goods> goodsList = new LinkedList<>();
+        Map<String, Goods> goodsMap = new HashMap<>();
         List<Sku> skuList = new LinkedList<>();
-        Multimap<String, String> category = ArrayListMultimap.create();
+        Multimap<String, Category> goodsCategoryMapping = ArrayListMultimap.create();
         data.forEach(l -> {
-            // category
-            category.put(l.getGoodsCode(), l.getCatalogName());
             // goods
-            if (!goodsSet.contains(l.getGoodsCode())) {
+            if (!goodsMap.containsKey(l.getGoodsCode())) {
                 Goods goods = new Goods();
-                goods.setBrandCode(brandMap.get(l.getBrandName()));
+                goods.setBrandCode(brandMap.get(l.getBrandName()).getCode());
                 goods.setGoodsCode(l.getGoodsCode());
                 goods.setGoodsName(l.getGoodsName());
                 goods.setUrl(l.getGoodsUrl());
                 goods.setIllustration("");
-                goodsList.add(goods);
-                goodsSet.add(l.getGoodsCode());
-                goodsList.add(goods);
+                goodsMap.put(l.getGoodsCode(), goods);
+                goodsCategoryMapping.put(goods.getGoodsCode(), categoryMap.get(l.getCatalogName()));
             }
             // sku
             Sku sku = new Sku();
-            sku.setBrandCode(brandMap.get(l.getBrandName()));
+            sku.setBrandCode(brandMap.get(l.getBrandName()).getCode());
             sku.setGoodsCode(l.getGoodsCode());
             sku.setSkuName(l.getSkuName());
             sku.setSkuByName("");
@@ -125,5 +120,17 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             sku.setExtension(objectNode);
             skuList.add(sku);
         });
+
+        Collection<GoodsCategoryMapping> mappings = new LinkedList<>();
+        Collection<Goods> goodsList = goodsMap.values();
+        goodsList.forEach(l -> {
+            GoodsCategoryMapping mapping = new GoodsCategoryMapping();
+            mapping.setGoods(l);
+            mapping.setCategories(goodsCategoryMapping.get(l.getGoodsCode()));
+            mappings.add(mapping);
+        });
+        goodsService.saveGoodsCategoriesMapping(mappings);
+        goodsService.save(goodsList);
+        skuService.save(skuList);
     }
 }

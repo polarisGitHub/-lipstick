@@ -10,8 +10,10 @@ import com.polaris.he.lipstick.service.SkuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -34,6 +36,12 @@ public class SkuServiceImpl implements SkuService {
 
     @Resource
     private GoodsService goodsService;
+
+    @Override
+    @Transactional
+    public int save(Collection<Sku> collection) {
+        return 0;
+    }
 
     @Override
     public Sku getByCode(String type, String code) {
