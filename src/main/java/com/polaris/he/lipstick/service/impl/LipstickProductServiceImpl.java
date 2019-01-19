@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.service.impl;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.entity.SkuAggregation;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.*;
@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * User: hexie
@@ -53,13 +52,13 @@ public class LipstickProductServiceImpl implements LipstickProductService {
     }
 
     @Override
-    public LipstickItem getBySkuCode(String skuCode) {
+    public LipstickListItem getBySkuCode(String skuCode) {
         Assert.hasText(skuCode, "skuCode不能为空");
         SkuAggregation skuInfo = skuService.getAggregationByCode(CosmeticsEnum.LIPSTICK.getCode(), skuCode);
         if (skuInfo == null) {
             return null;
         }
-        LipstickItem ret = new LipstickItem();
+        LipstickListItem ret = new LipstickListItem();
         ret.setBrandCode(skuInfo.getBrand().getCode());
         ret.setBrandName(skuInfo.getBrand().getName());
         // TODO

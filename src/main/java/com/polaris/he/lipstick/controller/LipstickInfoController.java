@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.controller;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.service.LipstickProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +50,7 @@ public class LipstickInfoController {
     }
 
     @GetMapping("/sku/{skuCode}")
-    public LipstickItem getBySkuCode(@PathVariable String skuCode) {
+    public LipstickListItem getBySkuCode(@PathVariable String skuCode) {
         return lipstickProductService.getBySkuCode(skuCode);
     }
 }

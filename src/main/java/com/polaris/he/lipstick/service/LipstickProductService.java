@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.service;
 
 import com.polaris.he.lipstick.entity.Brand;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 
 import java.util.List;
 
@@ -41,5 +41,5 @@ public interface LipstickProductService {
      * @param skuCode
      * @return
      */
-    LipstickItem getBySkuCode(String skuCode);
+    LipstickListItem getBySkuCode(String skuCode);
 }

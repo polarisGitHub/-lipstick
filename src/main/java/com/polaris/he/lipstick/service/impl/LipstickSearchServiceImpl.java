@@ -3,14 +3,14 @@ package com.polaris.he.lipstick.service.impl;
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.BrandService;
 import com.polaris.he.lipstick.service.CategoryService;
-import com.polaris.he.lipstick.service.LipstickProductService;
 import com.polaris.he.lipstick.service.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,7 +39,7 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
     private CategoryService categoryService;
 
     @Override
-    public List<LipstickItem> search(List<String> brandCodes, List<String> categories, String colorNo) {
+    public List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo) {
         log.info("[产品搜索] 查询，brand={},category={},colorNo={}", brandCodes, categories, colorNo);
         LipstickSearchDO query = LipstickSearchDO.builder().
                 brandCodes(brandCodes).
@@ -48,7 +48,7 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
                 build();
         List<LipstickAggregationDO> list = lipstickSearchDao.search(query);
         log.info("[产品搜索] 找到产品，list={}", list);
-        List<LipstickItem> result = new LinkedList<>();
+        List<LipstickListItem> result = new LinkedList<>();
         if (CollectionUtils.isNotEmpty(list)) {
             list.forEach(l -> result.add(convert(l)));
         }
@@ -56,8 +56,8 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         return result;
     }
 
-    private LipstickItem convert(LipstickAggregationDO l) {// TODO sku
-        LipstickItem item = new LipstickItem();
+    private LipstickListItem convert(LipstickAggregationDO l) {// TODO sku
+        LipstickListItem item = new LipstickListItem();
         item.setBrandCode(l.getBrandCode());
         item.setBrandName(Optional.ofNullable(brandService.getBrand(CosmeticsEnum.LIPSTICK.getCode(), l.getBrandCode()).getName()).orElse(""));
         // FIXME multi category
@@ -69,6 +69,7 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         item.setSkuName(l.getSku().getSkuName());
         item.setColorNo(l.getSku().getExtension().get("colorNo").asText(""));
         item.setColor(l.getSku().getExtension().get("color").asText(""));
+        item.setFigure(Optional.ofNullable(l.getSku().getExtension().get("figure")).map(ll -> ll.asText("")).orElse(""));
         return item;
     }
 }

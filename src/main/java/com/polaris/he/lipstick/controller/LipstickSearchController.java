@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.controller;
 
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.service.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,12 +27,12 @@ public class LipstickSearchController {
     private LipstickSearchService lipstickSearchService;
 
     @GetMapping("")
-    public List<LipstickItem> search(String brands, String categories, String colorNo) {
+    public List<LipstickListItem> search(String brands, String categories, String colorNo) {
         log.info("查找口红，brands={},categories={},colorNo={}", brands, categories, colorNo);
         Assert.hasText(brands, "品牌不能为空");
         Assert.hasText(categories, "类别不能为空");
         Assert.hasText(colorNo, "色卡不能为空");
-        List<LipstickItem> ret = lipstickSearchService.search(Arrays.asList(StringUtils.split(brands, ",")), Arrays.asList(StringUtils.split(categories, ",")), colorNo);
+        List<LipstickListItem> ret = lipstickSearchService.search(Arrays.asList(StringUtils.split(brands, ",")), Arrays.asList(StringUtils.split(categories, ",")), colorNo);
         log.info("找到口红：{}", ret);
         return ret;
     }

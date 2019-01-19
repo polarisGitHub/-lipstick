@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.service;
 
-import com.polaris.he.lipstick.entity.LipstickItem;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface LipstickSearchService {
 
-    List<LipstickItem> search(List<String> brandCodes, List<String> categories, String colorNo);
+    List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo);
 }

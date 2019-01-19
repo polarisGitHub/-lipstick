@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class LipstickItem {
+public class LipstickListItem {
 
     private String brandCode;
 
@@ -33,4 +33,6 @@ public class LipstickItem {
     private String colorNo;
 
     private String color;
+
+    private String figure;
 }
