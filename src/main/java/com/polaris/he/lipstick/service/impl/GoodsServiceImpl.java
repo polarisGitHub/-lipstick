@@ -52,9 +52,13 @@ public class GoodsServiceImpl implements GoodsService {
         }
         Set<String> goodsCodeSet = collection.stream().map(Goods::getGoodsCode).collect(Collectors.toSet());
         List<GoodsDO> goodsInDb = goodsDao.getByCodeList(type, goodsCodeSet);
-        List<GoodsDO> goodsToSave = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new GoodsDO())).collect(Collectors.toList());
+        List<GoodsDO> goodsToSave = collection.stream().map(l -> {
+            GoodsDO data = BeanCopyUtils.copyObject(l, new GoodsDO());
+            data.setType(type);
+            return data;
+        }).collect(Collectors.toList());
 
-        DiffUtils.DiffResult<GoodsDO> goodsDiff = DiffUtils.diff(goodsToSave, goodsInDb, GOODS_DO_CODE_FIELD, GoodsDO::equals);
+        DiffUtils.DiffResult<GoodsDO> goodsDiff = DiffUtils.diff(goodsInDb, goodsToSave, GOODS_DO_CODE_FIELD, GoodsDO::equals);
 
         Collection<GoodsDO> insert = goodsDiff.getAdd();
         if (CollectionUtils.isNotEmpty(insert)) {

@@ -32,7 +32,7 @@ public interface SkuDao extends Dao {
      * @param skuCodes
      * @return
      */
-    List<SkuDO> getByCodeList(String type, Set<String> skuCodes);
+    List<SkuDO> getByCodeList(@Param("type") String type, @Param("collection") Set<String> skuCodes);
 
     /**
      * @param type

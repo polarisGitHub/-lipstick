@@ -11,8 +11,8 @@
         <foreach collection="collection" item="item" separator=",">
             (
               #{item.type,jdbcType=VARCHAR},
-              #{categoryCode,jdbcType=VARCHAR},
-              #{goodsCode,jdbcType=VARCHAR}
+              #{item.categoryCode,jdbcType=VARCHAR},
+              #{item.goodsCode,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>

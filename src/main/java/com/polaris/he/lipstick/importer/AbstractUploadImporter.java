@@ -6,7 +6,7 @@ import com.polaris.he.lipstick.importer.data.UploadValidateResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -23,39 +23,44 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    abstract protected List<T> byteConvert(byte[] data, String extension);
+    abstract public List<T> byteConvert(byte[] data, String extension);
 
-    abstract protected UploadValidateResult validate(List<T> data);
+    abstract public UploadValidateResult validate(List<T> data);
 
     @Transactional
-    abstract protected void resolved(List<T> data);
+    abstract public void resolved(List<T> data);
 
     @Override
     @SuppressWarnings("unchecked")
     public UploadResult execute(byte[] data, String extension, UploadImportListener<T> listener) {
+        logger.info("导入开始");
         Assert.notNull(UploadExtensionExtensionEnum.valueOf(StringUtils.lowerCase(extension)), "不支持上传类型");
 
         Optional<UploadImportListener> optionalListener = Optional.ofNullable(listener);
         try {
             optionalListener.ifPresent(l -> l.onBegin(data));
             List<T> upload = byteConvert(data, extension);
+            logger.info("导入格式转换完成");
 
             optionalListener.ifPresent(l -> l.onBeforeValidate(data, upload));
             UploadValidateResult validateResult = validate(upload);
             optionalListener.ifPresent(l -> l.onAfterValidate(upload, validateResult));
             if (validateResult.hasError()) {
+                logger.info("导入校验错误：{}", validateResult);
                 return new UploadResult(null, UUID.randomUUID().toString());
             }
+            logger.info("导入校验完成");
 
             // 判断是否异步上传，暂不支持
             boolean isAsync = optionalListener.map(l -> l.asyncOrNot(upload)).orElse(false);
 
             optionalListener.ifPresent(l -> l.onBeforeResolve(upload));
-            resolved(upload);
+            ((AbstractUploadImporter) AopContext.currentProxy()).resolved(upload);
+            logger.info("导入流程玩");
 
             return new UploadResult(isAsync ? "async" : "sync", UUID.randomUUID().toString());
         } catch (Exception e) {
-            logger.error("数据上传失败", e);
+            logger.error("导入失败", e);
             optionalListener.ifPresent(l -> l.onException(e));
             throw e;
         } finally {

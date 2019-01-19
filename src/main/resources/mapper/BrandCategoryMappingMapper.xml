@@ -32,5 +32,6 @@
         <foreach collection="brands" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>
+        order by id
     </select>
 </mapper>

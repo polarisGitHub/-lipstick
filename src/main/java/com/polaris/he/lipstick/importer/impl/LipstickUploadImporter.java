@@ -50,34 +50,27 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
 
 
     @Override
-    protected List<LipstickUploadData> byteConvert(byte[] data, String extension) {
+    public List<LipstickUploadData> byteConvert(byte[] data, String extension) {
         return converter.convert(data, extension, LipstickUploadData.class);
     }
 
     @Override
-    protected UploadValidateResult validate(List<LipstickUploadData> data) {
+    public UploadValidateResult validate(List<LipstickUploadData> data) {
         Set<String> brandSet = brandService.getBrands(CosmeticsEnum.LIPSTICK.getCode()).stream().map(Brand::getName).collect(Collectors.toSet());
         Set<String> categorySet = categoryService.getCategories(CosmeticsEnum.LIPSTICK.getCode()).stream().map(Category::getName).collect(Collectors.toSet());
 
         UploadValidateResult ret = new UploadValidateResult(new LinkedList<>());
-        Set<String> set = new HashSet<>();
         int index = 0;
         for (LipstickUploadData item : data) {
             List<String> errors = new LinkedList<>();
             // brand
-            if (brandSet.contains(item.getBrandName())) {
+            if (!brandSet.contains(item.getBrandName())) {
                 errors.add(String.format("【%s】不存在", item.getBrandName()));
             }
             // category
-            if (categorySet.contains(item.getCatalogName())) {
+            if (!categorySet.contains(item.getCatalogName())) {
                 errors.add(String.format("【%s】不存在", item.getCatalogName()));
             }
-            // sku
-            if (set.contains(item.getSkuCode())) {
-                errors.add(String.format("【%s】重复", item.getSkuCode()));
-            }
-            set.add(item.getSkuCode());
-
             if (!errors.isEmpty()) {
                 ret.getResult().add(new UploadValidateErrorLine(index, String.join("，", errors)));
             }
@@ -87,14 +80,14 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
     }
 
     @Override
-    protected void resolved(List<LipstickUploadData> data) {
+    public void resolved(List<LipstickUploadData> data) {
         if (CollectionUtils.isEmpty(data)) {
             return;
         }
 
         Map<String, Brand> brandMap = brandService.getBrands(CosmeticsEnum.LIPSTICK.getCode()).stream().collect(Collectors.toMap(Brand::getName, Function.identity()));
         Map<String, Category> categoryMap = categoryService.getCategories(CosmeticsEnum.LIPSTICK.getCode()).stream().collect(Collectors.toMap(Category::getName, Function.identity()));
-
+        Set<String> skuSet = new HashSet<>();
         Map<String, Goods> goodsMap = new HashMap<>();
         List<Sku> skuList = new LinkedList<>();
         Multimap<String, Category> goodsCategoryMapping = ArrayListMultimap.create();
@@ -111,24 +104,28 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                 goodsCategoryMapping.put(goods.getGoodsCode(), categoryMap.get(l.getCatalogName()));
             }
             // sku
-            Sku sku = new Sku();
-            sku.setBrandCode(brandMap.get(l.getBrandName()).getCode());
-            sku.setGoodsCode(l.getGoodsCode());
-            sku.setSkuName(l.getSkuName());
-            sku.setSkuByName("");
-            sku.setUrl(l.getSkuUrl());
-            ObjectNode objectNode = JsonUtils.getObjectMapper().createObjectNode();
-            objectNode.put("colorNo", l.getColorNo());
-            objectNode.put("color", l.getColor());
-            String[] imgs = StringUtils.split(l.getSkuImgDownloadFile(), ",");
-            if (ArrayUtils.isNotEmpty(imgs)) {
-                objectNode.put("figure", imgs[0]);
-                ArrayNode images = JsonUtils.getObjectMapper().createArrayNode();
-                Arrays.stream(imgs).forEach(images::add);
-                objectNode.put("images", images);
+            if (!skuSet.contains(l.getSkuCode())) {
+                skuSet.add(l.getSkuCode());
+                Sku sku = new Sku();
+                sku.setBrandCode(brandMap.get(l.getBrandName()).getCode());
+                sku.setGoodsCode(l.getGoodsCode());
+                sku.setSkuCode(l.getSkuCode());
+                sku.setSkuName(l.getSkuName());
+                sku.setSkuByName("");
+                sku.setUrl(l.getSkuUrl());
+                ObjectNode objectNode = JsonUtils.getObjectMapper().createObjectNode();
+                objectNode.put("colorNo", l.getColorNo());
+                objectNode.put("color", l.getColor());
+                String[] imgs = StringUtils.split(l.getSkuImgDownloadFile(), ",");
+                if (ArrayUtils.isNotEmpty(imgs)) {
+                    objectNode.put("figure", imgs[0]);
+                    ArrayNode images = JsonUtils.getObjectMapper().createArrayNode();
+                    Arrays.stream(imgs).forEach(images::add);
+                    objectNode.put("images", images);
+                }
+                sku.setExtension(objectNode);
+                skuList.add(sku);
             }
-            sku.setExtension(objectNode);
-            skuList.add(sku);
         });
 
         Collection<GoodsCategoryMapping> mappings = new LinkedList<>();

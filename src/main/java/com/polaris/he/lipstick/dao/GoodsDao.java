@@ -37,5 +37,5 @@ public interface GoodsDao extends Dao {
      * @param goodsCodeSet
      * @return
      */
-    List<GoodsDO> getByCodeList(String type, Collection<String> goodsCodeSet);
+    List<GoodsDO> getByCodeList(@Param("type") String type, @Param("collection") Collection<String> goodsCodeSet);
 }
