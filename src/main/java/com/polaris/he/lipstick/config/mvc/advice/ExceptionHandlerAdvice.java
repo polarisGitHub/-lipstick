@@ -47,7 +47,7 @@ public class ExceptionHandlerAdvice {
         log.error("[系统异常],message={}", e.getMessage(), e);
         RestResponse response = new RestResponse();
         response.setCode(ResponseCodeEnum.error);
-        response.setMessage(e.getMessage());
+        response.setMessage("出错了");
         return response;
     }
 
