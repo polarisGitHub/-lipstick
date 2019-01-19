@@ -9,11 +9,11 @@ import lombok.Getter;
  * Description:
  */
 @Getter
-public class BizExcepton extends RuntimeException {
+public class BizException extends RuntimeException {
 
     private ExceptionCodeEnum exceptionCode;
 
-    public BizExcepton(String message, ExceptionCodeEnum exceptionCode, Throwable cause) {
+    public BizException(String message, ExceptionCodeEnum exceptionCode, Throwable cause) {
         super(message, cause);
         this.exceptionCode = exceptionCode;
     }

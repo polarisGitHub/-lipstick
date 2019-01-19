@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.config.mvc.advice;
 
 import com.polaris.he.lipstick.common.constant.ResponseCodeEnum;
 import com.polaris.he.lipstick.common.data.RestResponse;
-import com.polaris.he.lipstick.common.exception.BizExcepton;
+import com.polaris.he.lipstick.common.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +23,9 @@ public class ExceptionHandlerAdvice {
      * @return
      */
     @ResponseBody
-    @ExceptionHandler(value = BizExcepton.class)
+    @ExceptionHandler(value = {BizException.class, IllegalArgumentException.class})
     @ResponseStatus(code = HttpStatus.OK)
-    public RestResponse bizExceptionHandler(BizExcepton e) {
+    public RestResponse bizExceptionHandler(BizException e) {
         log.error("[业务异常{}],message={}", e.getMessage(), e.getExceptionCode(), e);
         RestResponse response = new RestResponse();
         response.setCode(ResponseCodeEnum.error);
