@@ -3,6 +3,7 @@ package com.polaris.he.lipstick.dao;
 import com.polaris.he.lipstick.dao.object.SkuDO;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,26 @@ import java.util.Set;
  */
 public interface SkuDao extends Dao {
 
+
+    /**
+     * @param l
+     * @return
+     */
+    int update(SkuDO l);
+
+    /**
+     * @param insert
+     * @return
+     */
+    int insert(Collection<SkuDO> insert);
+
+    /**
+     * @param type
+     * @param skuCodes
+     * @return
+     */
+    List<SkuDO> getByCodeList(String type, Set<String> skuCodes);
+
     /**
      * @param type
      * @param code
@@ -20,10 +41,4 @@ public interface SkuDao extends Dao {
      */
     SkuDO getByCode(@Param("type") String type, @Param("code") String code);
 
-    /**
-     * @param type
-     * @param skuCodes
-     * @return
-     */
-    List<SkuDO> getByCodes(String type, Set<String> skuCodes);
 }

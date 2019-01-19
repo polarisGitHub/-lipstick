@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.importer.impl;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -15,6 +16,8 @@ import com.polaris.he.lipstick.service.CategoryService;
 import com.polaris.he.lipstick.service.GoodsService;
 import com.polaris.he.lipstick.service.SkuService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -117,6 +120,13 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             ObjectNode objectNode = JsonUtils.getObjectMapper().createObjectNode();
             objectNode.put("colorNo", l.getColorNo());
             objectNode.put("color", l.getColor());
+            String[] imgs = StringUtils.split(l.getSkuImgDownloadFile(), ",");
+            if (ArrayUtils.isNotEmpty(imgs)) {
+                objectNode.put("figure", imgs[0]);
+                ArrayNode images = JsonUtils.getObjectMapper().createArrayNode();
+                Arrays.stream(imgs).forEach(images::add);
+                objectNode.put("images", images);
+            }
             sku.setExtension(objectNode);
             skuList.add(sku);
         });

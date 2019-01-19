@@ -1,6 +1,7 @@
 package com.polaris.he.lipstick.service.impl;
 
 import com.polaris.he.lipstick.dao.SkuDao;
+import com.polaris.he.lipstick.dao.object.GoodsDO;
 import com.polaris.he.lipstick.dao.object.SkuDO;
 import com.polaris.he.lipstick.entity.*;
 import com.polaris.he.lipstick.service.BrandService;
@@ -8,13 +9,16 @@ import com.polaris.he.lipstick.service.CategoryService;
 import com.polaris.he.lipstick.service.GoodsService;
 import com.polaris.he.lipstick.service.SkuService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
+import com.polaris.he.lipstick.utils.DiffUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +32,8 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class SkuServiceImpl implements SkuService {
+
+    private static final Field SKU_DO_CODE_FIELD = FieldUtils.getField(SkuDO.class, "skuCode", true);
 
     @Resource
     private SkuDao skuDao;
@@ -47,10 +53,24 @@ public class SkuServiceImpl implements SkuService {
         if (CollectionUtils.isEmpty(collection)) {
             return 0;
         }
-        List<SkuDO> skuInUpload = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new SkuDO())).collect(Collectors.toList());
-        Set<String> skuCodes = collection.stream().map(Sku::getSkuCode).collect(Collectors.toSet());
-        List<SkuDO> skuIndb = skuDao.getByCodes(type, skuCodes);
-        return 0;
+        Set<String> skuCodeSet = collection.stream().map(Sku::getSkuCode).collect(Collectors.toSet());
+        List<SkuDO> skuInDb = skuDao.getByCodeList(type, skuCodeSet);
+        List<SkuDO> skuToSave = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new SkuDO())).collect(Collectors.toList());
+
+        DiffUtils.DiffResult<SkuDO> skuDiff = DiffUtils.diff(skuToSave, skuInDb, SKU_DO_CODE_FIELD, SkuDO::equals);
+
+        Collection<SkuDO> insert = skuDiff.getAdd();
+        if (CollectionUtils.isNotEmpty(insert)) {
+            log.info("sku insert,code={}", insert.stream().map(SkuDO::getSkuCode).collect(Collectors.toList()));
+            skuDao.insert(insert);
+        }
+
+        Collection<SkuDO> update = skuDiff.getNotEqual();
+        if (CollectionUtils.isNotEmpty(update)) {
+            log.info("sku update,code={}", update.stream().map(SkuDO::getSkuCode).collect(Collectors.toList()));
+            update.forEach(l -> skuDao.update(l));
+        }
+        return 1;
     }
 
     @Override
