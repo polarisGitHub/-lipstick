@@ -24,7 +24,7 @@ public class ExceptionHandlerAdvice {
      */
     @ResponseBody
     @ExceptionHandler(value = BizExcepton.class)
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(code = HttpStatus.OK)
     public RestResponse bizExceptionHandler(BizExcepton e) {
         log.error("[业务异常{}],message={}", e.getMessage(), e.getExceptionCode(), e);
         RestResponse response = new RestResponse();
