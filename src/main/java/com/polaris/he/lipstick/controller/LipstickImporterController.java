@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.controller;
 
-import com.polaris.he.lipstick.entity.sku.LipstickUploadData;
+import com.polaris.he.lipstick.entity.biz.lipstick.LipstickUploadData;
 import com.polaris.he.lipstick.importer.UploadImporter;
 import com.polaris.he.lipstick.importer.data.UploadResult;
 import lombok.extern.slf4j.Slf4j;

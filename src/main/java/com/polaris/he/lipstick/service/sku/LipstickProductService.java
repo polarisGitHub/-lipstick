@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.service.sku;
 
 import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.entity.sku.Category;
-import com.polaris.he.lipstick.entity.sku.LipstickListItem;
+import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
 
 import java.util.List;
 

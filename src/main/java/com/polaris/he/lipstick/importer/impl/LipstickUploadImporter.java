@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.polaris.he.lipstick.common.utils.JsonUtils;
+import com.polaris.he.lipstick.entity.biz.lipstick.LipstickUploadData;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.entity.sku.*;
 import com.polaris.he.lipstick.importer.AbstractUploadImporter;
