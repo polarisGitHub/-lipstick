@@ -24,4 +24,14 @@ public enum CosmeticsEnum {
 
     public String getName() {
         return name;
-    }}
+    }
+
+    public static CosmeticsEnum getByCode(String code) {
+        for (CosmeticsEnum value : CosmeticsEnum.values()) {
+            if (value.getCode().equals(code)) {
+                return value;
+            }
+        }
+        return null;
+    }
+}
