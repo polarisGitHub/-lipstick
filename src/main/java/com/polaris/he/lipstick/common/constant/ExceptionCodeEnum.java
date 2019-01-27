@@ -6,7 +6,7 @@ package com.polaris.he.lipstick.common.constant;
  * Description:
  */
 public enum ExceptionCodeEnum {
-    test("test");
+    E00001("参数错误");
 
     private String message;
 
