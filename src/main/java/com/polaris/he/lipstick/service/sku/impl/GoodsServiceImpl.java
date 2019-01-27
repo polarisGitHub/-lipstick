@@ -1,8 +1,6 @@
-package com.polaris.he.lipstick.service.impl;
+package com.polaris.he.lipstick.service.sku.impl;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import com.polaris.he.lipstick.dao.GoodsCategoryMappingDao;
 import com.polaris.he.lipstick.dao.GoodsDao;
@@ -10,7 +8,7 @@ import com.polaris.he.lipstick.dao.object.GoodsCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.GoodsDO;
 import com.polaris.he.lipstick.entity.Goods;
 import com.polaris.he.lipstick.entity.GoodsCategoryMapping;
-import com.polaris.he.lipstick.service.GoodsService;
+import com.polaris.he.lipstick.service.sku.GoodsService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import com.polaris.he.lipstick.utils.DiffUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

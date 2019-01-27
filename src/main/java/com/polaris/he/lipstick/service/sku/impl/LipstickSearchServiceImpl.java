@@ -1,16 +1,15 @@
-package com.polaris.he.lipstick.service.impl;
+package com.polaris.he.lipstick.service.sku.impl;
 
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
-import com.polaris.he.lipstick.service.BrandService;
-import com.polaris.he.lipstick.service.CategoryService;
-import com.polaris.he.lipstick.service.LipstickSearchService;
+import com.polaris.he.lipstick.service.sku.BrandService;
+import com.polaris.he.lipstick.service.sku.CategoryService;
+import com.polaris.he.lipstick.service.sku.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.checkerframework.checker.nullness.Opt;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

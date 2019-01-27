@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.service;
+package com.polaris.he.lipstick.service.sku;
 
 import com.polaris.he.lipstick.entity.LipstickListItem;
 

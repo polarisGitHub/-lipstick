@@ -1,19 +1,17 @@
-package com.polaris.he.lipstick.service.impl;
+package com.polaris.he.lipstick.service.sku.impl;
 
 import com.polaris.he.lipstick.dao.SkuDao;
-import com.polaris.he.lipstick.dao.object.GoodsDO;
 import com.polaris.he.lipstick.dao.object.SkuDO;
 import com.polaris.he.lipstick.entity.*;
-import com.polaris.he.lipstick.service.BrandService;
-import com.polaris.he.lipstick.service.CategoryService;
-import com.polaris.he.lipstick.service.GoodsService;
-import com.polaris.he.lipstick.service.SkuService;
+import com.polaris.he.lipstick.service.sku.BrandService;
+import com.polaris.he.lipstick.service.sku.CategoryService;
+import com.polaris.he.lipstick.service.sku.GoodsService;
+import com.polaris.he.lipstick.service.sku.SkuService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import com.polaris.he.lipstick.utils.DiffUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

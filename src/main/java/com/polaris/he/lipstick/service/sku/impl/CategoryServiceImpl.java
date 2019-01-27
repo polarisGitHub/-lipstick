@@ -1,15 +1,13 @@
-package com.polaris.he.lipstick.service.impl;
+package com.polaris.he.lipstick.service.sku.impl;
 
 import com.polaris.he.lipstick.dao.BrandCategoryMappingDao;
 import com.polaris.he.lipstick.dao.CategoryDao;
 import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.CategoryDO;
 import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
-import com.polaris.he.lipstick.service.CategoryService;
+import com.polaris.he.lipstick.service.sku.CategoryService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

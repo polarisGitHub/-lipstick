@@ -1,12 +1,11 @@
-package com.polaris.he.lipstick.service.impl;
+package com.polaris.he.lipstick.service.sku.impl;
 
 import com.polaris.he.lipstick.dao.BrandDao;
 import com.polaris.he.lipstick.dao.object.BrandDO;
 import com.polaris.he.lipstick.entity.Brand;
-import com.polaris.he.lipstick.service.BrandService;
+import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
