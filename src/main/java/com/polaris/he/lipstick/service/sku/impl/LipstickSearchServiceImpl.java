@@ -3,7 +3,7 @@ package com.polaris.he.lipstick.service.sku.impl;
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
-import com.polaris.he.lipstick.entity.LipstickListItem;
+import com.polaris.he.lipstick.entity.sku.LipstickListItem;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.service.sku.CategoryService;

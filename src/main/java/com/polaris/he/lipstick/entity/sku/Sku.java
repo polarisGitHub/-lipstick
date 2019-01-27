@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.entity;
+package com.polaris.he.lipstick.entity.sku;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;

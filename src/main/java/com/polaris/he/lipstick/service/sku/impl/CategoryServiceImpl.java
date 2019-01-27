@@ -4,7 +4,7 @@ import com.polaris.he.lipstick.dao.BrandCategoryMappingDao;
 import com.polaris.he.lipstick.dao.CategoryDao;
 import com.polaris.he.lipstick.dao.object.BrandCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.CategoryDO;
-import com.polaris.he.lipstick.entity.Category;
+import com.polaris.he.lipstick.entity.sku.Category;
 import com.polaris.he.lipstick.service.sku.CategoryService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;

@@ -2,7 +2,7 @@ package com.polaris.he.lipstick.service.sku.impl;
 
 import com.polaris.he.lipstick.dao.SkuDao;
 import com.polaris.he.lipstick.dao.object.SkuDO;
-import com.polaris.he.lipstick.entity.*;
+import com.polaris.he.lipstick.entity.sku.*;
 import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.service.sku.CategoryService;
 import com.polaris.he.lipstick.service.sku.GoodsService;

@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.service.sku;
 
-import com.polaris.he.lipstick.entity.Category;
+import com.polaris.he.lipstick.entity.sku.Category;
 
 import java.util.List;
 

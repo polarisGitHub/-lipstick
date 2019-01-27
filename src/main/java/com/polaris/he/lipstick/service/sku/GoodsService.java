@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.service.sku;
 
-import com.polaris.he.lipstick.entity.Goods;
-import com.polaris.he.lipstick.entity.GoodsCategoryMapping;
+import com.polaris.he.lipstick.entity.sku.Goods;
+import com.polaris.he.lipstick.entity.sku.GoodsCategoryMapping;
 
 import java.util.Collection;
 

@@ -1,9 +1,9 @@
 package com.polaris.he.lipstick.service.sku.impl;
 
-import com.polaris.he.lipstick.entity.Brand;
-import com.polaris.he.lipstick.entity.Category;
-import com.polaris.he.lipstick.entity.LipstickListItem;
-import com.polaris.he.lipstick.entity.SkuAggregation;
+import com.polaris.he.lipstick.entity.sku.Brand;
+import com.polaris.he.lipstick.entity.sku.Category;
+import com.polaris.he.lipstick.entity.sku.LipstickListItem;
+import com.polaris.he.lipstick.entity.sku.SkuAggregation;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.service.sku.CategoryService;

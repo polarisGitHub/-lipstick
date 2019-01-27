@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.service.sku;
 
-import com.polaris.he.lipstick.entity.Sku;
-import com.polaris.he.lipstick.entity.SkuAggregation;
+import com.polaris.he.lipstick.entity.sku.Sku;
+import com.polaris.he.lipstick.entity.sku.SkuAggregation;
 
 import java.util.Collection;
 

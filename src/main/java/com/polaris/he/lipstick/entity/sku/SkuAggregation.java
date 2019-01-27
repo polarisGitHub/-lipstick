@@ -1,4 +1,4 @@
-package com.polaris.he.lipstick.entity;
+package com.polaris.he.lipstick.entity.sku;
 
 import lombok.Getter;
 import lombok.Setter;
