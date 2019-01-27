@@ -13,13 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Sku {
-
-    private String brandCode;
+public class Sku extends BaseSkuInfo{
 
     private String goodsCode;
-
-    private String skuCode;
 
     private String skuName;
 
