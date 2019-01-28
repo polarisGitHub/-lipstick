@@ -2,6 +2,7 @@ package com.polaris.he.lipstick.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -17,6 +18,7 @@ public class JsonUtils {
     private static final ObjectMapper OBJECT_MAPPER = Jackson2ObjectMapperBuilder.
             json().
             serializationInclusion(JsonInclude.Include.NON_NULL).
+            featuresToEnable(MapperFeature.PROPAGATE_TRANSIENT_MARKER).
             build();
 
     public static ObjectMapper getObjectMapper() {
