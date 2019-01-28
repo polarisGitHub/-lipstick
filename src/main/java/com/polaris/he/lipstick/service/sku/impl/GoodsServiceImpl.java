@@ -6,6 +6,8 @@ import com.polaris.he.lipstick.dao.GoodsCategoryMappingDao;
 import com.polaris.he.lipstick.dao.GoodsDao;
 import com.polaris.he.lipstick.dao.object.GoodsCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.GoodsDO;
+import com.polaris.he.lipstick.entity.sku.BaseGoodsInfo;
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Goods;
 import com.polaris.he.lipstick.entity.sku.GoodsCategoryMapping;
 import com.polaris.he.lipstick.service.sku.GoodsService;
@@ -43,10 +45,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional
-    public int save(String type, Collection<Goods> collection) {
+    public int save(Collection<Goods> collection) {
         if (CollectionUtils.isEmpty(collection)) {
             return 0;
         }
+        String type = getTypeInCollection(collection);
+
         Set<String> goodsCodeSet = collection.stream().map(Goods::getGoodsCode).collect(Collectors.toSet());
         List<GoodsDO> goodsInDb = goodsDao.getByCodeList(type, goodsCodeSet);
         List<GoodsDO> goodsToSave = collection.stream().map(l -> {
@@ -73,10 +77,11 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional
-    public int saveGoodsCategoriesMapping(String type, Collection<GoodsCategoryMapping> collection) {
+    public int saveGoodsCategoriesMapping(Collection<GoodsCategoryMapping> collection) {
         if (CollectionUtils.isEmpty(collection)) {
             return 0;
         }
+        String type = getTypeInCollection(collection.stream().map(GoodsCategoryMapping::getGoods).collect(Collectors.toList()));
         Multimap<String, String> map = HashMultimap.create();
         collection.forEach(l -> l.getCategories().forEach(ll -> map.put(l.getGoods().getGoodsCode(), ll.getCode())));
         goodsCategoryMappingDao.deleteByGoodsCode(type, map.keySet());
@@ -95,5 +100,13 @@ public class GoodsServiceImpl implements GoodsService {
     public Goods getByCode(String type, String code) {
         GoodsDO goodsDO = goodsDao.getByCode(type, code);
         return BeanCopyUtils.copyObject(goodsDO, new Goods());
+    }
+
+    private String getTypeInCollection(Collection<Goods> collection) {
+        List<String> types = collection.stream().map(BaseGoodsInfo::getType).distinct().collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(types) || types.size() > 1) {
+            throw new IllegalArgumentException();
+        }
+        return types.get(0);
     }
 }

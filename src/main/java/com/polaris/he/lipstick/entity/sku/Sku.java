@@ -12,8 +12,8 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
-public class Sku extends BaseSkuInfo{
+@ToString(callSuper = true)
+public class Sku extends BaseSkuInfo {
 
     private String goodsCode;
 

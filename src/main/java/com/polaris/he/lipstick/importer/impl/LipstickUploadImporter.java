@@ -97,6 +97,7 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             if (!goodsMap.containsKey(l.getGoodsCode())) {
                 Goods goods = new Goods();
                 goods.setBrandCode(brandMap.get(l.getBrandName()).getCode());
+                goods.setType(CosmeticsEnum.LIPSTICK.getCode());
                 goods.setGoodsCode(l.getGoodsCode());
                 goods.setGoodsName(l.getGoodsName());
                 goods.setUrl(l.getGoodsUrl());
@@ -109,6 +110,7 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                 skuSet.add(l.getSkuCode());
                 Sku sku = new Sku();
                 sku.setBrandCode(brandMap.get(l.getBrandName()).getCode());
+                sku.setType(CosmeticsEnum.LIPSTICK.getCode());
                 sku.setGoodsCode(l.getGoodsCode());
                 sku.setSkuCode(l.getSkuCode());
                 sku.setSkuName(l.getSkuName());
@@ -122,7 +124,7 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                     objectNode.put("figure", imgs[0]);
                     ArrayNode images = JsonUtils.getObjectMapper().createArrayNode();
                     Arrays.stream(imgs).forEach(images::add);
-                    objectNode.put("images", images);
+                    objectNode.set("images", images);
                 }
                 sku.setExtension(objectNode);
                 skuList.add(sku);
@@ -137,8 +139,8 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
             mapping.setCategories(goodsCategoryMapping.get(l.getGoodsCode()));
             mappings.add(mapping);
         });
-        goodsService.saveGoodsCategoriesMapping(CosmeticsEnum.LIPSTICK.getCode(), mappings);
-        goodsService.save(CosmeticsEnum.LIPSTICK.getCode(), goodsList);
-        skuService.save(CosmeticsEnum.LIPSTICK.getCode(), skuList);
+        goodsService.saveGoodsCategoriesMapping(mappings);
+        goodsService.save(goodsList);
+        skuService.save(skuList);
     }
 }

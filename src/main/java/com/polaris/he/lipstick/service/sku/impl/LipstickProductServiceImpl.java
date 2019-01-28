@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.service.sku.impl;
 
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.entity.sku.Category;
 import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
@@ -9,6 +10,7 @@ import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.service.sku.CategoryService;
 import com.polaris.he.lipstick.service.sku.LipstickProductService;
 import com.polaris.he.lipstick.service.sku.SkuService;
+import com.polaris.he.lipstick.utils.BaseSkuInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -55,9 +57,10 @@ public class LipstickProductServiceImpl implements LipstickProductService {
     }
 
     @Override
-    public LipstickListItem getBySkuCode(String skuCode) {
+    public LipstickListItem getBySkuCode(String skuCode) {// FIXME brand
         Assert.hasText(skuCode, "skuCode不能为空");
-        SkuAggregation skuInfo = skuService.getAggregationByCode(CosmeticsEnum.LIPSTICK.getCode(), skuCode);
+        // FIXME brand
+        SkuAggregation skuInfo = skuService.getAggregationByCode(BaseSkuInfoUtils.create(null, CosmeticsEnum.LIPSTICK.getCode(), skuCode));
         if (skuInfo == null) {
             return null;
         }

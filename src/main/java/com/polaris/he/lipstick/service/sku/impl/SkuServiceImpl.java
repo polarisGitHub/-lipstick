@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,10 +48,15 @@ public class SkuServiceImpl implements SkuService {
 
     @Override
     @Transactional
-    public int save(String type, Collection<Sku> collection) {
+    public int save(Collection<Sku> collection) {
         if (CollectionUtils.isEmpty(collection)) {
             return 0;
         }
+        List<String> types = collection.stream().map(BaseSkuInfo::getType).distinct().collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(types) || types.size() > 1) {
+            throw new IllegalArgumentException();
+        }
+        String type = types.get(0);
         Set<String> skuCodeSet = collection.stream().map(Sku::getSkuCode).collect(Collectors.toSet());
         List<SkuDO> skuInDb = skuDao.getByCodeList(type, skuCodeSet);
         List<SkuDO> skuToSave = collection.stream().map(l -> {
@@ -76,8 +82,8 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public Sku getByCode(String type, String code) {
-        SkuDO sku = skuDao.getByCode(type, code);
+    public Sku getByCode(BaseSkuInfo baseSkuInfo) {
+        SkuDO sku = skuDao.getByCode(baseSkuInfo.getType(), baseSkuInfo.getSkuCode());
         if (sku == null) {
             return null;
         }
@@ -85,29 +91,29 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public SkuAggregation getAggregationByCode(String type, String code) {
-        Sku sku = getByCode(type, code);
+    public SkuAggregation getAggregationByCode(BaseSkuInfo baseSkuInfo) {
+        Sku sku = getByCode(baseSkuInfo);
         if (sku == null) {
             return null;
         }
         SkuAggregation ret = new SkuAggregation();
         ret.setSku(sku);
-        ret.setBrand(getBrand(type, sku));
+        ret.setBrand(getBrand(sku));
         // TODO
 //        ret.setCategories(getCategories(type, sku));
-        ret.setGoods(getGoods(type, sku));
+        ret.setGoods(getGoods(sku));
         return ret;
     }
 
-    private Goods getGoods(String type, Sku sku) {
-        return goodsService.getByCode(type, sku.getGoodsCode());
+    private Goods getGoods(Sku sku) {
+        return goodsService.getByCode(sku.getType(), sku.getGoodsCode());
     }
 
-    private List<Category> getCategories(String type, Sku sku) {
-        return categoryService.getCategoriesByGoods(type, sku.getGoodsCode());
+    private List<Category> getCategories(Sku sku) {
+        return categoryService.getCategoriesByGoods(sku.getType(), sku.getGoodsCode());
     }
 
-    private Brand getBrand(String type, Sku sku) {
-        return brandService.getBrand(type, sku.getBrandCode());
+    private Brand getBrand(Sku sku) {
+        return brandService.getBrand(sku.getType(), sku.getBrandCode());
     }
 }

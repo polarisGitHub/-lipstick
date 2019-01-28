@@ -11,12 +11,8 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
-public class Goods {
-
-    private String brandCode;
-
-    private String goodsCode;
+@ToString(callSuper = true)
+public class Goods extends BaseGoodsInfo {
 
     private String goodsName;
 

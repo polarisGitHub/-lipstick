@@ -18,13 +18,13 @@ public interface FavoritesService {
      * @param sku
      * @param user
      */
-    void save(BaseSkuInfo sku, UserInfo user);
+    int save(BaseSkuInfo sku, UserInfo user);
 
     /**
      * @param id
      * @param user
      */
-    void delete(Long id, UserInfo user);
+    int delete(Long id, UserInfo user);
 
     /**
      * @param user
