@@ -32,7 +32,7 @@
     </insert>
 
     <update id="update" parameterType="com.polaris.he.lipstick.dao.object.SkuDO">
-        update goods
+        update sku
         <set>
             <if test="brandCode != null">
                 ,brand_code=#{brandCode,jdbcType=VARCHAR}
@@ -57,7 +57,7 @@
             </if>
         </set>
         <where>
-            sku_code=#{skuCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR}
+            brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{skuCode,jdbcType=VARCHAR}
         </where>
     </update>
 
@@ -78,7 +78,7 @@
         </foreach>
     </select>
 
-    <select id="getByCode" resultType="com.polaris.he.lipstick.dao.object.SkuDO">
+    <select id="getSku" resultType="com.polaris.he.lipstick.dao.object.SkuDO">
         select
             type as type,
             brand_code as brandCode,
@@ -89,6 +89,6 @@
             url as url,
             extension as extension
         from sku
-        where type=#{type,jdbcType=VARCHAR} and sku_code=#{code,jdbcType=VARCHAR}
+        where brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{code,jdbcType=VARCHAR}
     </select>
 </mapper>

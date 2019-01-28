@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -41,7 +42,11 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsCategoryMappingDao goodsCategoryMappingDao;
 
-    private static final Field GOODS_DO_CODE_FIELD = FieldUtils.getField(GoodsDO.class, "goodsCode", true);
+    private static final List<Field> GOODS_UNIQUE_FIELDS = Arrays.asList(
+            FieldUtils.getField(GoodsDO.class, "brandCode", true),
+            FieldUtils.getField(GoodsDO.class, "type", true),
+            FieldUtils.getField(GoodsDO.class, "goodsCode", true)
+    );
 
     @Override
     @Transactional
@@ -53,13 +58,9 @@ public class GoodsServiceImpl implements GoodsService {
 
         Set<String> goodsCodeSet = collection.stream().map(Goods::getGoodsCode).collect(Collectors.toSet());
         List<GoodsDO> goodsInDb = goodsDao.getByCodeList(type, goodsCodeSet);
-        List<GoodsDO> goodsToSave = collection.stream().map(l -> {
-            GoodsDO data = BeanCopyUtils.copyObject(l, new GoodsDO());
-            data.setType(type);
-            return data;
-        }).collect(Collectors.toList());
+        List<GoodsDO> goodsToSave = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new GoodsDO())).collect(Collectors.toList());
 
-        DiffUtils.DiffResult<GoodsDO> goodsDiff = DiffUtils.diff(goodsInDb, goodsToSave, GOODS_DO_CODE_FIELD, GoodsDO::equals);
+        DiffUtils.DiffResult<GoodsDO> goodsDiff = DiffUtils.diff(goodsInDb, goodsToSave, GOODS_UNIQUE_FIELDS, GoodsDO::equals);
 
         Collection<GoodsDO> insert = goodsDiff.getAdd();
         if (CollectionUtils.isNotEmpty(insert)) {

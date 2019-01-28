@@ -75,6 +75,6 @@
             illustration as illustration,
             url as url
         from goods
-        where type=#{type,jdbcType=VARCHAR} and goods_code=#{code,jdbcType=VARCHAR}
+        where brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and goods_code=#{code,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -1,9 +1,12 @@
 package com.polaris.he.lipstick.controller;
 
+import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.entity.sku.Category;
 import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
 import com.polaris.he.lipstick.service.sku.LipstickProductService;
+import com.polaris.he.lipstick.utils.BaseSkuInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,16 +44,22 @@ public class LipstickInfoController {
     /**
      * 获取口红品牌下的分类，多个品牌用,分隔
      *
-     * @param brandId
+     * @param brandCode
      * @return
      */
-    @GetMapping("/categories/{brandId}")
-    public List<Category> getCategories(@PathVariable String brandId) {
-        return lipstickProductService.getCategories(Arrays.asList(StringUtils.split(brandId, ",")));
+    @GetMapping("/categories/{brandCode}")
+    public List<Category> getCategories(@PathVariable String brandCode) {
+        return lipstickProductService.getCategories(Arrays.asList(StringUtils.split(brandCode, ",")));
     }
 
-    @GetMapping("/sku/{skuCode}")
-    public LipstickListItem getBySkuCode(@PathVariable String skuCode) {
-        return lipstickProductService.getBySkuCode(skuCode);
+    /**
+     * @param brandCode
+     * @param skuCode
+     * @return
+     */
+    @GetMapping("/sku/{brandCode}/{skuCode}")
+    public LipstickListItem getBySkuCode(@PathVariable String brandCode, @PathVariable String skuCode) {
+        BaseSkuInfo sku = BaseSkuInfoUtils.create(brandCode, CosmeticsEnum.LIPSTICK.getCode(), skuCode);
+        return lipstickProductService.getBySkuCode(sku);
     }
 }

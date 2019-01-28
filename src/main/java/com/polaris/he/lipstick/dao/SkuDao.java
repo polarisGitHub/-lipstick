@@ -36,9 +36,9 @@ public interface SkuDao extends Dao {
 
     /**
      * @param type
-     * @param code
+     * @param brandCode
      * @return
      */
-    SkuDO getByCode(@Param("type") String type, @Param("code") String code);
+    SkuDO getSku(@Param("brandCode") String brandCode, @Param("type") String type, @Param("skuCode") String skuCode);
 
 }

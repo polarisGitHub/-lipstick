@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.service.sku;
 
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.entity.sku.Category;
 import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
@@ -41,5 +42,5 @@ public interface LipstickProductService {
      * @param skuCode
      * @return
      */
-    LipstickListItem getBySkuCode(String skuCode);
+    LipstickListItem getBySkuCode(BaseSkuInfo sku);
 }

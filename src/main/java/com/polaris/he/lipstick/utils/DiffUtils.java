@@ -19,11 +19,11 @@ public class DiffUtils {
      *
      * @param source
      * @param target
-     * @param uniqueField
+     * @param uniqueFields
      * @param <T>
      * @return
      */
-    public static <T> DiffResult<T> diff(Collection<T> source, Collection<T> target, Field uniqueField, BiFunction<T, T, Boolean> equalFunction) {
+    public static <T> DiffResult<T> diff(Collection<T> source, Collection<T> target, Collection<Field> uniqueFields, BiFunction<T, T, Boolean> equalFunction) {
         if (CollectionUtils.isEmpty(source)) {
             return new DiffResult<>(target, new LinkedList<>(), new LinkedList<>(), new LinkedList<>());
         }
@@ -31,8 +31,8 @@ public class DiffUtils {
             return new DiffResult<>(new LinkedList<>(), source, new LinkedList<>(), new LinkedList<>());
         }
 
-        Map<String, T> sourceMap = source.stream().collect(Collectors.toMap(l -> String.valueOf(getFieldValueElegant(uniqueField, l)), Function.identity()));
-        Map<String, T> targetMap = target.stream().collect(Collectors.toMap(l -> String.valueOf(getFieldValueElegant(uniqueField, l)), Function.identity()));
+        Map<String, T> sourceMap = source.stream().collect(Collectors.toMap(l -> String.valueOf(getFieldsValueElegant(uniqueFields, l)), Function.identity()));
+        Map<String, T> targetMap = target.stream().collect(Collectors.toMap(l -> String.valueOf(getFieldsValueElegant(uniqueFields, l)), Function.identity()));
         Set<String> sourceKey = sourceMap.keySet();
         Set<String> targetKey = targetMap.keySet();
 
@@ -58,12 +58,19 @@ public class DiffUtils {
         return ret;
     }
 
-    private static Object getFieldValueElegant(Field field, Object object) {
-        try {
-            return String.valueOf(FieldUtils.readField(field, object));
-        } catch (IllegalAccessException e) {
+    private static String getFieldsValueElegant(Collection<Field> fields, Object object) {
+        if (CollectionUtils.isNotEmpty(fields)) {
+            return fields.stream().map(l -> fieldsValueElegantGetter(l, object)).collect(Collectors.joining(" __!#@__ "));
         }
         return null;
+    }
+
+    private static String fieldsValueElegantGetter(Field field, Object object) {
+        try {
+            return String.valueOf(FieldUtils.readField(field, object, true));
+        } catch (IllegalAccessException e) {
+        }
+        return "null";
     }
 
     @Getter

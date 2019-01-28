@@ -33,7 +33,7 @@ public class FavoritesServiceImpl implements FavoritesService {
         log.info("用户保存到收藏夹,user={},sku={}", user, sku);
         Assert.notNull(sku, "sku不能为空");
         Assert.notNull(user, "用户信息不能为空");
-        skuService.getAggregationByCode(sku);
+        skuService.getAggregationBySkuInfo(sku);
         return 0;
     }
 

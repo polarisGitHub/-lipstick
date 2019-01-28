@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +29,11 @@ import java.util.stream.Collectors;
 @Service
 public class SkuServiceImpl implements SkuService {
 
-    private static final Field SKU_DO_CODE_FIELD = FieldUtils.getField(SkuDO.class, "skuCode", true);
+    private static final List<Field> SKU_UNIQUE_FIELDS = Arrays.asList(
+            FieldUtils.getField(SkuDO.class, "brandCode", true),
+            FieldUtils.getField(SkuDO.class, "type", true),
+            FieldUtils.getField(SkuDO.class, "skuCode", true)
+    );
 
     @Resource
     private SkuDao skuDao;
@@ -59,13 +60,9 @@ public class SkuServiceImpl implements SkuService {
         String type = types.get(0);
         Set<String> skuCodeSet = collection.stream().map(Sku::getSkuCode).collect(Collectors.toSet());
         List<SkuDO> skuInDb = skuDao.getByCodeList(type, skuCodeSet);
-        List<SkuDO> skuToSave = collection.stream().map(l -> {
-            SkuDO data = BeanCopyUtils.copyObject(l, new SkuDO());
-            data.setType(type);
-            return data;
-        }).collect(Collectors.toList());
+        List<SkuDO> skuToSave = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new SkuDO())).collect(Collectors.toList());
 
-        DiffUtils.DiffResult<SkuDO> skuDiff = DiffUtils.diff(skuInDb, skuToSave, SKU_DO_CODE_FIELD, SkuDO::equals);
+        DiffUtils.DiffResult<SkuDO> skuDiff = DiffUtils.diff(skuInDb, skuToSave, SKU_UNIQUE_FIELDS, SkuDO::equals);
 
         Collection<SkuDO> insert = skuDiff.getAdd();
         if (CollectionUtils.isNotEmpty(insert)) {
@@ -82,8 +79,8 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public Sku getByCode(BaseSkuInfo baseSkuInfo) {
-        SkuDO sku = skuDao.getByCode(baseSkuInfo.getType(), baseSkuInfo.getSkuCode());
+    public Sku getBySkuInfo(BaseSkuInfo baseSkuInfo) {
+        SkuDO sku = skuDao.getSku(baseSkuInfo.getBrandCode(), baseSkuInfo.getType(), baseSkuInfo.getSkuCode());
         if (sku == null) {
             return null;
         }
@@ -91,8 +88,8 @@ public class SkuServiceImpl implements SkuService {
     }
 
     @Override
-    public SkuAggregation getAggregationByCode(BaseSkuInfo baseSkuInfo) {
-        Sku sku = getByCode(baseSkuInfo);
+    public SkuAggregation getAggregationBySkuInfo(BaseSkuInfo baseSkuInfo) {
+        Sku sku = getBySkuInfo(baseSkuInfo);
         if (sku == null) {
             return null;
         }

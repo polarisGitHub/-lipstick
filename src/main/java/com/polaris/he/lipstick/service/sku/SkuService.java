@@ -23,11 +23,11 @@ public interface SkuService {
      * @param sku
      * @return
      */
-    Sku getByCode(BaseSkuInfo sku);
+    Sku getBySkuInfo(BaseSkuInfo sku);
 
     /**
      * @param sku
      * @return
      */
-    SkuAggregation getAggregationByCode(BaseSkuInfo sku);
+    SkuAggregation getAggregationBySkuInfo(BaseSkuInfo sku);
 }

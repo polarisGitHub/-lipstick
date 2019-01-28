@@ -57,10 +57,9 @@ public class LipstickProductServiceImpl implements LipstickProductService {
     }
 
     @Override
-    public LipstickListItem getBySkuCode(String skuCode) {// FIXME brand
-        Assert.hasText(skuCode, "skuCode不能为空");
-        // FIXME brand
-        SkuAggregation skuInfo = skuService.getAggregationByCode(BaseSkuInfoUtils.create(null, CosmeticsEnum.LIPSTICK.getCode(), skuCode));
+    public LipstickListItem getBySkuCode(BaseSkuInfo baseSkuInfo) {
+        Assert.notNull(baseSkuInfo, "skuInfo不能为空");
+        SkuAggregation skuInfo = skuService.getAggregationBySkuInfo(baseSkuInfo);
         if (skuInfo == null) {
             return null;
         }
