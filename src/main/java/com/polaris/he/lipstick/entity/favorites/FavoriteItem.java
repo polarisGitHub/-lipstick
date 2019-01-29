@@ -19,7 +19,5 @@ public class FavoriteItem {
     @Encryption
     private Long id;
 
-    private Long idd;
-
     private Sku sku;
 }

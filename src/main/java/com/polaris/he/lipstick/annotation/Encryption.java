@@ -1,8 +1,10 @@
 package com.polaris.he.lipstick.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.polaris.he.lipstick.common.constant.EncryptionEnum;
+import com.polaris.he.lipstick.common.json.JacksonEncryptionDeserializer;
 import com.polaris.he.lipstick.common.json.JacksonEncryptionSerializer;
 
 import java.lang.annotation.*;
@@ -17,6 +19,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @JsonSerialize(using = JacksonEncryptionSerializer.class)
+@JsonDeserialize(using = JacksonEncryptionDeserializer.class)
 public @interface Encryption {
 
     /**

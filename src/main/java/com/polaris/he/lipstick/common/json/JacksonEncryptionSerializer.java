@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import com.polaris.he.lipstick.annotation.Encryption;
 import com.polaris.he.lipstick.common.utils.EncryptionUtils;
+import com.polaris.he.lipstick.utils.SpringContextUtils;
 
 import java.io.IOException;
 
@@ -18,24 +18,13 @@ import java.io.IOException;
  */
 public class JacksonEncryptionSerializer extends JsonSerializer<Object> implements ContextualSerializer {
 
-    private boolean encryption;
-
-    public JacksonEncryptionSerializer() {
-    }
-
-    public JacksonEncryptionSerializer(boolean encryption) {
-        this.encryption = encryption;
-    }
-
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        if (encryption) {
-            gen.writeString(EncryptionUtils.AESEncode(String.valueOf(value), "12345"));
-        }
+        gen.writeString(EncryptionUtils.AESEncode(String.valueOf(value), SpringContextUtils.getProperty("encryption.aes.password")));
     }
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
-        return new JacksonEncryptionSerializer(property.getAnnotation(Encryption.class) != null);
+        return this;
     }
 }

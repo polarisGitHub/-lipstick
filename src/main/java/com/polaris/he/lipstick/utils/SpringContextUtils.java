@@ -1,8 +1,10 @@
 package com.polaris.he.lipstick.utils;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,7 +26,11 @@ public class SpringContextUtils implements ApplicationContextAware {
         return applicationContext.getBean(beanName, clazz);
     }
 
-    public static <T> T getBean(Class<T> clazz){
+    public static <T> T getBean(Class<T> clazz) {
         return applicationContext.getBean(clazz);
+    }
+
+    public static String getProperty(String property) {
+        return applicationContext.getEnvironment().getProperty(property);
     }
 }
