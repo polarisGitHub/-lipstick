@@ -1,10 +1,10 @@
 package com.polaris.he.lipstick.controller;
 
+import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.entity.sku.Category;
-import com.polaris.he.lipstick.entity.biz.lipstick.LipstickListItem;
 import com.polaris.he.lipstick.service.sku.LipstickProductService;
 import com.polaris.he.lipstick.utils.BaseSkuInfoUtils;
 import lombok.extern.slf4j.Slf4j;

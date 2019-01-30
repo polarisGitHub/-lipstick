@@ -7,7 +7,6 @@ import com.polaris.he.lipstick.dao.GoodsDao;
 import com.polaris.he.lipstick.dao.object.GoodsCategoryMappingDO;
 import com.polaris.he.lipstick.dao.object.GoodsDO;
 import com.polaris.he.lipstick.entity.sku.BaseGoodsInfo;
-import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.sku.Goods;
 import com.polaris.he.lipstick.entity.sku.GoodsCategoryMapping;
 import com.polaris.he.lipstick.service.sku.GoodsService;

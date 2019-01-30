@@ -1,7 +1,5 @@
 package com.polaris.he.lipstick.config.mvc.advice;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polaris.he.lipstick.common.constant.ResponseCodeEnum;
 import com.polaris.he.lipstick.common.data.RestResponse;
 import com.polaris.he.lipstick.common.utils.JsonUtils;

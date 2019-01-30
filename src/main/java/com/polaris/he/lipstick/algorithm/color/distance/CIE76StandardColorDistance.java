@@ -1,7 +1,6 @@
 package com.polaris.he.lipstick.algorithm.color.distance;
 
 import com.polaris.he.lipstick.algorithm.color.data.ColorSpace;
-import com.polaris.he.lipstick.algorithm.color.utils.HexColorUtils;
 
 /**
  * https://zh.wikipedia.org/wiki/%E9%A2%9C%E8%89%B2%E5%B7%AE%E5%BC%82#CIE76

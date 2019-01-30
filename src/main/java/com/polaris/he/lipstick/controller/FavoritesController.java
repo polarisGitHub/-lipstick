@@ -6,7 +6,6 @@ import com.polaris.he.lipstick.entity.favorites.FavoriteItem;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import com.polaris.he.lipstick.service.favorites.FavoritesService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

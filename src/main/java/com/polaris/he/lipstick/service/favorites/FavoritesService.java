@@ -1,6 +1,5 @@
 package com.polaris.he.lipstick.service.favorites;
 
-import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.entity.favorites.FavoriteItem;
 import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.user.UserInfo;
