@@ -45,19 +45,11 @@ public class MybatisSqlLogInterceptor implements Interceptor {
         if (invocation.getArgs().length > 1) {
             parameter = invocation.getArgs()[1];
         }
-        String sqlId = mappedStatement.getId();
-        BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-        Configuration configuration = mappedStatement.getConfiguration();
-        Object returnValue = null;
         long start = System.currentTimeMillis();
-        returnValue = invocation.proceed();
+        Object ret = invocation.proceed();
         long end = System.currentTimeMillis();
-        long time = (end - start);
-        if (time > 1) {
-            String sql = getSql(configuration, boundSql, sqlId, time);
-            log.info(sql);
-        }
-        return returnValue;
+        log.info("execution time:{}ms,{} #{}", end - start, mappedStatement.getId(), processSqlString(mappedStatement.getConfiguration(), mappedStatement.getBoundSql(parameter)));
+        return ret;
     }
 
     @Override
@@ -70,20 +62,7 @@ public class MybatisSqlLogInterceptor implements Interceptor {
 
     }
 
-
-    private String getSql(Configuration configuration, BoundSql boundSql, String sqlId, long time) {
-        String sql = showSql(configuration, boundSql);
-        StringBuilder str = new StringBuilder(100);
-        str.append(sqlId);
-        str.append(":");
-        str.append(sql);
-        str.append(":");
-        str.append(time);
-        str.append("ms");
-        return str.toString();
-    }
-
-    private String showSql(Configuration configuration, BoundSql boundSql) {
+    private String processSqlString(Configuration configuration, BoundSql boundSql) {
         Object parameterObject = boundSql.getParameterObject();
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
         String sql = boundSql.getSql().replaceAll("[\\s]+", " ");
@@ -91,7 +70,6 @@ public class MybatisSqlLogInterceptor implements Interceptor {
             TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
             if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
                 sql = sql.replaceFirst("\\?", getParameterValue(parameterObject));
-
             }
         } else {
             MetaObject metaObject = configuration.newMetaObject(parameterObject);
