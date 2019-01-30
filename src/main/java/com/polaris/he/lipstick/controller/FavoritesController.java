@@ -3,8 +3,10 @@ package com.polaris.he.lipstick.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.entity.favorites.FavoriteItem;
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import com.polaris.he.lipstick.service.favorites.FavoritesService;
+import com.polaris.he.lipstick.utils.BaseSkuInfoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,29 +21,31 @@ import java.util.Optional;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/favorites")
+@RequestMapping("/api/{type}/favorites")
 public class FavoritesController {
 
     @Resource
     private FavoritesService favoritesService;
 
-    @GetMapping("/{type}/query")
+    @GetMapping("/query")
     public List<FavoriteItem> favorites(@PathVariable CosmeticsEnum type, UserInfo user) {
         log.info("查询收藏夹，type={}，user={}", type, user);
         return favoritesService.query(type.getCode(), user);
     }
 
-    @PostMapping("/{type}/save")
+    @PostMapping("/save")
     public String saveFavorite(@PathVariable CosmeticsEnum type, @RequestBody JsonNode body, UserInfo user) {
         log.info("添加收藏物品，user={},type={},body={}", user, type, body);
-        String brand = Optional.ofNullable(body).map(l -> l.get("brand")).map(JsonNode::asText).orElseThrow(() -> new IllegalArgumentException("参数错误"));
+        String brandCode = Optional.ofNullable(body).map(l -> l.get("brandCode")).map(JsonNode::asText).orElseThrow(() -> new IllegalArgumentException("参数错误"));
         String skuCode = Optional.ofNullable(body).map(l -> l.get("skuCode")).map(JsonNode::asText).orElseThrow(() -> new IllegalArgumentException("参数错误"));
-        return "";
+        BaseSkuInfo sku = BaseSkuInfoUtils.create(brandCode, type.getCode(), skuCode);
+        favoritesService.save(sku, user);
+        return "ok";
     }
 
-    @PostMapping("/{type}/delete")
+    @PostMapping("/delete")
     public String deleteFavorite(@PathVariable CosmeticsEnum type, @RequestBody JsonNode body, UserInfo user) {
         log.info("删除收藏物品，user={},type={},body={}", user, type, body);
-        return "";
+        return "ok";
     }
 }

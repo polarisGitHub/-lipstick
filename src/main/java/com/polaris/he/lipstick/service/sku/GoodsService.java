@@ -2,7 +2,6 @@ package com.polaris.he.lipstick.service.sku;
 
 import com.polaris.he.lipstick.entity.sku.Goods;
 import com.polaris.he.lipstick.entity.sku.GoodsCategoryMapping;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 

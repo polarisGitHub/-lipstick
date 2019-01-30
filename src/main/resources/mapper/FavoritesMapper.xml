@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polaris.he.lipstick.dao.FavoritesDao">
+
+
+    <insert id="insert" parameterType="com.polaris.he.lipstick.dao.object.FavoritesDO" keyProperty="id"
+            useGeneratedKeys="true">
+      insert into user_favorites (
+        source,
+        open_id,
+        type,
+        brand_code,
+        brand_name,
+        goods_code,
+        goods_name,
+        goods_illustration,
+        goods_url,
+        sku_code,
+        sku_name,
+        sku_by_name,
+        sku_extension,
+        created_date
+      ) values (
+        #{source,jdbcType=VARCHAR},
+        #{openId,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR},
+        #{brandCode,jdbcType=VARCHAR},
+        #{brandName,jdbcType=VARCHAR},
+        #{goodsCode,jdbcType=VARCHAR},
+        #{goodsName,jdbcType=VARCHAR},
+        #{goodsIllustration,jdbcType=VARCHAR},
+        #{goodsUrl,jdbcType=VARCHAR},
+        #{skuName,jdbcType=VARCHAR},
+        #{skuByName,jdbcType=VARCHAR},
+        #{skuUrl,jdbcType=VARCHAR},
+        #{skuExtension,jdbcType=VARCHAR},
+        now()
+      )
+    </insert>
+
+  <delete id="delete">
+      delete from
+        user_favorites
+      where
+        id=#{id,jdbcType=BIGINT} and source=#{user.source,jdbcType=VARCHAR} and open_id=#{user.openId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

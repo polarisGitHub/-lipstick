@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.dao;
 
+import com.polaris.he.lipstick.dao.object.FavoritesDO;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,11 @@ import org.apache.ibatis.annotations.Param;
 public interface FavoritesDao extends Dao {
 
 
-    int save(@Param("user") UserInfo user);
+    /**
+     * @param favorite
+     * @return
+     */
+    int insert(FavoritesDO favorite);
 
     /**
      * @param id
@@ -21,7 +26,6 @@ public interface FavoritesDao extends Dao {
     int delete(@Param("id") Long id, @Param("user") UserInfo user);
 
     /**
-     *
      * @param user
      * @return
      */

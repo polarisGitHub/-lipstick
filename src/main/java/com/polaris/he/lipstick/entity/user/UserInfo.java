@@ -14,5 +14,8 @@ import lombok.*;
 public class UserInfo {
 
     @NonNull
+    private String source;
+
+    @NonNull
     private String openId;
 }

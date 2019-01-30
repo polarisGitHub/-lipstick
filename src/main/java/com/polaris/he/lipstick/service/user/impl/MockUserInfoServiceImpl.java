@@ -16,7 +16,6 @@ public class MockUserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo getUserInfo(ServletRequest request) {
-        UserInfo userInfo = new UserInfo("test-user");
-        return userInfo;
+        return new UserInfo("weixin", "test-user");
     }
 }

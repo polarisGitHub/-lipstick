@@ -28,7 +28,7 @@ CREATE TABLE brand_category_mapping (
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (id),
-  UNIQUE INDEX udx_brand_category_mapping (brand_code,category_code,type)
+  UNIQUE INDEX udx_brand_category_mapping (category_code,brand_code,type)
 )ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE goods (
@@ -42,7 +42,7 @@ CREATE TABLE goods (
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (id),
-  UNIQUE INDEX udx_sku_brand_sku_type (brand_code,goods_code,type)
+  UNIQUE INDEX udx_goods_brand_type (goods_code,brand_code,type)
 )ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE goods_category_mapping (
@@ -59,7 +59,7 @@ CREATE TABLE goods_category_mapping (
 CREATE TABLE sku (
   id BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
   brand_code VARCHAR(45) NOT NULL COMMENT 'brand',
-  goods_code VARCHAR(45) NOT NULL COMMENT 'sku',
+  goods_code VARCHAR(45) NOT NULL COMMENT 'goods',
   type VARCHAR(45) NOT NULL COMMENT '类别',
   sku_code VARCHAR(45) NOT NULL COMMENT 'sku',
   sku_name VARCHAR(45) NOT NULL COMMENT 'name',
@@ -71,16 +71,38 @@ CREATE TABLE sku (
   PRIMARY KEY (id),
   INDEX idx_sku_goods_code (goods_code),
   INDEX idx_sku_sku_code (sku_code),
-  UNIQUE INDEX idx_sku_brand_sku_type (brand_code,sku_code,type)
+  UNIQUE INDEX idx_sku_sku_brand_type (sku_code,brand_code,type)
 )ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE attachment (
+CREATE TABLE user_info (
   id BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
-  biz_code VARCHAR(45) NOT NULL COMMENT '业务类型 + 唯一键',
-  type VARCHAR(45) NOT NULL COMMENT  '附件类型，img',
-  url VARCHAR(4000) NOT NULL COMMENT 'url',
+  source VARCHAR(64) NOT NULL COMMENT '来源',
+  open_id  VARCHAR(64) NOT NULL COMMENT '用户id',
+  avatar VARCHAR(64) NOT NULL COMMENT '头像文件',
   created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (id),
-  INDEX idx_attachment_biz_code (biz_code)
+  INDEX idx_user_info_open_id (open_id)
+)ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE user_favorites (
+  id BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+  source VARCHAR(64) NOT NULL COMMENT '来源',
+  open_id  VARCHAR(64) NOT NULL COMMENT '用户id',
+  type VARCHAR(45) NOT NULL COMMENT '类别',
+  brand_code VARCHAR(45) NOT NULL COMMENT 'brand code',
+  brand_name VARCHAR(45) NOT NULL COMMENT 'brand name',
+  goods_code VARCHAR(45) NOT NULL COMMENT 'goods code',
+  goods_name VARCHAR(45) NOT NULL COMMENT 'goods name',
+  goods_illustration VARCHAR(4000) NOT NULL DEFAULT '' COMMENT '产品说明',
+  goods_url VARCHAR(4000) NOT NULL DEFAULT '' COMMENT '产品url',
+  sku_code VARCHAR(45) NOT NULL COMMENT 'sku code',
+  sku_name VARCHAR(45) NOT NULL COMMENT 'name code',
+  sku_by_name VARCHAR(45) NOT NULL COMMENT '别名',
+  sku_url VARCHAR(4000) NOT NULL DEFAULT '' COMMENT 'sku url',
+  sku_extension JSON DEFAULT NULL COMMENT 'sku 扩展信息',
+  created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (id),
+  INDEX idx_user_stock_open_id_sku_code (open_id,sku_code)
 )ENGINE=InnoDB auto_increment=1 DEFAULT CHARSET=utf8mb4;

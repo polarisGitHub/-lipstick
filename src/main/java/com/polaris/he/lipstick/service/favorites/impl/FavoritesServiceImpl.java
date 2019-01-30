@@ -1,8 +1,12 @@
 package com.polaris.he.lipstick.service.favorites.impl;
 
+import com.polaris.he.lipstick.common.constant.ExceptionCodeEnum;
+import com.polaris.he.lipstick.common.exception.BizException;
 import com.polaris.he.lipstick.dao.FavoritesDao;
+import com.polaris.he.lipstick.dao.object.FavoritesDO;
 import com.polaris.he.lipstick.entity.favorites.FavoriteItem;
 import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
+import com.polaris.he.lipstick.entity.sku.SkuAggregation;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import com.polaris.he.lipstick.service.favorites.FavoritesService;
 import com.polaris.he.lipstick.service.sku.SkuService;
@@ -33,8 +37,27 @@ public class FavoritesServiceImpl implements FavoritesService {
         log.info("用户保存到收藏夹,user={},sku={}", user, sku);
         Assert.notNull(sku, "sku不能为空");
         Assert.notNull(user, "用户信息不能为空");
-        skuService.getAggregationBySkuInfo(sku);
-        return 0;
+        SkuAggregation skuInfo = skuService.getAggregationBySkuInfo(sku);
+
+        if (skuInfo == null) {
+            throw new BizException(String.format("找不到sku:%s", sku), ExceptionCodeEnum.E00002, null);
+        }
+        FavoritesDO insert = new FavoritesDO();
+        insert.setSource(user.getSource());
+        insert.setOpenId(user.getOpenId());
+        insert.setType(sku.getType());
+        insert.setBrandCode(skuInfo.getBrand().getCode());
+        insert.setBrandName(skuInfo.getBrand().getName());
+        insert.setGoodsCode(skuInfo.getGoods().getGoodsCode());
+        insert.setGoodsName(skuInfo.getGoods().getGoodsName());
+        insert.setGoodsUrl(skuInfo.getGoods().getUrl());
+        insert.setGoodsIllustration(skuInfo.getGoods().getIllustration());
+        insert.setSkuCode(skuInfo.getSku().getSkuCode());
+        insert.setSkuName(skuInfo.getSku().getSkuName());
+        insert.setSkuByName(skuInfo.getSku().getSkuByName());
+        insert.setSkuUrl(skuInfo.getSku().getUrl());
+        insert.setSkuExtension(skuInfo.getSku().getExtension());
+        return favoritesDao.insert(insert);
     }
 
     @Override
