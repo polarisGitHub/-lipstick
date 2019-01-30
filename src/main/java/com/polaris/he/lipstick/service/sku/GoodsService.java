@@ -2,6 +2,7 @@ package com.polaris.he.lipstick.service.sku;
 
 import com.polaris.he.lipstick.entity.sku.Goods;
 import com.polaris.he.lipstick.entity.sku.GoodsCategoryMapping;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 
@@ -13,24 +14,22 @@ import java.util.Collection;
 public interface GoodsService {
 
     /**
-     *
-     *
      * @param collection
      * @return
      */
     int save(Collection<Goods> collection);
 
     /**
-     *
      * @param collection
      * @return
      */
     int saveGoodsCategoriesMapping(Collection<GoodsCategoryMapping> collection);
 
     /**
+     * @param brandCode
      * @param type
-     * @param code
+     * @param goodsCode
      * @return
      */
-    Goods getByCode(String type, String code);
+    Goods getByCode(String brandCode, String type, String goodsCode);
 }

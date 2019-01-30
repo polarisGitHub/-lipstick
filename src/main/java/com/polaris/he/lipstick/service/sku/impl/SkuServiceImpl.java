@@ -106,7 +106,7 @@ public class SkuServiceImpl implements SkuService {
     }
 
     private Goods getGoods(Sku sku) {
-        return goodsService.getByCode(sku.getType(), sku.getGoodsCode());
+        return goodsService.getByCode(sku.getBrandCode(), sku.getType(), sku.getGoodsCode());
     }
 
     private List<Category> getCategories(Sku sku) {

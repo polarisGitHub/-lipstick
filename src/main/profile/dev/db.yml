@@ -1,6 +1,6 @@
 c3p0:
   driverClass: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3307/lipstick?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://127.0.0.1:3307/lipstick?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
   username: polaris_he
   password: 123456
   minPoolSize: 2

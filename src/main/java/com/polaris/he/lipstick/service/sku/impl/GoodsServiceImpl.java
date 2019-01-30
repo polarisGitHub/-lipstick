@@ -97,8 +97,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Goods getByCode(String type, String code) {
-        GoodsDO goodsDO = goodsDao.getByCode(type, code);
+    public Goods getByCode(String brandCode, String type, String skuCode) {
+        GoodsDO goodsDO = goodsDao.getByCode(brandCode, type, skuCode);
         return BeanCopyUtils.copyObject(goodsDO, new Goods());
     }
 

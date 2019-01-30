@@ -89,6 +89,6 @@
             url as url,
             extension as extension
         from sku
-        where brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{code,jdbcType=VARCHAR}
+        where brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{skuCode,jdbcType=VARCHAR}
     </select>
 </mapper>

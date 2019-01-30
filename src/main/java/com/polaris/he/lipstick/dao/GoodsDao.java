@@ -30,7 +30,7 @@ public interface GoodsDao extends Dao {
      * @param code
      * @return
      */
-    GoodsDO getByCode(@Param("type") String type, @Param("code") String code);
+    GoodsDO getByCode(@Param("brandCode") String brandCode, @Param("type") String type, @Param("goodsCode") String goodsCode);
 
     /**
      * @param type
