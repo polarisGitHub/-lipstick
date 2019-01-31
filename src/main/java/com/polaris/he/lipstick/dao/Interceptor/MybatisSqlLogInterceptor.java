@@ -1,8 +1,13 @@
 package com.polaris.he.lipstick.dao.Interceptor;
 
+import com.polaris.he.lipstick.dao.Interceptor.utils.MappedStatementHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
@@ -11,15 +16,16 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.defaults.DefaultSqlSession;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
+import java.lang.reflect.Field;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * User: hexie
@@ -27,10 +33,10 @@ import java.util.Properties;
  * Description:
  */
 @Slf4j
-@Intercepts({
-        @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}),
-        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
-        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class})
+@Intercepts(value = {
+        @Signature(type = StatementHandler.class, args = {Statement.class, ResultHandler.class}, method = "query"),
+        @Signature(type = StatementHandler.class, args = {Statement.class}, method = "update"),
+        @Signature(type = StatementHandler.class, args = {Statement.class}, method = "batch")
 })
 public class MybatisSqlLogInterceptor implements Interceptor {
 
@@ -40,16 +46,16 @@ public class MybatisSqlLogInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-        Object parameter = null;
-        if (invocation.getArgs().length > 1) {
-            parameter = invocation.getArgs()[1];
-        }
+        MappedStatement mappedStatement = MappedStatementHolder.get();
+        String id = Optional.ofNullable(mappedStatement).map(MappedStatement::getId).orElse("");
+        StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         long start = System.currentTimeMillis();
-        Object ret = invocation.proceed();
-        long end = System.currentTimeMillis();
-        log.info("execution time:{}ms,{} #{}", end - start, mappedStatement.getId(), processSqlString(mappedStatement.getConfiguration(), mappedStatement.getBoundSql(parameter)));
-        return ret;
+        try {
+            return invocation.proceed();
+        } finally {
+            long end = System.currentTimeMillis();
+            log.info("execution time:{}ms,{} #{}", end - start, id, processSqlString(statementHandler.getBoundSql()));
+        }
     }
 
     @Override
@@ -62,48 +68,54 @@ public class MybatisSqlLogInterceptor implements Interceptor {
 
     }
 
-    private String processSqlString(Configuration configuration, BoundSql boundSql) {
-        Object parameterObject = boundSql.getParameterObject();
-        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+    private String processSqlString(BoundSql boundSql) {
         String sql = boundSql.getSql().replaceAll("[\\s]+", " ");
-        if (parameterMappings.size() > 0 && parameterObject != null) {
-            TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-            if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
-                sql = sql.replaceFirst("\\?", getParameterValue(parameterObject));
+        String unwrappedSql = sql;
+        try {
+            Object parameterObject = boundSql.getParameterObject();
+            List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+            if (parameterObject == null || CollectionUtils.isEmpty(parameterMappings)) {
+                return sql;
             }
-        } else {
-            MetaObject metaObject = configuration.newMetaObject(parameterObject);
-            for (ParameterMapping parameterMapping : parameterMappings) {
-                String propertyName = parameterMapping.getProperty();
-                if (metaObject.hasGetter(propertyName)) {
-                    Object obj = metaObject.getValue(propertyName);
-                    sql = sql.replaceFirst("\\?", getParameterValue(obj));
-                } else if (boundSql.hasAdditionalParameter(propertyName)) {
-                    Object obj = boundSql.getAdditionalParameter(propertyName);
-                    sql = sql.replaceFirst("\\?", getParameterValue(obj));
+            for (ParameterMapping mapping : parameterMappings) {
+                String property = mapping.getProperty();
+                Object param = boundSql.getAdditionalParameter(property);
+                if (param == null) {
+                    if (parameterObject instanceof MapperMethod.ParamMap) {
+                        param = ((MapperMethod.ParamMap) parameterObject).getOrDefault(property, null);
+                    } else {
+                        param = parameterObject;
+                    }
                 }
+                sql = sql.replaceFirst("\\?", getParameterValue(property, param));
             }
+        } catch (Exception e) {
+            return unwrappedSql;
         }
         return sql;
     }
 
-    private String getParameterValue(Object obj) {
-        String value = null;
-        if (obj instanceof String) {
-            value = "'" + obj.toString() + "'";
-        } else if (obj instanceof Date) {
-            value = "'" + DATE_TIME_FORMATTER.format(((Date) obj).toInstant().atZone(ZoneOffset.systemDefault()).toLocalDateTime()) + "'";
-        } else if (obj instanceof LocalDate) {
-            value = "'" + DATE_FORMATTER.format((LocalDate) obj) + "'";
-        } else if (obj instanceof LocalDateTime) {
-            value = "'" + DATE_TIME_FORMATTER.format((LocalDateTime) obj) + "'";
+    private String getParameterValue(String property, Object param) {
+        String value = "null";
+        if (param == null) {
+            return value;
+        } else if (param instanceof String) {
+            return "'" + param.toString() + "'";
+        } else if (param instanceof Date) {
+            return "'" + DATE_TIME_FORMATTER.format(((Date) param).toInstant().atZone(ZoneOffset.systemDefault()).toLocalDateTime()) + "'";
+        } else if (param instanceof LocalDate) {
+            return "'" + DATE_FORMATTER.format((LocalDate) param) + "'";
+        } else if (param instanceof LocalDateTime) {
+            return "'" + DATE_TIME_FORMATTER.format((LocalDateTime) param) + "'";
         } else {
-            if (obj != null) {
-                value = obj.toString();
-            } else {
-                value = "";
+            Field f = FieldUtils.getField(param.getClass(), property, true);
+            if (f != null) {
+                try {
+                    return String.valueOf(FieldUtils.readField(f, param));
+                } catch (IllegalAccessException e) {
+                }
             }
+            return param.toString();
         }
-        return value;
     }
 }

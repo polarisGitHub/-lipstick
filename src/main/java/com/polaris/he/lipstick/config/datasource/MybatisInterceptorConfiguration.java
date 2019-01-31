@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.config.datasource;
 
+import com.polaris.he.lipstick.dao.Interceptor.MybatisMappedStatementHolderInterceptor;
 import com.polaris.he.lipstick.dao.Interceptor.MybatisSqlLogInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.springframework.context.annotation.Bean;
@@ -18,5 +19,10 @@ public class MybatisInterceptorConfiguration {
     @Bean
     public Interceptor sqlLogInterceptor() {
         return new MybatisSqlLogInterceptor();
+    }
+
+    @Bean
+    public Interceptor mappedStatementHolderInterceptor() {
+        return new MybatisMappedStatementHolderInterceptor();
     }
 }
