@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.polaris.he.lipstick.dao.FavoritesDao">
+<mapper namespace="com.polaris.he.framework.dao.FavoritesDao">
 
 
-    <insert id="insert" parameterType="com.polaris.he.lipstick.dao.object.FavoritesDO" keyProperty="id"
+    <insert id="insert" parameterType="com.polaris.he.framework.dao.object.FavoritesDO" keyProperty="id"
             useGeneratedKeys="true">
       insert into user_favorites (
         source,
@@ -45,7 +45,7 @@
         id=#{id,jdbcType=BIGINT} and source=#{user.source,jdbcType=VARCHAR} and open_id=#{user.openId,jdbcType=VARCHAR}
     </delete>
 
-    <select id="checkFavorite" parameterType="com.polaris.he.lipstick.dao.object.FavoritesDO"
+    <select id="checkFavorite" parameterType="com.polaris.he.framework.dao.object.FavoritesDO"
             resultType="java.lang.Boolean">
       select count(1) from
         user_favorites

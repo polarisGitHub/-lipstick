@@ -1,7 +1,8 @@
 package com.polaris.he.lipstick.dao;
 
-import com.polaris.he.lipstick.dao.object.LipstickAggregationDO;
-import com.polaris.he.lipstick.dao.object.LipstickSearchDO;
+import com.polaris.he.framework.dao.Dao;
+import com.polaris.he.framework.dao.object.LipstickSearchDO;
+import com.polaris.he.framework.dao.object.LipstickAggregationDO;
 
 import java.util.List;
 

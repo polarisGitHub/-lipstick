@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-com.polaris.he.lipstick.config.yml.CustomerYmlConfigLoader
+com.polaris.he.application.yml.CustomerYmlConfigLoader

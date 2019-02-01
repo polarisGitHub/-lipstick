@@ -1,7 +1,7 @@
 package com.polaris.he.lipstick.algorithm.color.converter;
 
 import com.polaris.he.lipstick.algorithm.color.data.Color;
-import com.polaris.he.lipstick.utils.SpringContextUtils;
+import com.polaris.he.framework.utils.SpringContextUtils;
 
 /**
  * User: hexie

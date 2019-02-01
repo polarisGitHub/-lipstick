@@ -12,4 +12,4 @@ c3p0:
 
 mybatis:
   mapperLocations: mapper/*.xml
-  typeHandlersPackage: com.polaris.he.lipstick.dao.handler
+  typeHandlersPackage: com.polaris.he.framework.dao.handler

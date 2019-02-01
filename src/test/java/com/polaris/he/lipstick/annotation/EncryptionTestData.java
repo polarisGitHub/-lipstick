@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.annotation;
 
+import com.polaris.he.framework.annotation.Encryption;
 import lombok.*;
 
 /**

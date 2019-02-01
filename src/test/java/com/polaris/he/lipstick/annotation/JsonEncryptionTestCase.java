@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.annotation;
 
-import com.polaris.he.lipstick.common.utils.JsonUtils;
+import com.polaris.he.application.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;

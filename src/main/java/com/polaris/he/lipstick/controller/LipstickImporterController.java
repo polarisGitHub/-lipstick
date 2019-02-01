@@ -1,8 +1,8 @@
 package com.polaris.he.lipstick.controller;
 
-import com.polaris.he.lipstick.entity.biz.lipstick.LipstickUploadData;
-import com.polaris.he.lipstick.importer.UploadImporter;
-import com.polaris.he.lipstick.importer.data.UploadResult;
+import com.polaris.he.lipstick.entity.LipstickUploadData;
+import com.polaris.he.framework.importer.UploadImporter;
+import com.polaris.he.framework.importer.data.UploadResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.bind.annotation.PostMapping;

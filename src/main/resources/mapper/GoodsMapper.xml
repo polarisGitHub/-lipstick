@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.polaris.he.lipstick.dao.GoodsDao">
+<mapper namespace="com.polaris.he.framework.dao.GoodsDao">
 
-    <insert id="insert" parameterType="com.polaris.he.lipstick.dao.object.GoodsDO">
+    <insert id="insert" parameterType="com.polaris.he.framework.dao.object.GoodsDO">
         insert goods (
           type,
           brand_code,
@@ -27,7 +27,7 @@
         </foreach>
     </insert>
 
-    <update id="update" parameterType="com.polaris.he.lipstick.dao.object.GoodsDO">
+    <update id="update" parameterType="com.polaris.he.framework.dao.object.GoodsDO">
         update goods
         <set>
             <if test="type != null">
@@ -51,7 +51,7 @@
         </where>
     </update>
 
-    <select id="getByCodeList" resultType="com.polaris.he.lipstick.dao.object.GoodsDO">
+    <select id="getByCodeList" resultType="com.polaris.he.framework.dao.object.GoodsDO">
         select
             type as type,
             brand_code as brandCode,
@@ -66,7 +66,7 @@
         </foreach>
     </select>
 
-    <select id="getByCode" resultType="com.polaris.he.lipstick.dao.object.GoodsDO">
+    <select id="getByCode" resultType="com.polaris.he.framework.dao.object.GoodsDO">
         select
             type as type,
             brand_code as brandCode,

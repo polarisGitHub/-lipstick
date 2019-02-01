@@ -1,6 +1,6 @@
 package com.polaris.he.lipstick.controller;
 
-import com.polaris.he.lipstick.entity.biz.lipstick.LipstickFavoriteItem;
+import com.polaris.he.lipstick.entity.LipstickFavoriteItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
