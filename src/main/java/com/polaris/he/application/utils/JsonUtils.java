@@ -2,6 +2,7 @@ package com.polaris.he.application.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +44,9 @@ public class JsonUtils {
             log.error("write json string error", e);
         }
         return null;
+    }
+
+    public static JsonNode javaObjectToObjectJson(Object object) {
+        return toJavaObject(toJsonString(object), JsonNode.class);
     }
 }

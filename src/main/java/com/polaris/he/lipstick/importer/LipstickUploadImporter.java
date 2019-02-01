@@ -10,6 +10,7 @@ import com.polaris.he.framework.importer.converter.UploadByteConverter;
 import com.polaris.he.framework.importer.data.UploadValidateErrorLine;
 import com.polaris.he.framework.importer.data.UploadValidateResult;
 import com.polaris.he.application.utils.JsonUtils;
+import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickUploadData;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.service.sku.BrandService;
@@ -116,17 +117,17 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                 sku.setSkuName(l.getSkuName());
                 sku.setSkuByName("");
                 sku.setUrl(l.getSkuUrl());
-                ObjectNode objectNode = JsonUtils.getObjectMapper().createObjectNode();
-                objectNode.put("colorNo", l.getColorNo());
-                objectNode.put("color", l.getColor());
+
+                LipstickExtension extension = new LipstickExtension();
+                extension.setColorNo(l.getColorNo());
+                extension.setColor(l.getColor());
+
                 String[] imgs = StringUtils.split(l.getSkuImgDownloadFile(), ",");
                 if (ArrayUtils.isNotEmpty(imgs)) {
-                    objectNode.put("figure", imgs[0]);
-                    ArrayNode images = JsonUtils.getObjectMapper().createArrayNode();
-                    Arrays.stream(imgs).forEach(images::add);
-                    objectNode.set("images", images);
+                    extension.setFigure(imgs[0]);
+                    extension.setImgs(Arrays.asList(imgs));
                 }
-                sku.setExtension(objectNode);
+                sku.setExtension(JsonUtils.javaObjectToObjectJson(extension));
                 skuList.add(sku);
             }
         });
