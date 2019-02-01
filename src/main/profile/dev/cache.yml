@@ -2,6 +2,6 @@ spring:
   cache:
     type: CAFFEINE
     cache-names:
-      - local
+      - default
     caffeine:
       spec: maximumSize=500,expireAfterWrite=300s

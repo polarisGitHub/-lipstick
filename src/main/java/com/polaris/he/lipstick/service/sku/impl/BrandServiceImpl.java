@@ -6,6 +6,7 @@ import com.polaris.he.lipstick.entity.sku.Brand;
 import com.polaris.he.lipstick.service.sku.BrandService;
 import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ public class BrandServiceImpl implements BrandService {
     private BrandDao brandDao;
 
     @Override
+    @Cacheable(cacheNames = "default", key = "'brand_'+#type")
     public List<Brand> getBrands(String type) {
         List<BrandDO> brands = brandDao.getAll(type);
         if (CollectionUtils.isNotEmpty(brands)) {
@@ -33,6 +35,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Cacheable(cacheNames = "default", key = "'brand_'+#type+'#'+#code")
     public Brand getBrand(String type, String code) {
         BrandDO brand = brandDao.getByCode(type, code);
         return BeanCopyUtils.copyObject(brand, new Brand());
