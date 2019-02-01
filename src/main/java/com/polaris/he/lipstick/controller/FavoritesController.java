@@ -2,7 +2,6 @@ package com.polaris.he.lipstick.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.polaris.he.lipstick.entity.constanst.CosmeticsEnum;
-import com.polaris.he.lipstick.entity.favorites.FavoriteItem;
 import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import com.polaris.he.lipstick.service.favorites.FavoritesService;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,12 +24,6 @@ public class FavoritesController {
 
     @Resource
     private FavoritesService favoritesService;
-
-    @GetMapping("/query")
-    public List<FavoriteItem> favorites(@PathVariable CosmeticsEnum type, UserInfo user) {
-        log.info("查询收藏夹，type={}，user={}", type, user);
-        return favoritesService.query(type.getCode(), user);
-    }
 
     @PostMapping("/save")
     public String saveFavorite(@PathVariable CosmeticsEnum type, @RequestBody JsonNode body, UserInfo user) {
