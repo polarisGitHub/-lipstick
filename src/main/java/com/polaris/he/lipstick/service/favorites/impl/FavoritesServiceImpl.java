@@ -10,7 +10,12 @@ import com.polaris.he.lipstick.entity.sku.SkuAggregation;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import com.polaris.he.lipstick.service.favorites.FavoritesService;
 import com.polaris.he.lipstick.service.sku.SkuService;
+import com.polaris.he.lipstick.utils.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -33,6 +38,13 @@ public class FavoritesServiceImpl implements FavoritesService {
     private SkuService skuService;
 
     @Override
+    public boolean checkFavorite(BaseSkuInfo sku, UserInfo user) {
+        FavoritesDO query = BeanCopyUtils.copyObject(sku, new FavoritesDO());
+        query = BeanCopyUtils.copyObject(user, query);
+        return favoritesDao.checkFavorite(query);
+    }
+
+    @Override
     public int save(BaseSkuInfo sku, UserInfo user) {
         log.info("用户保存到收藏夹,user={},sku={}", user, sku);
         Assert.notNull(sku, "sku不能为空");
@@ -42,6 +54,12 @@ public class FavoritesServiceImpl implements FavoritesService {
         if (skuInfo == null) {
             throw new BizException(String.format("找不到sku:%s", sku), ExceptionCodeEnum.E00002, null);
         }
+
+        // check
+        if (checkFavorite(sku, user)) {
+            throw new BizException(String.format("重复收藏", user, sku), ExceptionCodeEnum.E00003, null);
+        }
+
         FavoritesDO insert = new FavoritesDO();
         insert.setSource(user.getSource());
         insert.setOpenId(user.getOpenId());

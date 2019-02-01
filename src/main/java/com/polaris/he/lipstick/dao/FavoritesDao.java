@@ -1,6 +1,7 @@
 package com.polaris.he.lipstick.dao;
 
 import com.polaris.he.lipstick.dao.object.FavoritesDO;
+import com.polaris.he.lipstick.entity.sku.BaseSkuInfo;
 import com.polaris.he.lipstick.entity.user.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,10 @@ public interface FavoritesDao extends Dao {
      * @return
      */
     int queryByUser(@Param("user") UserInfo user);
+
+    /**
+     * @param favorite
+     * @return
+     */
+    boolean checkFavorite(FavoritesDO favorite);
 }

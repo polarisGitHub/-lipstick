@@ -16,6 +16,13 @@ public interface FavoritesService {
     /**
      * @param sku
      * @param user
+     * @return
+     */
+    boolean checkFavorite(BaseSkuInfo sku, UserInfo user);
+
+    /**
+     * @param sku
+     * @param user
      */
     int save(BaseSkuInfo sku, UserInfo user);
 

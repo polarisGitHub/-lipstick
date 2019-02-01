@@ -30,18 +30,27 @@
         #{goodsName,jdbcType=VARCHAR},
         #{goodsIllustration,jdbcType=VARCHAR},
         #{goodsUrl,jdbcType=VARCHAR},
+        #{skuCode,jdbcType=VARCHAR},
         #{skuName,jdbcType=VARCHAR},
         #{skuByName,jdbcType=VARCHAR},
-        #{skuUrl,jdbcType=VARCHAR},
         #{skuExtension,jdbcType=VARCHAR},
         now()
       )
     </insert>
 
-  <delete id="delete">
+    <delete id="delete">
       delete from
         user_favorites
       where
         id=#{id,jdbcType=BIGINT} and source=#{user.source,jdbcType=VARCHAR} and open_id=#{user.openId,jdbcType=VARCHAR}
     </delete>
+
+    <select id="checkFavorite" parameterType="com.polaris.he.lipstick.dao.object.FavoritesDO"
+            resultType="java.lang.Boolean">
+      select count(1) from
+        user_favorites
+      where
+        source=#{source,jdbcType=VARCHAR} and open_id=#{openId,jdbcType=VARCHAR} and
+        brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{skuCode,jdbcType=VARCHAR}
+    </select>
 </mapper>
