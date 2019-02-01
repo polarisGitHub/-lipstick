@@ -111,7 +111,11 @@ public class MybatisSqlLogInterceptor implements Interceptor {
             Field f = FieldUtils.getField(param.getClass(), property, true);
             if (f != null) {
                 try {
-                    return String.valueOf(FieldUtils.readField(f, param));
+                    Object object = FieldUtils.readField(f, param);
+                    if (object instanceof String) {
+                        return String.format("'%s'", String.valueOf(object));
+                    }
+                    return String.valueOf(object);
                 } catch (IllegalAccessException e) {
                 }
             }
