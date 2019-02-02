@@ -26,8 +26,10 @@ public interface GoodsDao extends Dao {
     int update(GoodsDO update);
 
     /**
+     *
+     * @param brandCode
      * @param type
-     * @param code
+     * @param goodsCode
      * @return
      */
     GoodsDO getByCode(@Param("brandCode") String brandCode, @Param("type") String type, @Param("goodsCode") String goodsCode);

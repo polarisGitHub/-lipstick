@@ -1,5 +1,7 @@
-package com.polaris.he.framework.dao.object;
+package com.polaris.he.lipstick.dao.objects;
 
+import com.polaris.he.framework.dao.object.GoodsDO;
+import com.polaris.he.framework.dao.object.SkuDO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

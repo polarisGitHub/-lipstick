@@ -1,8 +1,10 @@
 package com.polaris.he.lipstick.service.impl;
 
+import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
-import com.polaris.he.framework.dao.object.LipstickAggregationDO;
-import com.polaris.he.framework.dao.object.LipstickSearchDO;
+import com.polaris.he.lipstick.dao.objects.LipstickAggregationDO;
+import com.polaris.he.lipstick.dao.objects.LipstickSearchDO;
+import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.service.sku.BrandService;
@@ -66,9 +68,10 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         item.setGoodsName(l.getGoods().getGoodsName());
         item.setSkuCode(l.getSku().getSkuCode());
         item.setSkuName(l.getSku().getSkuName());
-        item.setColorNo(l.getSku().getExtension().get("colorNo").asText(""));
-        item.setColor(l.getSku().getExtension().get("color").asText(""));
-        item.setFigure(Optional.ofNullable(l.getSku().getExtension().get("figure")).map(ll -> ll.asText("")).orElse(""));
+        LipstickExtension extension = JsonUtils.toJavaObject(l.getSku().getExtension(), LipstickExtension.class);
+        item.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(null));
+        item.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(null));
+        item.setFigure(Optional.ofNullable(extension).map(LipstickExtension::getFigure).orElse(null));
         return item;
     }
 }

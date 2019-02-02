@@ -1,4 +1,4 @@
-package com.polaris.he.framework.dao.object;
+package com.polaris.he.lipstick.dao.objects;
 
 import lombok.Builder;
 import lombok.Getter;

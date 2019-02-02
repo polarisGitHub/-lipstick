@@ -28,6 +28,15 @@ public class JsonUtils {
         return OBJECT_MAPPER;
     }
 
+    public static <T> T toJavaObject(JsonNode jsonNode, Class<T> clazz) {
+        try {
+            return getObjectMapper().treeToValue(jsonNode, clazz);
+        } catch (JsonProcessingException e) {
+            log.error("convert json error", e);
+        }
+        return null;
+    }
+
     public static <T> T toJavaObject(String content, Class<T> clazz) {
         try {
             return getObjectMapper().readValue(content, clazz);

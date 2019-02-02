@@ -11,5 +11,5 @@ c3p0:
   maxStatements: 20
 
 mybatis:
-  mapperLocations: mapper/*.xml
+  mapperLocations: mapper/*.xml,mapper/**/*.xml
   typeHandlersPackage: com.polaris.he.framework.dao.handler
