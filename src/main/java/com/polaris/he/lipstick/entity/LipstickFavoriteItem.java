@@ -22,6 +22,7 @@ public class LipstickFavoriteItem {
 
     private String goodsName;
 
+    @Encryption
     private String skuCode;
 
     private String skuName;

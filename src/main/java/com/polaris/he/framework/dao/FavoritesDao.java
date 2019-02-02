@@ -4,6 +4,8 @@ import com.polaris.he.framework.dao.object.FavoritesDO;
 import com.polaris.he.framework.entity.user.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * User: hexie
  * Date: 2019-01-28 20:53
@@ -26,14 +28,15 @@ public interface FavoritesDao extends Dao {
     int delete(@Param("id") Long id, @Param("user") UserInfo user);
 
     /**
-     * @param user
-     * @return
-     */
-    int queryByUser(@Param("user") UserInfo user);
-
-    /**
      * @param favorite
      * @return
      */
     boolean checkFavorite(FavoritesDO favorite);
+
+    /**
+     * @param source
+     * @param openId
+     * @return
+     */
+    List<FavoritesDO> queryFavorites(@Param("source") String source, @Param("openId") String openId, @Param("type") String type);
 }

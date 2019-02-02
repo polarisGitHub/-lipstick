@@ -53,4 +53,25 @@
         source=#{source,jdbcType=VARCHAR} and open_id=#{openId,jdbcType=VARCHAR} and
         brand_code=#{brandCode,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR} and sku_code=#{skuCode,jdbcType=VARCHAR}
     </select>
+
+  <select id="queryFavorites"  resultType="com.polaris.he.framework.dao.object.FavoritesDO">
+        select
+          id as id,
+          source as source,
+          open_id as openId,
+          brand_code as brandCode,
+          brand_name as brandName,
+          goods_code as goodsCode,
+          goods_name as goodsName,
+          goods_illustration as goodsIllustration,
+          goods_url as goodsUrl,
+          sku_code as skuCode,
+          sku_name as skuName,
+          sku_by_name as skuByName,
+          sku_url as skuUrl,
+          sku_extension as skuExtension
+        from user_favorites
+        where
+          source=#{source,jdbcType=VARCHAR} and open_id =#{openId,jdbcType=VARCHAR} and type=#{type,jdbcType=VARCHAR}
+    </select>
 </mapper>

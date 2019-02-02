@@ -3,6 +3,7 @@ package com.polaris.he.framework.service.favorites;
 import com.polaris.he.framework.entity.favorites.FavoriteItem;
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.user.UserInfo;
+import com.polaris.he.lipstick.entity.LipstickFavoriteItem;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public interface FavoritesService {
 
     /**
      * @param user
+     * @param type
+     * @return
      */
-    List<FavoriteItem> query(String type, UserInfo user);
+    List<?> queryUserFavorite(UserInfo user, String type);
 }
