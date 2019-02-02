@@ -1,5 +1,6 @@
 package com.polaris.he.application.mvc;
 
+import com.polaris.he.application.mvc.argument.PathVariableEncryptionMethodArgumentResolver;
 import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.application.mvc.argument.UserInfoArgumentResolver;
 import com.polaris.he.application.mvc.converter.StringToCosmeticsEnumConverter;
@@ -30,6 +31,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new UserInfoArgumentResolver());
+        resolvers.add(new PathVariableEncryptionMethodArgumentResolver());
     }
 
     @Override

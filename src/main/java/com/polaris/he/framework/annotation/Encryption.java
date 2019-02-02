@@ -16,7 +16,7 @@ import java.lang.annotation.*;
  */
 @Documented
 @JacksonAnnotationsInside
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @JsonSerialize(using = JacksonEncryptionSerializer.class)
 @JsonDeserialize(using = JacksonEncryptionDeserializer.class)

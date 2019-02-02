@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.entity;
 
+import com.polaris.he.framework.annotation.Encryption;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,10 +23,12 @@ public class LipstickListItem {
 
     private String categoryName;
 
+    @Encryption
     private String goodsCode;
 
     private String goodsName;
 
+    @Encryption
     private String skuCode;
 
     private String skuName;

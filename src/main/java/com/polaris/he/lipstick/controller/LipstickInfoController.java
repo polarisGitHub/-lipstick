@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.controller;
 
+import com.polaris.he.framework.annotation.PathVariableEncryption;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
@@ -58,7 +59,7 @@ public class LipstickInfoController {
      * @return
      */
     @GetMapping("/sku/{brandCode}/{skuCode}")
-    public LipstickListItem getBySkuCode(@PathVariable String brandCode, @PathVariable String skuCode) {
+    public LipstickListItem getBySkuCode(@PathVariable String brandCode, @PathVariableEncryption String skuCode) {
         BaseSkuInfo sku = BaseSkuInfoUtils.create(brandCode, CosmeticsEnum.LIPSTICK.getCode(), skuCode);
         return lipstickProductService.getBySkuCode(sku);
     }
