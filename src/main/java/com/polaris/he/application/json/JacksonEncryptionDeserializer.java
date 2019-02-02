@@ -35,7 +35,11 @@ public class JacksonEncryptionDeserializer extends JsonDeserializer<Object> impl
 
     @Override
     public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        String decode = EncryptionUtils.AESDecode(p.getText(), SpringContextUtils.getProperty("encryption.aes.password"));
+        String text = p.getText();
+        if (text == null) {
+            return null;
+        }
+        String decode = EncryptionUtils.AESDecode(text, SpringContextUtils.getProperty("encryption.aes.password"));
         if (Long.class.equals(clazz)) {
             return Long.valueOf(decode);
         } else if (String.class.equals(clazz)) {

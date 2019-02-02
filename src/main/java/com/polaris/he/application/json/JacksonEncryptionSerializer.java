@@ -20,6 +20,9 @@ public class JacksonEncryptionSerializer extends JsonSerializer<Object> implemen
 
     @Override
     public void serialize(Object value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        if (value == null) {
+            gen.writeNull();
+        }
         gen.writeString(EncryptionUtils.AESEncode(String.valueOf(value), SpringContextUtils.getProperty("encryption.aes.password")));
     }
 
