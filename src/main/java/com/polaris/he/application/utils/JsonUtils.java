@@ -39,6 +39,9 @@ public class JsonUtils {
 
     public static <T> T toJavaObject(String content, Class<T> clazz) {
         try {
+            if (content == null) {
+                return null;
+            }
             return getObjectMapper().readValue(content, clazz);
         } catch (IOException e) {
             log.error("read json string error", e);

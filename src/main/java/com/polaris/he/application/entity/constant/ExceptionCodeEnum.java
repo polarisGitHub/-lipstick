@@ -9,6 +9,9 @@ public enum ExceptionCodeEnum {
     E00001("参数错误"),
     E00002("找不到数据"),
     E00003("数据重复"),
+    E00004("无权限"),
+    E00005("服务异常"),
+    E00006("登录过期"),
     ;
     private String message;
 

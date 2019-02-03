@@ -5,4 +5,6 @@ user:
 
 encryption:
   aes:
-    password: 123467890
+    password:
+      data: SIEGe0K4$XuceFy%
+      jwt: Bten&eh9E5RrMQCE

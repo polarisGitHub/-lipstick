@@ -10,12 +10,13 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-@RequiredArgsConstructor
 public class UserInfo {
 
-    @NonNull
     private String source;
 
-    @NonNull
     private String openId;
+
+    private String name;
+
+    private String avatar;
 }

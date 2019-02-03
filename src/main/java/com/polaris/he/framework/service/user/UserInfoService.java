@@ -2,7 +2,7 @@ package com.polaris.he.framework.service.user;
 
 import com.polaris.he.framework.entity.user.UserInfo;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * User: hexie
@@ -11,5 +11,5 @@ import javax.servlet.ServletRequest;
  */
 public interface UserInfoService {
 
-    UserInfo getUserInfo(ServletRequest request);
+    UserInfo getUserInfo(HttpServletRequest request);
 }

@@ -24,7 +24,7 @@ public class PathVariableEncryptionMethodArgumentResolver extends PathVariableMe
     @Override
     protected Object resolveName(String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
         String ret = (String) super.resolveName(name, parameter, request);
-        return (ret != null ? EncryptionUtils.AESDecode(ret, SpringContextUtils.getProperty("encryption.aes.password")) : null);
+        return (ret != null ? EncryptionUtils.AESDecode(ret, SpringContextUtils.getProperty("encryption.aes.password.data")) : null);
     }
 
     @Override

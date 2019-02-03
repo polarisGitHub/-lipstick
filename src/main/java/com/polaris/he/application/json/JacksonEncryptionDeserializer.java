@@ -39,7 +39,7 @@ public class JacksonEncryptionDeserializer extends JsonDeserializer<Object> impl
         if (text == null) {
             return null;
         }
-        String decode = EncryptionUtils.AESDecode(text, SpringContextUtils.getProperty("encryption.aes.password"));
+        String decode = EncryptionUtils.AESDecode(text, SpringContextUtils.getProperty("encryption.aes.password.data"));
         if (Long.class.equals(clazz)) {
             return Long.valueOf(decode);
         } else if (String.class.equals(clazz)) {

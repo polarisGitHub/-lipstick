@@ -1,6 +1,5 @@
 package com.polaris.he.framework.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.entity.favorites.FavoritesDeleteEntity;
 import com.polaris.he.framework.entity.favorites.FavoritesSaveEntity;
@@ -13,7 +12,6 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Optional;
 
 /**
  * User: hexie

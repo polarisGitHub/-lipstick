@@ -1,7 +1,7 @@
 package com.polaris.he.application.mvc;
 
 import com.polaris.he.application.mvc.filter.MdcFilter;
-import com.polaris.he.application.mvc.filter.WeixinUserInfoFilter;
+import com.polaris.he.application.mvc.filter.JwtFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,12 +29,12 @@ public class FilterConfiguration {
     }
 
     @Bean
-    public FilterRegistrationBean weixinFilter() {
+    public FilterRegistrationBean jwtFilter() {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setName("weixinUserInfo");
-        registrationBean.setFilter(new WeixinUserInfoFilter());
+        registrationBean.setName("jwtFilter");
+        registrationBean.setFilter(new JwtFilter());
         registrationBean.setOrder(2);
-        registrationBean.setUrlPatterns(Collections.singletonList("/*"));
+        registrationBean.setUrlPatterns(Collections.singletonList("/api/*"));
         return registrationBean;
     }
 }
