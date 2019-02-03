@@ -1,6 +1,5 @@
 package com.polaris.he.framework.service.sku.impl;
 
-import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.sku.Brand;
@@ -10,6 +9,7 @@ import com.polaris.he.framework.service.sku.BrandService;
 import com.polaris.he.framework.service.sku.CategoryService;
 import com.polaris.he.framework.service.sku.LipstickProductService;
 import com.polaris.he.framework.service.sku.SkuService;
+import com.polaris.he.lipstick.entity.LipstickListItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;

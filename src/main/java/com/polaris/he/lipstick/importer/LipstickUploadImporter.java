@@ -1,22 +1,20 @@
 package com.polaris.he.lipstick.importer;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.polaris.he.application.utils.JsonUtils;
+import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.entity.sku.*;
 import com.polaris.he.framework.importer.AbstractUploadImporter;
 import com.polaris.he.framework.importer.converter.UploadByteConverter;
 import com.polaris.he.framework.importer.data.UploadValidateErrorLine;
 import com.polaris.he.framework.importer.data.UploadValidateResult;
-import com.polaris.he.application.utils.JsonUtils;
-import com.polaris.he.lipstick.entity.LipstickExtension;
-import com.polaris.he.lipstick.entity.LipstickUploadData;
-import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.service.sku.BrandService;
 import com.polaris.he.framework.service.sku.CategoryService;
 import com.polaris.he.framework.service.sku.GoodsService;
 import com.polaris.he.framework.service.sku.SkuService;
+import com.polaris.he.lipstick.entity.LipstickExtension;
+import com.polaris.he.lipstick.entity.LipstickUploadData;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

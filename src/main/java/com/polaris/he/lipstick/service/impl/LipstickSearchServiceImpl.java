@@ -1,14 +1,14 @@
 package com.polaris.he.lipstick.service.impl;
 
 import com.polaris.he.application.utils.JsonUtils;
+import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
+import com.polaris.he.framework.service.sku.BrandService;
+import com.polaris.he.framework.service.sku.CategoryService;
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.objects.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.objects.LipstickSearchDO;
 import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickListItem;
-import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
-import com.polaris.he.framework.service.sku.BrandService;
-import com.polaris.he.framework.service.sku.CategoryService;
 import com.polaris.he.lipstick.service.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

@@ -1,8 +1,8 @@
 package com.polaris.he.framework.importer;
 
 import com.polaris.he.framework.importer.converter.UploadExtensionExtensionEnum;
-import com.polaris.he.framework.importer.data.UploadValidateResult;
 import com.polaris.he.framework.importer.data.UploadResult;
+import com.polaris.he.framework.importer.data.UploadValidateResult;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

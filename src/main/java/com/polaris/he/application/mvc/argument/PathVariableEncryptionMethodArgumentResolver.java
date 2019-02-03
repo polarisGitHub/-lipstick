@@ -5,7 +5,6 @@ import com.polaris.he.framework.annotation.PathVariableEncryption;
 import com.polaris.he.framework.utils.SpringContextUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ValueConstants;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.PathVariableMethodArgumentResolver;

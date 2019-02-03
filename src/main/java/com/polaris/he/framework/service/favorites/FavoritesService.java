@@ -1,9 +1,7 @@
 package com.polaris.he.framework.service.favorites;
 
-import com.polaris.he.framework.entity.favorites.FavoriteItem;
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.user.UserInfo;
-import com.polaris.he.lipstick.entity.LipstickFavoriteItem;
 
 import java.util.List;
 

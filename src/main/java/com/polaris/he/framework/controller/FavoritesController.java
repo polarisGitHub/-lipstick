@@ -6,12 +6,10 @@ import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.user.UserInfo;
 import com.polaris.he.framework.service.favorites.FavoritesService;
 import com.polaris.he.framework.utils.BaseSkuInfoUtils;
-import com.polaris.he.lipstick.entity.LipstickFavoriteItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,7 +41,7 @@ public class FavoritesController {
         return "ok";
     }
 
-    @PostMapping("/query")
+    @GetMapping("/query")
     public Object queryFavorites(@PathVariable CosmeticsEnum type, UserInfo user) {
         log.info("用户{}查询{}收藏情况", user, type);
         return favoritesService.queryUserFavorite(user, type.getCode());

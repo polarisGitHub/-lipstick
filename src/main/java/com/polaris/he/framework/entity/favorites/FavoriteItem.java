@@ -1,9 +1,9 @@
 package com.polaris.he.framework.entity.favorites;
 
 import com.polaris.he.framework.entity.sku.Brand;
-import com.polaris.he.framework.entity.sku.Sku;
 import com.polaris.he.framework.entity.sku.Category;
 import com.polaris.he.framework.entity.sku.Goods;
+import com.polaris.he.framework.entity.sku.Sku;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
