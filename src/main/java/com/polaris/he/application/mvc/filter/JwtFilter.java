@@ -75,7 +75,7 @@ public class JwtFilter implements Filter {
                     writeResponse(response, ERROR_JWT_STRING);
                     return;
                 }
-                if (LocalDateTime.now().isAfter(javaWebToken.getExpireTime())) {// token未过期
+                if (LocalDateTime.now().isBefore(javaWebToken.getExpireTime())) {// token未过期
                     BeanUtils.copyProperties(javaWebToken, userInfo);
                 } else {// token过期
                     writeResponse(response, LOGIN_TIMEOUT_STRING);
