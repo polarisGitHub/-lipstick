@@ -90,7 +90,7 @@ public class FavoritesServiceImpl implements FavoritesService, ApplicationContex
     @Override
     public int delete(Long id, UserInfo user) {
         log.info("用户删除收藏夹，user={},id={}", user, id);
-        return favoritesDao.delete(id, user);
+        return favoritesDao.delete(id, user.getSource(), user.getOpenId());
     }
 
     @Override

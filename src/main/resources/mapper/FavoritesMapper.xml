@@ -42,7 +42,7 @@
       delete from
         user_favorites
       where
-        id=#{id,jdbcType=BIGINT} and source=#{user.source,jdbcType=VARCHAR} and open_id=#{user.openId,jdbcType=VARCHAR}
+        id=#{id,jdbcType=BIGINT} and source=#{source,jdbcType=VARCHAR} and open_id=#{openId,jdbcType=VARCHAR}
     </delete>
 
     <select id="checkFavorite" parameterType="com.polaris.he.framework.dao.object.FavoritesDO"

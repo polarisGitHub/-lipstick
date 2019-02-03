@@ -21,11 +21,13 @@ public interface FavoritesDao extends Dao {
     int insert(FavoritesDO favorite);
 
     /**
+     *
      * @param id
-     * @param user
+     * @param source
+     * @param openId
      * @return
      */
-    int delete(@Param("id") Long id, @Param("user") UserInfo user);
+    int delete(@Param("id") Long id, @Param("source") String source, @Param("openId") String openId);
 
     /**
      * @param favorite
