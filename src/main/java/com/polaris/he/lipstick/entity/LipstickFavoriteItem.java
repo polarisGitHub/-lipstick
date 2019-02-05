@@ -18,7 +18,12 @@ public class LipstickFavoriteItem {
     @Encryption
     private Long id;
 
+    private String brandCode;
+
     private String brandName;
+
+    @Encryption
+    private String goodsCode;
 
     private String goodsName;
 

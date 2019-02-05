@@ -24,7 +24,9 @@ public class LipstickFavoritesConverter implements Converter<FavoritesDO, Lipsti
     public LipstickFavoriteItem convert(FavoritesDO source) {
         LipstickFavoriteItem data = new LipstickFavoriteItem();
         data.setId(source.getId());
+        data.setBrandCode(source.getBrandCode());
         data.setBrandName(source.getBrandName());
+        data.setGoodsCode(source.getGoodsCode());
         data.setGoodsName(source.getGoodsName());
         data.setSkuCode(source.getSkuCode());
         data.setSkuName(source.getSkuName());

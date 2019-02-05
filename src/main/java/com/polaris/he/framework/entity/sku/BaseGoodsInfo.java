@@ -16,7 +16,6 @@ import lombok.ToString;
 @ToString
 public class BaseGoodsInfo {
 
-    @Encryption
     private String brandCode;
 
     transient private String type; // 具体type具体业务关心，不在接口返回
