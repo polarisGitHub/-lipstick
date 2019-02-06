@@ -1,7 +1,6 @@
 package com.polaris.he.framework.dao;
 
 import com.polaris.he.framework.dao.object.FavoritesDO;
-import com.polaris.he.framework.entity.user.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

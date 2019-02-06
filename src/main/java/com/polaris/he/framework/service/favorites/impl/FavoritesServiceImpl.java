@@ -2,31 +2,22 @@ package com.polaris.he.framework.service.favorites.impl;
 
 import com.polaris.he.application.entity.constant.ExceptionCodeEnum;
 import com.polaris.he.application.exception.BizException;
-import com.polaris.he.framework.annotation.FavoritesConverter;
 import com.polaris.he.framework.dao.FavoritesDao;
 import com.polaris.he.framework.dao.object.FavoritesDO;
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.sku.SkuAggregation;
 import com.polaris.he.framework.entity.user.UserInfo;
+import com.polaris.he.framework.repository.FrameworkBizConverterRepository;
 import com.polaris.he.framework.service.favorites.FavoritesService;
 import com.polaris.he.framework.service.sku.SkuService;
 import com.polaris.he.framework.utils.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -36,15 +27,16 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class FavoritesServiceImpl implements FavoritesService, ApplicationContextAware {
-
-    private static final Map<String, Converter<FavoritesDO, ?>> CONVERTER_MAP = new HashMap<>();
+public class FavoritesServiceImpl implements FavoritesService {
 
     @Resource
     private FavoritesDao favoritesDao;
 
     @Resource
     private SkuService skuService;
+
+    @Resource
+    private FrameworkBizConverterRepository frameworkBizConverterRepository;
 
     @Override
     public boolean checkFavorite(BaseSkuInfo sku, UserInfo user) {
@@ -96,28 +88,7 @@ public class FavoritesServiceImpl implements FavoritesService, ApplicationContex
     @Override
     public List<?> queryUserFavorite(UserInfo user, String type) {
         List<FavoritesDO> list = favoritesDao.queryFavorites(user.getSource(), user.getOpenId(), type);
-        Converter converter = CONVERTER_MAP.get(type);
-        Assert.notNull(converter, "convert为空");
-        return list.stream().map((Function<FavoritesDO, ?>) converter::convert).collect(Collectors.toList());
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        Map<String, Converter> beans = applicationContext.getBeansOfType(Converter.class);
-        if (MapUtils.isNotEmpty(beans)) {
-            beans.forEach((beanName, bean) -> {
-                Class<? extends Converter> clazz = bean.getClass();
-                Type[] types = clazz.getGenericInterfaces();
-                for (Type type : types) {
-                    Type source = ((ParameterizedType) type).getActualTypeArguments()[0];
-                    if (((ParameterizedType) type).getRawType().equals(Converter.class) && source.equals(FavoritesDO.class)) {
-                        FavoritesConverter ann = clazz.getAnnotation(FavoritesConverter.class);
-                        if (ann != null) {
-                            CONVERTER_MAP.put(ann.type().getCode(), bean);
-                        }
-                    }
-                }
-            });
-        }
+        Converter<FavoritesDO, ?> converter = frameworkBizConverterRepository.getConverter(type, FavoritesDO.class, "favorites");
+        return list.stream().map(converter::convert).collect(Collectors.toList());
     }
 }

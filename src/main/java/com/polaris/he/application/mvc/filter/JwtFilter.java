@@ -7,14 +7,11 @@ import com.polaris.he.application.utils.EncryptionUtils;
 import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.framework.entity.user.JavaWebToken;
 import com.polaris.he.framework.entity.user.UserInfo;
-import com.polaris.he.framework.service.user.UserInfoService;
 import com.polaris.he.framework.utils.SpringContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

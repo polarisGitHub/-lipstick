@@ -1,13 +1,13 @@
 package com.polaris.he.lipstick.converter;
 
 import com.polaris.he.application.utils.JsonUtils;
-import com.polaris.he.framework.annotation.FavoritesConverter;
+import com.polaris.he.framework.annotation.FrameworkBizConverter;
 import com.polaris.he.framework.dao.object.FavoritesDO;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickFavoriteItem;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -16,8 +16,8 @@ import java.util.Optional;
  * Date: 2019-02-02 22:58
  * Description:
  */
-@Service
-@FavoritesConverter(type = CosmeticsEnum.LIPSTICK)
+@Component
+@FrameworkBizConverter(type = CosmeticsEnum.LIPSTICK, biz = "favorites")
 public class LipstickFavoritesConverter implements Converter<FavoritesDO, LipstickFavoriteItem> {
 
     @Override

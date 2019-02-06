@@ -11,11 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 

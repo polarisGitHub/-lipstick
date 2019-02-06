@@ -6,17 +6,21 @@ import java.lang.annotation.*;
 
 /**
  * User: hexie
- * Date: 2019-02-02 22:43
+ * Date: 2019-02-06 23:56
  * Description:
  */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FavoritesConverter {
-
+public @interface FrameworkBizConverter {
 
     /**
      * @return
      */
     CosmeticsEnum type();
+
+    /**
+     * @return
+     */
+    String biz();
 }

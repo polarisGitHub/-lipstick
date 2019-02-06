@@ -1,9 +1,8 @@
-package com.polaris.he.framework.service.sku;
+package com.polaris.he.framework.service.product;
 
 import com.polaris.he.framework.entity.sku.BaseSkuInfo;
 import com.polaris.he.framework.entity.sku.Brand;
 import com.polaris.he.framework.entity.sku.Category;
-import com.polaris.he.lipstick.entity.LipstickListItem;
 
 import java.util.List;
 
@@ -12,35 +11,34 @@ import java.util.List;
  * Date: 2018-12-16 20:42
  * Description:
  */
-public interface LipstickProductService {
+public interface ProductService {
 
     /**
      * @return
      */
-    List<Brand> getBrands();
-
-    /**
-     * @param code
-     * @return
-     */
-    Brand getBrand(String code);
+    List<Brand> getBrands(String type);
 
     /**
      * @param code
      * @return
      */
-    Category getCategory(String code);
+    Brand getBrand(String type, String code);
+
+    /**
+     * @param code
+     * @return
+     */
+    Category getCategory(String type, String code);
 
     /**
      * @param brandCodes
      * @return
      */
-    List<Category> getCategories(List<String> brandCodes);
+    List<Category> getCategories(String type, List<String> brandCodes);
 
     /**
-     *
-     * @param skuCode
+     * @param sku
      * @return
      */
-    LipstickListItem getBySkuCode(BaseSkuInfo sku);
+    Object getBySkuCode(BaseSkuInfo sku);
 }
