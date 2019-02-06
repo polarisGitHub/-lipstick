@@ -93,7 +93,6 @@ public class JwtFilter implements Filter {
         response.setContentType(MediaType.APPLICATION_JSON_UTF8.toString());
         response.getWriter().write(content);
         response.getWriter().flush();
-        response.getWriter().close();
     }
 
     @Override
