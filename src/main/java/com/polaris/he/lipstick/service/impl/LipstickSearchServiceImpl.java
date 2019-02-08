@@ -69,7 +69,7 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         item.setSkuCode(l.getSku().getSkuCode());
         item.setSkuName(l.getSku().getSkuName());
         LipstickExtension extension = JsonUtils.toJavaObject(l.getSku().getExtension(), LipstickExtension.class);
-        item.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(null));
+        item.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColorNo).orElse(null));
         item.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(null));
         item.setFigure(Optional.ofNullable(extension).map(LipstickExtension::getFigure).orElse(null));
         return item;
