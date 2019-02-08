@@ -13,6 +13,11 @@ public class BizException extends RuntimeException {
 
     private ExceptionCodeEnum exceptionCode;
 
+    public BizException(String message, ExceptionCodeEnum exceptionCode) {
+        super(message);
+        this.exceptionCode = exceptionCode;
+    }
+
     public BizException(String message, ExceptionCodeEnum exceptionCode, Throwable cause) {
         super(message, cause);
         this.exceptionCode = exceptionCode;

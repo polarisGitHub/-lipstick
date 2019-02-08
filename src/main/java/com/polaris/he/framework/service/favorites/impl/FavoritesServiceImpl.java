@@ -53,12 +53,12 @@ public class FavoritesServiceImpl implements FavoritesService {
         SkuAggregation skuInfo = skuService.getAggregationBySkuInfo(sku);
 
         if (skuInfo == null) {
-            throw new BizException(String.format("找不到sku:%s", sku), ExceptionCodeEnum.E00002, null);
+            throw new BizException(String.format("找不到sku:%s", sku), ExceptionCodeEnum.E00002);
         }
 
         // check
         if (checkFavorite(sku, user)) {
-            throw new BizException(String.format("重复收藏", user, sku), ExceptionCodeEnum.E00003, null);
+            throw new BizException(String.format("重复收藏", user, sku), ExceptionCodeEnum.E00003);
         }
 
         FavoritesDO insert = new FavoritesDO();

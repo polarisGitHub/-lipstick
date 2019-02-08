@@ -1,5 +1,7 @@
 package com.polaris.he.lipstick.controller;
 
+import com.polaris.he.application.entity.constant.ExceptionCodeEnum;
+import com.polaris.he.application.exception.BizException;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.service.LipstickSearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +32,9 @@ public class LipstickSearchController {
     public List<LipstickListItem> search(String brands, String categories, String colorNo) {
         log.info("查找口红，brands={},categories={},colorNo={}", brands, categories, colorNo);
         Assert.hasText(brands, "品牌不能为空");
-        Assert.hasText(categories, "类别不能为空");
-        Assert.hasText(colorNo, "色卡不能为空");
+        if (StringUtils.isEmpty(categories) && StringUtils.isEmpty(colorNo)) {
+            throw new BizException("【类别，色卡】必须填一个", ExceptionCodeEnum.E00001);
+        }
         List<LipstickListItem> ret = lipstickSearchService.search(Arrays.asList(StringUtils.split(brands, ",")), Arrays.asList(StringUtils.split(categories, ",")), colorNo);
         log.info("找到口红：{}", ret);
         return ret;

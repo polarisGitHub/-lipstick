@@ -46,14 +46,18 @@
           <foreach collection="brandCodes" item="item" open="(" separator="," close=")">
               #{item,jdbcType=VARCHAR}
           </foreach>
-          and a.category_code in
-          <foreach collection="categoryCodes" item="item" open="(" separator="," close=")">
-              #{item,jdbcType=VARCHAR}
-          </foreach>
-          and (
+          <if test="categoryCodes != null &amp;&amp; categoryCodes.size!=0">
+              and a.category_code in
+              <foreach collection="categoryCodes" item="item" open="(" separator="," close=")">
+                  #{item,jdbcType=VARCHAR}
+              </foreach>
+          </if>
+          <if test="colorNo!=null">
+              and (
               c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
               c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
               c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%')
-          )
+              )
+          </if>
     </select>
 </mapper>
