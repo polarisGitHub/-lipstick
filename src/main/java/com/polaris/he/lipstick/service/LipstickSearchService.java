@@ -11,5 +11,21 @@ import java.util.List;
  */
 public interface LipstickSearchService {
 
+    /**
+     * @param brandCodes
+     * @param categories
+     * @param colorNo
+     * @return
+     */
     List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo);
+
+    /**
+     * @param brandCodes
+     * @param categories
+     * @param color
+     * @param threshold
+     * @return
+     */
+    List<LipstickListItem> similar(List<String> brandCodes, List<String> categories, String color, Double threshold);
+
 }

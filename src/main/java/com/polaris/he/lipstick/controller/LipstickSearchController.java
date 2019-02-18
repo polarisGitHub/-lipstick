@@ -35,8 +35,26 @@ public class LipstickSearchController {
         if (StringUtils.isEmpty(categories) && StringUtils.isEmpty(colorNo)) {
             throw new BizException("【类别，色卡】必须填一个", ExceptionCodeEnum.E00001);
         }
-        List<LipstickListItem> ret = lipstickSearchService.search(Arrays.asList(StringUtils.split(brands, ",")), Arrays.asList(StringUtils.split(categories, ",")), colorNo);
+        List<LipstickListItem> ret = lipstickSearchService.search(
+                Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(brands), ",")),
+                Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(categories), ",")),
+                colorNo);
         log.info("找到口红：{}", ret);
+        return ret;
+    }
+
+    @GetMapping("/similar")
+    public List<LipstickListItem> similar(String brands, String categories, String color, String threshold) {
+        log.info("查找颜色相似口红，brands={},categories={},colorNo={}", brands, categories, color);
+        if (StringUtils.isEmpty(color)) {
+            throw new BizException("【颜色必填】必须填一个", ExceptionCodeEnum.E00001);
+        }
+        List<LipstickListItem> ret = lipstickSearchService.similar(
+                Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(brands), ",")),
+                Arrays.asList(StringUtils.split(StringUtils.trimToEmpty(categories), ",")),
+                color,
+                Double.valueOf(threshold));
+        log.info("查找颜色相似口红：{}", ret);
         return ret;
     }
 }

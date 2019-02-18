@@ -4,20 +4,26 @@ import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.service.sku.BrandService;
 import com.polaris.he.framework.service.sku.CategoryService;
+import com.polaris.he.lipstick.algorithm.color.data.ColorDistanceAlgorithm;
+import com.polaris.he.lipstick.algorithm.color.data.ColorSpace;
+import com.polaris.he.lipstick.algorithm.color.distance.ColorDistance;
+import com.polaris.he.lipstick.algorithm.color.distance.ColorDistanceComputerFactory;
+import com.polaris.he.lipstick.algorithm.color.utils.HexColorUtils;
 import com.polaris.he.lipstick.dao.LipstickSearchDao;
 import com.polaris.he.lipstick.dao.objects.LipstickAggregationDO;
 import com.polaris.he.lipstick.dao.objects.LipstickSearchDO;
 import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import com.polaris.he.lipstick.service.LipstickSearchService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * TODO 搜索最好走搜索引擎，现在没资源，直接在db中做
@@ -57,6 +63,39 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         return result;
     }
 
+    @Override
+    public List<LipstickListItem> similar(List<String> brandCodes, List<String> categories, String color, Double threshold) {
+        log.info("[产品颜色搜索] 查询，brand={},category={},color={},threshold={}", brandCodes, categories, color, threshold);
+        LipstickSearchDO query = LipstickSearchDO.builder().
+                brandCodes(brandCodes).
+                categoryCodes(categories).
+                build();
+        List<LipstickAggregationDO> list = lipstickSearchDao.search(query);
+
+        List<LipstickListItem> result = Collections.emptyList();
+        List<SimilarColorDistanceWrapper> wrappers = Collections.synchronizedList(new ArrayList<>());
+        if (CollectionUtils.isNotEmpty(list)) {
+            ColorDistance algorithm = ColorDistanceComputerFactory.getComputer(ColorDistanceAlgorithm.CIE76);
+            ColorSpace target = new ColorSpace(HexColorUtils.hex2Rgb(color));
+            list.stream().parallel().forEach(l -> {
+                LipstickExtension extension = JsonUtils.toJavaObject(l.getSku().getExtension(), LipstickExtension.class);
+                if (extension != null) {
+                    double distance = algorithm.compute(target, new ColorSpace(HexColorUtils.hex2Rgb(extension.getColor())));
+                    log.info("{}和{}【{}】距离为，{}", color, extension.getColor(), l.getSku().getSkuCode(), distance);
+                    if (distance < threshold) {
+                        wrappers.add(new SimilarColorDistanceWrapper(convert(l), distance));
+                    }
+                }
+            });
+        }
+
+        if (CollectionUtils.isNotEmpty(wrappers)) {
+            result = wrappers.stream().sorted(Comparator.comparingDouble(SimilarColorDistanceWrapper::getDistance)).map(SimilarColorDistanceWrapper::getLipstick).collect(Collectors.toList());
+        }
+        log.info("[产品颜色搜索] 返回结果，result={}", result);
+        return result;
+    }
+
     private LipstickListItem convert(LipstickAggregationDO l) {// TODO sku
         LipstickListItem item = new LipstickListItem();
         item.setBrandCode(l.getBrandCode());
@@ -73,5 +112,13 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
         item.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(null));
         item.setFigure(Optional.ofNullable(extension).map(LipstickExtension::getFigure).orElse(null));
         return item;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    private static class SimilarColorDistanceWrapper {
+        private LipstickListItem lipstick;
+
+        private double distance;
     }
 }
