@@ -82,15 +82,17 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
                 if (extension != null) {
                     double distance = algorithm.compute(target, new ColorSpace(HexColorUtils.hex2Rgb(extension.getColor())));
                     log.info("{}和{}【{}】距离为，{}", color, extension.getColor(), l.getSku().getSkuCode(), distance);
-                    if (distance < threshold) {
-                        wrappers.add(new SimilarColorDistanceWrapper(convert(l), distance));
-                    }
+                    wrappers.add(new SimilarColorDistanceWrapper(convert(l), distance));
                 }
             });
         }
 
         if (CollectionUtils.isNotEmpty(wrappers)) {
-            result = wrappers.stream().sorted(Comparator.comparingDouble(SimilarColorDistanceWrapper::getDistance)).map(SimilarColorDistanceWrapper::getLipstick).collect(Collectors.toList());
+            result = wrappers.stream().
+                    filter(l -> l.getDistance() < threshold).
+                    sorted(Comparator.comparingDouble(SimilarColorDistanceWrapper::getDistance)).
+                    map(SimilarColorDistanceWrapper::getLipstick).
+                    collect(Collectors.toList());
         }
         log.info("[产品颜色搜索] 返回结果，result={}", result);
         return result;
