@@ -100,7 +100,7 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                 goods.setGoodsCode(l.getGoodsCode());
                 goods.setGoodsName(l.getGoodsName());
                 goods.setUrl(l.getGoodsUrl());
-                goods.setIllustration("");
+                goods.setIllustration(l.getGoodsIllustration());
                 goodsMap.put(l.getGoodsCode(), goods);
                 goodsCategoryMapping.put(goods.getGoodsCode(), categoryMap.get(l.getCatalogName()));
             }
@@ -119,6 +119,9 @@ public class LipstickUploadImporter extends AbstractUploadImporter<LipstickUploa
                 LipstickExtension extension = new LipstickExtension();
                 extension.setColorNo(l.getColorNo());
                 extension.setColor(l.getColor());
+                if (!StringUtils.equals(l.getColor(), l.getColor1())) {
+                    extension.setColor1(l.getColor1());
+                }
 
                 String[] imgs = StringUtils.split(l.getSkuImgDownloadFile(), ",");
                 if (ArrayUtils.isNotEmpty(imgs)) {

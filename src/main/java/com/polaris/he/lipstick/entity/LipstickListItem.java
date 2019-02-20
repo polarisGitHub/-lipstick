@@ -37,5 +37,7 @@ public class LipstickListItem {
 
     private String color;
 
+    private String color1;
+
     private String figure;
 }

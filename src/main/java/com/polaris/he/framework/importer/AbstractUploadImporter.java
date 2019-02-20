@@ -56,7 +56,7 @@ public abstract class AbstractUploadImporter<T> implements UploadImporter<T> {
 
             optionalListener.ifPresent(l -> l.onBeforeResolve(upload));
             ((AbstractUploadImporter) AopContext.currentProxy()).resolved(upload);
-            logger.info("导入流程玩");
+            logger.info("导入流程完");
 
             return new UploadResult(isAsync ? "async" : "sync", UUID.randomUUID().toString());
         } catch (Exception e) {

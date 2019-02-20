@@ -33,6 +33,7 @@ public class LipstickFavoritesConverter implements Converter<FavoritesDO, Lipsti
         LipstickExtension extension = JsonUtils.toJavaObject(source.getSkuExtension(), LipstickExtension.class);
         data.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColorNo).orElse(""));
         data.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(""));
+        data.setColor1(Optional.ofNullable(extension).map(LipstickExtension::getColor1).orElse(""));
         return data;
     }
 }

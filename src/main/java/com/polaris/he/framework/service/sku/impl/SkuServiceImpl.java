@@ -65,7 +65,7 @@ public class SkuServiceImpl implements SkuService {
         List<SkuDO> skuInDb = skuDao.getByCodeList(type, skuCodeSet);
         List<SkuDO> skuToSave = collection.stream().map(l -> BeanCopyUtils.copyObject(l, new SkuDO())).collect(Collectors.toList());
 
-        DiffUtils.DiffResult<SkuDO> skuDiff = DiffUtils.diff(skuInDb, skuToSave, SKU_UNIQUE_FIELDS, SkuDO::equals);
+        DiffUtils.DiffResult<SkuDO> skuDiff = DiffUtils.diff(skuToSave, skuInDb, SKU_UNIQUE_FIELDS, SkuDO::equals);
 
         Collection<SkuDO> insert = skuDiff.getAdd();
         if (CollectionUtils.isNotEmpty(insert)) {

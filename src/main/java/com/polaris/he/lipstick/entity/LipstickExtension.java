@@ -18,6 +18,8 @@ public class LipstickExtension {
 
     private String color;
 
+    private String color1;
+
     private String colorNo;
 
     private String figure;

@@ -30,6 +30,9 @@ public class LipstickUploadData {
     @JsonProperty(value = "goods_url")
     private String goodsUrl;
 
+    @JsonProperty(value = "goods_illustration")
+    private String goodsIllustration;
+
     @JsonProperty(value = "sku_code")
     private String skuCode;
 
@@ -51,6 +54,9 @@ public class LipstickUploadData {
     @JsonProperty(value = "color_card_url")
     private String colorCardUrl;
 
-    @JsonProperty(value = "colour")
+    @JsonProperty(value = "color")
     private String color;
+
+    @JsonProperty(value = "color1")
+    private String color1;
 }

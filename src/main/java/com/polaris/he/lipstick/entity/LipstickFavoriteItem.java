@@ -34,5 +34,7 @@ public class LipstickFavoriteItem {
 
     private String color;
 
+    private String color1;
+
     private String colorNo;
 }

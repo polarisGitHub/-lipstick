@@ -35,25 +35,22 @@
         update sku
         <set>
             <if test="brandCode != null">
-                ,brand_code=#{brandCode,jdbcType=VARCHAR}
+                brand_code=#{brandCode,jdbcType=VARCHAR},
             </if>
             <if test="goodsCode != null">
-                ,goods_code=#{goodsCode,jdbcType=VARCHAR}
+                goods_code=#{goodsCode,jdbcType=VARCHAR},
             </if>
-            <if test="goodsName != null">
-                ,goods_name=#{goodsName,jdbcType=VARCHAR}
-            </if>
-            <if test="skuName != null">
-                ,sku_name=#{skuName,jdbcType=VARCHAR}
+              <if test="skuName != null">
+                sku_name=#{skuName,jdbcType=VARCHAR},
             </if>
             <if test="skuByName != null">
-                ,sku_by_name=#{skuByName,jdbcType=VARCHAR}
+                sku_by_name=#{skuByName,jdbcType=VARCHAR},
             </if>
             <if test="url != null">
-                ,url=#{url,jdbcType=VARCHAR}
+                url=#{url,jdbcType=VARCHAR},
             </if>
             <if test="extension != null">
-                ,extension=#{extension,jdbcType=VARCHAR}
+                extension=#{extension,jdbcType=VARCHAR},
             </if>
         </set>
         <where>

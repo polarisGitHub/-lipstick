@@ -31,19 +31,19 @@
         update goods
         <set>
             <if test="type != null">
-                ,type=#{type,jdbcType=VARCHAR}
+                type=#{type,jdbcType=VARCHAR},
             </if>
             <if test="brandCode != null">
-                ,brand_code=#{brandCode,jdbcType=VARCHAR}
+                brand_code=#{brandCode,jdbcType=VARCHAR},
             </if>
             <if test="goodsName != null">
-                ,goods_name=#{goodsName,jdbcType=VARCHAR}
+                goods_name=#{goodsName,jdbcType=VARCHAR},
             </if>
             <if test="illustration != null">
-                ,illustration=#{illustration,jdbcType=VARCHAR}
+                illustration=#{illustration,jdbcType=VARCHAR},
             </if>
             <if test="url != null">
-                ,url=#{url,jdbcType=VARCHAR}
+                url=#{url,jdbcType=VARCHAR},
             </if>
         </set>
         <where>
