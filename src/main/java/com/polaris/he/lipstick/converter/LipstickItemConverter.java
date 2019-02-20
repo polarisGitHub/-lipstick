@@ -35,7 +35,7 @@ public class LipstickItemConverter implements Converter<SkuAggregation, Lipstick
         LipstickExtension extension = JsonUtils.toJavaObject(source.getSku().getExtension(), LipstickExtension.class);
         ret.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColorNo).orElse(""));
         ret.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(""));
-        ret.setColor1(Optional.ofNullable(extension).map(LipstickExtension::getColor1).orElse(""));
+        ret.setColor1(Optional.ofNullable(extension).map(LipstickExtension::getColor1).orElse(null));
         return ret;
     }
 }
