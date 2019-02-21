@@ -5,24 +5,23 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 /**
  * User: hexie
- * Date: 2019-02-01 23:09
+ * Date: 2019-02-21 21:28
  * Description:
  */
 @Getter
 @Setter
 @ToString
-public class LipstickFavoriteItem{
-
-    @Encryption
-    private Long id;
+public class LipstickItem {
 
     private String brandCode;
 
     private String brandName;
+
+    private String categoryCode;
+
+    private String categoryName;
 
     @Encryption
     private String goodsCode;
@@ -34,11 +33,9 @@ public class LipstickFavoriteItem{
 
     private String skuName;
 
+    private String colorNo;
+
     private String color;
 
     private String color1;
-
-    private String colorNo;
-
-    private List<String> images;
 }

@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * User: hexie
  * Date: 2019-01-05 21:33
@@ -12,7 +14,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString(callSuper = true)
-public class LipstickListItem extends LipstickItem{
+public class LipstickDetailItem extends LipstickItem {
 
-    private String figure;
+
+    private List<String> images;
 }

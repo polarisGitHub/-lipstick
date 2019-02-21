@@ -4,6 +4,7 @@ import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.framework.annotation.FrameworkBizConverter;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
 import com.polaris.he.framework.entity.sku.SkuAggregation;
+import com.polaris.he.lipstick.entity.LipstickDetailItem;
 import com.polaris.he.lipstick.entity.LipstickExtension;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 import org.springframework.core.convert.converter.Converter;
@@ -18,11 +19,11 @@ import java.util.Optional;
  */
 @Component
 @FrameworkBizConverter(type = CosmeticsEnum.LIPSTICK, biz = "product")
-public class LipstickItemConverter implements Converter<SkuAggregation, LipstickListItem> {
+public class LipstickItemConverter implements Converter<SkuAggregation, LipstickDetailItem> {
 
     @Override
-    public LipstickListItem convert(SkuAggregation source) {
-        LipstickListItem ret = new LipstickListItem();
+    public LipstickDetailItem convert(SkuAggregation source) {
+        LipstickDetailItem ret = new LipstickDetailItem();
         ret.setBrandCode(source.getBrand().getCode());
         ret.setBrandName(source.getBrand().getName());
         // TODO
@@ -36,6 +37,7 @@ public class LipstickItemConverter implements Converter<SkuAggregation, Lipstick
         ret.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColorNo).orElse(""));
         ret.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(""));
         ret.setColor1(Optional.ofNullable(extension).map(LipstickExtension::getColor1).orElse(null));
+        ret.setImages(Optional.ofNullable(extension).map(LipstickExtension::getImgs).orElse(null));
         return ret;
     }
 }

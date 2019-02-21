@@ -34,6 +34,7 @@ public class LipstickFavoritesConverter implements Converter<FavoritesDO, Lipsti
         data.setColorNo(Optional.ofNullable(extension).map(LipstickExtension::getColorNo).orElse(""));
         data.setColor(Optional.ofNullable(extension).map(LipstickExtension::getColor).orElse(""));
         data.setColor1(Optional.ofNullable(extension).map(LipstickExtension::getColor1).orElse(null));
+        data.setImages(Optional.ofNullable(extension).map(LipstickExtension::getImgs).orElse(null));
         return data;
     }
 }
