@@ -1,8 +1,7 @@
 package com.polaris.he.application.mvc.argument;
 
-import com.polaris.he.application.utils.EncryptionUtils;
 import com.polaris.he.framework.annotation.PathVariableEncryption;
-import com.polaris.he.framework.utils.SpringContextUtils;
+import com.polaris.he.framework.utils.BizEncryptionUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ValueConstants;
@@ -24,7 +23,7 @@ public class PathVariableEncryptionMethodArgumentResolver extends PathVariableMe
     @Override
     protected Object resolveName(String name, MethodParameter parameter, NativeWebRequest request) throws Exception {
         String ret = (String) super.resolveName(name, parameter, request);
-        return (ret != null ? EncryptionUtils.AESDecode(ret, SpringContextUtils.getProperty("encryption.aes.password.data")) : null);
+        return (ret != null ? BizEncryptionUtils.decode(ret) : null);
     }
 
     @Override

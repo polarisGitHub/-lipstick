@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.polaris.he.application.utils.EncryptionUtils;
+import com.polaris.he.framework.utils.BizEncryptionUtils;
 import com.polaris.he.framework.utils.SpringContextUtils;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class JacksonEncryptionSerializer extends JsonSerializer<Object> implemen
         if (value == null) {
             gen.writeNull();
         }
-        gen.writeString(EncryptionUtils.AESEncode(String.valueOf(value), SpringContextUtils.getProperty("encryption.aes.password.data")));
+        gen.writeString(BizEncryptionUtils.encode(String.valueOf(value)));
     }
 
     @Override

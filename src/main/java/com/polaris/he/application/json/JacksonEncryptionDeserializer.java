@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.polaris.he.application.utils.EncryptionUtils;
+import com.polaris.he.framework.utils.BizEncryptionUtils;
 import com.polaris.he.framework.utils.SpringContextUtils;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class JacksonEncryptionDeserializer extends JsonDeserializer<Object> impl
         if (text == null) {
             return null;
         }
-        String decode = EncryptionUtils.AESDecode(text, SpringContextUtils.getProperty("encryption.aes.password.data"));
+        String decode = BizEncryptionUtils.decode(text);
         if (Long.class.equals(clazz)) {
             return Long.valueOf(decode);
         } else if (String.class.equals(clazz)) {
