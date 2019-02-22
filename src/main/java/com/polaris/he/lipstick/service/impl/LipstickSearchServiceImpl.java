@@ -2,6 +2,7 @@ package com.polaris.he.lipstick.service.impl;
 
 import com.polaris.he.application.utils.JsonUtils;
 import com.polaris.he.framework.entity.constanst.CosmeticsEnum;
+import com.polaris.he.framework.entity.page.Pull;
 import com.polaris.he.framework.service.sku.BrandService;
 import com.polaris.he.framework.service.sku.CategoryService;
 import com.polaris.he.lipstick.algorithm.color.data.ColorDistanceAlgorithm;
@@ -46,13 +47,15 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
     private CategoryService categoryService;
 
     @Override
-    public List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo) {
-        log.info("[产品搜索] 查询，brand={},category={},colorNo={}", brandCodes, categories, colorNo);
+    public List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo, Pull pull) {
+        log.info("[产品搜索] 查询，brand={},category={},colorNo={},pull={}", brandCodes, categories, colorNo, pull);
         LipstickSearchDO query = LipstickSearchDO.builder().
                 brandCodes(brandCodes).
                 categoryCodes(categories).
                 colorNo(colorNo).
                 build();
+        query.setNextId(pull.getNextId());
+        query.setPageSize(pull.getPageSize());
         List<LipstickAggregationDO> list = lipstickSearchDao.search(query);
         log.info("[产品搜索] 找到产品，list={}", list);
         List<LipstickListItem> result = new LinkedList<>();
@@ -100,6 +103,8 @@ public class LipstickSearchServiceImpl implements LipstickSearchService {
 
     private LipstickListItem convert(LipstickAggregationDO l) {// TODO sku
         LipstickListItem item = new LipstickListItem();
+        item.setId(l.getSku().getId());
+
         item.setBrandCode(l.getBrandCode());
         item.setBrandName(Optional.ofNullable(brandService.getBrand(CosmeticsEnum.LIPSTICK.getCode(), l.getBrandCode()).getName()).orElse(""));
         // FIXME multi category

@@ -7,16 +7,22 @@ import lombok.ToString;
 
 /**
  * User: hexie
- * Date: 2019-01-05 21:33
+ * Date: 2019-02-22 22:32
  * Description:
  */
-@Setter
 @Getter
-@ToString(callSuper = true)
-public class LipstickListItem extends LipstickItem{
+@Setter
+@ToString
+public class LipstickSearchData {
+
+    private String brands;
+
+    private String categories;
+
+    private String colorNo;
 
     @Encryption
-    private Long id;
+    private String nextId;// TODO
 
-    private String figure;
+    private Integer pageSize;
 }

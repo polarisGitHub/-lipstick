@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.dao.objects;
 
+import com.polaris.he.framework.dao.object.PullDO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,8 +14,8 @@ import java.util.Collection;
  */
 @Getter
 @Builder
-@ToString
-public class LipstickSearchDO {
+@ToString(callSuper = true)
+public class LipstickSearchDO extends PullDO {
 
     private Collection<String> brandCodes;
 

@@ -1,5 +1,6 @@
 package com.polaris.he.lipstick.service;
 
+import com.polaris.he.framework.entity.page.Pull;
 import com.polaris.he.lipstick.entity.LipstickListItem;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface LipstickSearchService {
      * @param colorNo
      * @return
      */
-    List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo);
+    List<LipstickListItem> search(List<String> brandCodes, List<String> categories, String colorNo, Pull pull);
 
     /**
      * @param brandCodes

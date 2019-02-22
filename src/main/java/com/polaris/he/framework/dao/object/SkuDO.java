@@ -17,6 +17,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class SkuDO extends BaseDO {
 
+    private Long id;
+
     private String type;
 
     private String brandCode;

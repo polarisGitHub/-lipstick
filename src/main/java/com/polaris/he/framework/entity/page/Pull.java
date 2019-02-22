@@ -1,9 +1,7 @@
 package com.polaris.he.framework.entity.page;
 
 import com.polaris.he.framework.annotation.Encryption;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * User: hexie
@@ -13,10 +11,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pull {
 
     @Encryption
-    private Long startId;
+    private Long nextId;
 
-    private Integer size;
+    private Integer pageSize;
 }

@@ -17,50 +17,59 @@
         <!--sku-->
         <association property="sku" javaType="com.polaris.he.framework.dao.object.SkuDO">
             <id column="brand_code" property="brandCode" jdbcType="VARCHAR"/>
+            <result column="sku_id" property="id" jdbcType="BIGINT"/>
             <result column="goods_code" property="goodsCode" jdbcType="VARCHAR"/>
             <result column="sku_code" property="skuCode" jdbcType="VARCHAR"/>
             <result column="sku_name" property="skuName" jdbcType="VARCHAR"/>
             <result column="sku_url" property="url" jdbcType="VARCHAR"/>
-            <result column="sku_extension" property="extension" typeHandler="com.polaris.he.framework.dao.handler.JsonNodeTypeHandler"/>
+            <result column="sku_extension" property="extension"
+                    typeHandler="com.polaris.he.framework.dao.handler.JsonNodeTypeHandler"/>
         </association>
     </resultMap>
 
-    <select id="search" parameterType="com.polaris.he.lipstick.dao.objects.LipstickSearchDO" resultMap="SearchResultMap">
+    <select id="search" parameterType="com.polaris.he.lipstick.dao.objects.LipstickSearchDO"
+            resultMap="SearchResultMap">
         select
-          a.category_code as category_code,
-          b.brand_code as brand_code,
-          b.goods_code as goods_code,
-          b.goods_name as goods_name,
-          b.illustration as goods_illustration,
-          b.url as goods_url,
-          c.sku_code as sku_code,
-          c.sku_name as sku_name,
-          c.url as sku_url,
-          c.extension as sku_extension
+        a.category_code as category_code,
+        b.brand_code as brand_code,
+        b.goods_code as goods_code,
+        b.goods_name as goods_name,
+        b.illustration as goods_illustration,
+        b.url as goods_url,
+        c.id as sku_id,
+        c.sku_code as sku_code,
+        c.sku_name as sku_name,
+        c.url as sku_url,
+        c.extension as sku_extension
         from goods_category_mapping a
         join goods b on a.goods_code=b.goods_code
         join sku c on b.goods_code=c.goods_code
         <where>
-          c.type='lipstick'
-          <if test="brandCodes != null &amp;&amp; brandCodes.size!=0">
-              and c.brand_code in
-              <foreach collection="brandCodes" item="item" open="(" separator="," close=")">
-                  #{item,jdbcType=VARCHAR}
-              </foreach>
-          </if>
-          <if test="categoryCodes != null &amp;&amp; categoryCodes.size!=0">
-              and a.category_code in
-              <foreach collection="categoryCodes" item="item" open="(" separator="," close=")">
-                  #{item,jdbcType=VARCHAR}
-              </foreach>
-          </if>
-          <if test="colorNo!=null">
-              and (
-                  c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
-                  c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
-                  c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%')
-              )
-          </if>
+            c.type='lipstick'
+            <if test="brandCodes != null &amp;&amp; brandCodes.size!=0">
+                and c.brand_code in
+                <foreach collection="brandCodes" item="item" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="categoryCodes != null &amp;&amp; categoryCodes.size!=0">
+                and a.category_code in
+                <foreach collection="categoryCodes" item="item" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="colorNo!=null">
+                and (
+                c.sku_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
+                c.sku_by_name like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%') or
+                c.extension->'$.colorNo' like CONCAT('%',#{colorNo,jdbcType=VARCHAR},'%')
+                )
+            </if>
+            <if test="nextId!=null">
+                and c.id>#{nextId,jdbcType=BIGINT}
+
+            </if>
+            limit #{pageSize,jdbcType=INTEGER}
         </where>
     </select>
 </mapper>
